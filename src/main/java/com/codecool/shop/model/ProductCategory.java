@@ -5,12 +5,12 @@ import java.util.List;
 
 public class ProductCategory extends BaseModel {
     private String department;
-    private List<Product> products;
+    private List<Pokemon> pokemons;
 
     public ProductCategory(String name, String department, String description) {
         super(name);
         this.department = department;
-        this.products = new ArrayList<>();
+        this.pokemons = new ArrayList<>();
     }
 
     public String getDepartment() {
@@ -21,16 +21,16 @@ public class ProductCategory extends BaseModel {
         this.department = department;
     }
 
-    public void setProducts(ArrayList<Product> products) {
-        this.products = products;
+    public void setProducts(ArrayList<Pokemon> pokemons) {
+        this.pokemons = pokemons;
     }
 
-    public List<Product> getProducts() {
-        return this.products;
+    public List<Pokemon> getProducts() {
+        return this.pokemons;
     }
 
-    public void addProduct(Product product) {
-        this.products.add(product);
+    public void addProduct(Pokemon pokemon) {
+        this.pokemons.add(pokemon);
     }
 
     @Override

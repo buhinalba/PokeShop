@@ -5,7 +5,7 @@
 Everyone loves to buy and sell stuff but we need a shop for that! In this
 project the goal is to build one the [most common type of websites on the
 web](https://www.expertmarket.co.uk/web-design/different-types-of-websites): an
-online eCommerce web-application, where users can browse products, add them into
+online eCommerce web-application, where users can browse pokemons, add them into
 a shopping cart, checkout items and make payments.
 
 ## What are you going to learn?
@@ -20,7 +20,7 @@ a shopping cart, checkout items and make payments.
     - Given I startup my Java web-application server, when I open `http://localhost:8888` in my browser, then ensure the server gives back an index page
 
 2. As a User, I want to have an index page, where I can see the list of Products within a default Product Category, so that I can browse Products within that Category.
-    - Given I have Products and a default Product Category in the application when I open the root url (`/`) then ensure I can see a list of Products with the following details: product title, description, image, price
+    - Given I have Products and a default Product Category in the application when I open the root url (`/`) then ensure I can see a list of Products with the following details: pokemon title, description, image, price
 
 3. As a User, I want to have an index page, where I can filter Products by Product Categories so that I can browse Products within any Category.
     - Given I have Products and Product Categories listed on the index page when I click on a Category's title then ensure it displays the Products only in the selected Category
@@ -28,7 +28,7 @@ a shopping cart, checkout items and make payments.
 4. As a User, I want to have an index page, where I can filter Products by Suppliers so that I can browse Products by Suppliers too.
     - Given I have Products and Suppliers listed on the index page when I click on a Supplier's name then ensure it displays the Products only for the selected Supplier
 
-5. As a User, I want to have a Shopping Cart so that I can add products which I want to buy.
+5. As a User, I want to have a Shopping Cart so that I can add pokemons which I want to buy.
     - Given I have a Product list and the Products have an "Add to cart" button when I click on the "Add to cart" button then ensure it creates a new Order for storing cart data of the User and ensure it creates a new LineItem with the quanity (default: 1) and price (the price of the Product) and ensure it stores this data on the server
     - Given I have a Product list and the Products have an "Add to cart" button when I click on the "Add to cart" button then ensure the number of cart items is displayed in the Page header
 

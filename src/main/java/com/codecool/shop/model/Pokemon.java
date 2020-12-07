@@ -2,7 +2,7 @@ package com.codecool.shop.model;
 
 import java.util.Currency;
 
-public class Product extends BaseModel {
+public class Pokemon extends BaseModel {
 
     private float defaultPrice;
     private Currency defaultCurrency;
@@ -10,7 +10,7 @@ public class Product extends BaseModel {
     private String spiritImageUrl;
 
 
-    public Product(String name, float defaultPrice, String currencyString, String description, ProductCategory productCategory, String spirit) {
+    public Pokemon(String name, float defaultPrice, String currencyString, String description, ProductCategory productCategory, String spirit) {
         super(name, description);
         this.setPrice(defaultPrice, currencyString);
         this.setSpiritImageUrl(spirit);

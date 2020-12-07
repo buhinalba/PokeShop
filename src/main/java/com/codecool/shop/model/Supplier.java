@@ -4,23 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Supplier extends BaseModel {
-    private List<Product> products;
+    private List<Pokemon> pokemons;
 
     public Supplier(String name, String description) {
         super(name);
-        this.products = new ArrayList<>();
+        this.pokemons = new ArrayList<>();
     }
 
-    public void setProducts(ArrayList<Product> products) {
-        this.products = products;
+    public void setProducts(ArrayList<Pokemon> pokemons) {
+        this.pokemons = pokemons;
     }
 
-    public List<Product> getProducts() {
-        return this.products;
+    public List<Pokemon> getProducts() {
+        return this.pokemons;
     }
 
-    public void addProduct(Product product) {
-        this.products.add(product);
+    public void addProduct(Pokemon pokemon) {
+        this.pokemons.add(pokemon);
     }
 
     @Override

@@ -36,12 +36,9 @@ public class PokemonCategory extends BaseModel {
     @Override
     public String toString() {
         return String.format(
-                "id: %1$d," +
-                        "name: %2$s, " +
-                        "category: %3$s, " +
-                        "description: %4$s",
+                    "id: %1$d," +
+                    "category: %2$s, ",
                 this.id,
-                this.name,
                 this.category);
     }
 }

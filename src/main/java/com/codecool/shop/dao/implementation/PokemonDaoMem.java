@@ -26,6 +26,12 @@ public class PokemonDaoMem implements PokemonDao {
         return instance;
     }
 
+    public void addAll(List<Pokemon> pokemonList) {
+        for (Pokemon pokemon : pokemonList) {
+            add(pokemon);
+        }
+    }
+
     @Override
     public void add(Pokemon pokemon) {
         pokemon.setId(data.size() + 1);

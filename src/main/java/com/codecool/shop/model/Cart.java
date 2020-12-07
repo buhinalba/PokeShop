@@ -5,10 +5,19 @@ import java.util.stream.Collectors;
 
 public class Cart {
     private List<Pokemon> pokemons;
+    private int id;
 
     public Cart() {}
     public Cart(Pokemon pokemon) { addPokemonToCart(pokemon); }
     public Cart(List<Pokemon> pokemons) { setPokemons(pokemons); }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public List<Pokemon> getPokemons() {
         return pokemons;

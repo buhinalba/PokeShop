@@ -1,0 +1,111 @@
+body {
+    background: #3c556f;
+    color: white;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 50px;
+    font-family: fantasy;
+}
+
+.filter {
+    color: white;
+    position: sticky;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    top: 0;
+    background: #2c3e50;
+    border-radius: .25em;
+}
+
+.filter__select, .filter__price, .filter__button {
+    display: inline-block;
+    margin: 0 30px;
+}
+
+
+
+select::-ms-expand {
+    display: none;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    outline: 0;
+    box-shadow: none;
+    border: 0 !important;
+    background: #3c556f none;
+}
+
+select {
+    flex: 1;
+    padding: 0 .5em;
+    color: #fff;
+    cursor: pointer;
+}
+
+.filter__select {
+    position: relative;
+    display: flex;
+    width: 20em;
+    height: 3em;
+    line-height: 3;
+    background: #2c3e50;
+    overflow: hidden;
+    border-radius: .25em;
+}
+
+.filter__select::after {
+    content: '\25BC';
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 1em;
+    background: #34495e;
+    cursor: pointer;
+    pointer-events: none;
+    -webkit-transition: .25s all ease;
+    -o-transition: .25s all ease;
+    transition: .25s all ease;
+}
+
+.filter__select:hover::after {
+    color: #12a7ac;
+}
+
+.lorem-ipsum {
+    position: relative;
+    align-content: center;
+    width: 25%;
+}
+
+
+.filter__button button {
+    padding: 5px 10px;
+    text-align: center;
+    color: white;
+    background: #3c556f;
+    font-size: 15px;
+    text-decoration: none;
+    overflow: hidden;
+    transition: .5s;
+    letter-spacing: 4px;
+    border-radius: .25em;
+}
+
+.filter__button button:hover {
+    cursor: pointer;
+    background: #03e9f4;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #03e9f4,
+    0 0 25px #03e9f4,
+    0 0 50px #03e9f4,
+    0 0 100px #03e9f4;
+}

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="author" content="Codecool"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <title>Pokemon Shop</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css"/>
+</head>
+
+<body>
+
+<div class="page-title">
+    <h1>Pokemon Shop</h1>
+</div>
+
+<div class="filter">
+    <div class="filter__price">
+        <p>Pokemon price</p>
+    </div>
+
+    <div class="filter__select">
+        <select name="select-type" id="select-type">
+            <option selected disabled>Search by type</option>
+            <option value="1">Water</option>
+            <option value="2">Poison</option>
+            <option value="3">Grass</option>
+        </select>
+    </div>
+
+    <div class="filter__button">
+        <button type="submit" name="submit-search">Search
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+
+</div>
+
+<div class="container">
+    <div class="card">
+        <strong th:text="${category.name}">Category Title</strong>
+    </div>
+
+    <div id="pokemons-container" class="row">
+        <div class="card-container" th:each="pokemon, iterStat : ${pokemons}">
+            <div class="card">
+                <img th:href="src=${pokemon.sprite}" alt=""/>>
+                <div class="card-header">
+                    <h4 class="card-title" th:text="${pokemon.name}">Pokemon name</h4>
+                </div>
+                <div class="card-body">
+                    <div class="card-text">
+                        <p class="card-text" th:text="${pokemon.type}">Pokemon type</p>
+                        <p class="lead" th:text="${pokemon.price}">Price</p>
+                    </div>
+                    <div class="card-text">
+                        <a class="btn btn-success" href="#">Add to cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="lorem-ipsum">
+    <p>
+        "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat."
+
+        "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat."
+
+        "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat."
+
+        "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat."
+    </p>
+</div>
+
+<div th:replace="footer.html :: copy"></div>
+
+</body>
+</html>

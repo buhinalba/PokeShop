@@ -7,7 +7,7 @@ public class Pokemon extends BaseModel {
     private float defaultPrice;
     private Currency defaultCurrency;
     private PokemonCategory pokemonCategory;
-    private String spiritImageUrl;
+    private String spriteImageUrl;
 
 
     public Pokemon(String name, float defaultPrice, String currencyString, String description, PokemonCategory pokemonCategory, String spirit) {
@@ -52,11 +52,11 @@ public class Pokemon extends BaseModel {
     }
 
     public String getSpiritImageUrl() {
-        return spiritImageUrl;
+        return spriteImageUrl;
     }
 
     public void setSpiritImageUrl(String spirit) {
-        this.spiritImageUrl = spirit;
+        this.spriteImageUrl = spirit;
     }
 
     @Override
@@ -72,6 +72,6 @@ public class Pokemon extends BaseModel {
                 this.defaultPrice,
                 this.defaultCurrency.toString(),
                 this.pokemonCategory.getName(),
-                this.spiritImageUrl);
+                this.spriteImageUrl);
     }
 }

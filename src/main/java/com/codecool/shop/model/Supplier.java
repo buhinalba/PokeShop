@@ -2,7 +2,7 @@ package com.codecool.shop.model;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//we don't need this class
 public class Supplier extends BaseModel {
     private List<Pokemon> pokemons;
 

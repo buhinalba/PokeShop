@@ -3,17 +3,17 @@ package com.codecool.shop.model;
 import java.util.Currency;
 
 public class Pokemon extends BaseModel {
-
     private float defaultPrice;
     private Currency defaultCurrency;
     private PokemonCategory pokemonCategory;
     private String spriteImageUrl;
 
 
-    public Pokemon(String name, float defaultPrice, String currencyString, String description, PokemonCategory pokemonCategory, String spirit) {
-        super(name, description);
+    public Pokemon(int id, String name, float defaultPrice, String currencyString, PokemonCategory pokemonCategory, String sprite) {
+        super(name);
+        this.setId(id);
         this.setPrice(defaultPrice, currencyString);
-        this.setSpiritImageUrl(spirit);
+        this.setSpriteImageUrl(sprite);
         this.setProductCategory(pokemonCategory);
     }
 
@@ -48,14 +48,14 @@ public class Pokemon extends BaseModel {
 
     public void setProductCategory(PokemonCategory pokemonCategory) {
         this.pokemonCategory = pokemonCategory;
-        this.pokemonCategory.addProduct(this);
+        this.pokemonCategory.addPokemon(this);
     }
 
-    public String getSpiritImageUrl() {
+    public String getSpriteImageUrl() {
         return spriteImageUrl;
     }
 
-    public void setSpiritImageUrl(String spirit) {
+    public void setSpriteImageUrl(String spirit) {
         this.spriteImageUrl = spirit;
     }
 
@@ -66,7 +66,7 @@ public class Pokemon extends BaseModel {
                         "defaultPrice: %3$f, " +
                         "defaultCurrency: %4$s, " +
                         "productCategory: %5$s, " +
-                        "spiritImageUrl: %6$s ",
+                        "spriteImageUrl: %6$s ",
                 this.id,
                 this.name,
                 this.defaultPrice,

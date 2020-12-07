@@ -34,8 +34,8 @@ public class Initializer implements ServletContextListener {
         productCategoryDataStore.add(tablet);
 
         //setting up products and printing it
-        productDataStore.add(new Pokemon("Amazon Fire", 49.9f, "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, "."));
-        productDataStore.add(new Pokemon("Lenovo IdeaPad Miix 700", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet,"."));
-        productDataStore.add(new Pokemon("Amazon Fire HD 8", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, "."));
+        productDataStore.add(new Pokemon(1, "Amazon Fire", 49.9f, "USD", tablet, "."));
+        productDataStore.add(new Pokemon(2, "Lenovo IdeaPad Miix 700", 479, "USD",  tablet,"."));
+        productDataStore.add(new Pokemon(3, "Amazon Fire HD 8", 89, "USD",  tablet, "."));
     }
 }

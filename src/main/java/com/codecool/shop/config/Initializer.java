@@ -7,7 +7,7 @@ import com.codecool.shop.dao.implementation.PokemonCategoryDaoMem;
 import com.codecool.shop.dao.implementation.PokemonDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.Pokemon;
-import com.codecool.shop.model.ProductCategory;
+import com.codecool.shop.model.PokemonCategory;
 import com.codecool.shop.model.Supplier;
 
 import javax.servlet.ServletContextEvent;
@@ -30,7 +30,7 @@ public class Initializer implements ServletContextListener {
         supplierDataStore.add(lenovo);
 
         //setting up a new product category
-        ProductCategory tablet = new ProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
+        PokemonCategory tablet = new PokemonCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
         productCategoryDataStore.add(tablet);
 
         //setting up products and printing it

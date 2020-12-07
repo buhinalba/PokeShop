@@ -6,15 +6,15 @@ public class Pokemon extends BaseModel {
 
     private float defaultPrice;
     private Currency defaultCurrency;
-    private ProductCategory productCategory;
+    private PokemonCategory pokemonCategory;
     private String spiritImageUrl;
 
 
-    public Pokemon(String name, float defaultPrice, String currencyString, String description, ProductCategory productCategory, String spirit) {
+    public Pokemon(String name, float defaultPrice, String currencyString, String description, PokemonCategory pokemonCategory, String spirit) {
         super(name, description);
         this.setPrice(defaultPrice, currencyString);
         this.setSpiritImageUrl(spirit);
-        this.setProductCategory(productCategory);
+        this.setProductCategory(pokemonCategory);
     }
 
     public float getDefaultPrice() {
@@ -42,13 +42,13 @@ public class Pokemon extends BaseModel {
         this.defaultCurrency = Currency.getInstance(currency);
     }
 
-    public ProductCategory getProductCategory() {
-        return productCategory;
+    public PokemonCategory getProductCategory() {
+        return pokemonCategory;
     }
 
-    public void setProductCategory(ProductCategory productCategory) {
-        this.productCategory = productCategory;
-        this.productCategory.addProduct(this);
+    public void setProductCategory(PokemonCategory pokemonCategory) {
+        this.pokemonCategory = pokemonCategory;
+        this.pokemonCategory.addProduct(this);
     }
 
     public String getSpiritImageUrl() {
@@ -71,7 +71,7 @@ public class Pokemon extends BaseModel {
                 this.name,
                 this.defaultPrice,
                 this.defaultCurrency.toString(),
-                this.productCategory.getName(),
+                this.pokemonCategory.getName(),
                 this.spiritImageUrl);
     }
 }

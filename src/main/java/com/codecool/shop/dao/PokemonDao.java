@@ -1,8 +1,7 @@
 package com.codecool.shop.dao;
 
 import com.codecool.shop.model.Pokemon;
-import com.codecool.shop.model.Supplier;
-import com.codecool.shop.model.ProductCategory;
+import com.codecool.shop.model.PokemonCategory;
 
 import java.util.List;
 
@@ -13,6 +12,6 @@ public interface PokemonDao {
     void remove(int id);
 
     List<Pokemon> getAll();
-    List<Pokemon> getBy(ProductCategory productCategory);
+    List<Pokemon> getBy(PokemonCategory pokemonCategory);
 
 }

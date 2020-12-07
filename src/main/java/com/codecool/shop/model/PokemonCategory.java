@@ -3,11 +3,11 @@ package com.codecool.shop.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductCategory extends BaseModel {
+public class PokemonCategory extends BaseModel {
     private String department;
     private List<Pokemon> pokemons;
 
-    public ProductCategory(String name, String department, String description) {
+    public PokemonCategory(String name, String department, String description) {
         super(name);
         this.department = department;
         this.pokemons = new ArrayList<>();

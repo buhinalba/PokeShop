@@ -3,7 +3,7 @@ package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.dao.PokemonDao;
 import com.codecool.shop.model.Pokemon;
-import com.codecool.shop.model.ProductCategory;
+import com.codecool.shop.model.PokemonCategory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +48,7 @@ public class PokemonDaoMem implements PokemonDao {
     }
 
     @Override
-    public List<Pokemon> getBy(ProductCategory productCategory) {
-        return data.stream().filter(t -> t.getProductCategory().equals(productCategory)).collect(Collectors.toList());
+    public List<Pokemon> getBy(PokemonCategory pokemonCategory) {
+        return data.stream().filter(t -> t.getProductCategory().equals(pokemonCategory)).collect(Collectors.toList());
     }
 }

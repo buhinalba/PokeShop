@@ -9,11 +9,10 @@ public class Pokemon extends BaseModel {
     private String spriteImageUrl;
 
 
-    public Pokemon(int id, String name, float defaultPrice, String currencyString, PokemonCategory pokemonCategory, String sprite) {
+    public Pokemon(int id, String name, float defaultPrice, String currencyString, PokemonCategory pokemonCategory) {
         super(name);
         this.setId(id);
         this.setPrice(defaultPrice, currencyString);
-        this.setSpriteImageUrl(sprite);
         this.setProductCategory(pokemonCategory);
     }
 

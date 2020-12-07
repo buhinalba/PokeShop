@@ -30,12 +30,12 @@ public class Initializer implements ServletContextListener {
         supplierDataStore.add(lenovo);
 
         //setting up a new product category
-        PokemonCategory tablet = new PokemonCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
+        PokemonCategory tablet = new PokemonCategory("Tablet", "Hardware");
         productCategoryDataStore.add(tablet);
 
         //setting up products and printing it
-        productDataStore.add(new Pokemon(1, "Amazon Fire", 49.9f, "USD", tablet, "."));
-        productDataStore.add(new Pokemon(2, "Lenovo IdeaPad Miix 700", 479, "USD",  tablet,"."));
-        productDataStore.add(new Pokemon(3, "Amazon Fire HD 8", 89, "USD",  tablet, "."));
+        productDataStore.add(new Pokemon(1, "Amazon Fire", 49.9f, "USD", tablet));
+        productDataStore.add(new Pokemon(2, "Lenovo IdeaPad Miix 700", 479, "USD",  tablet));
+        productDataStore.add(new Pokemon(3, "Amazon Fire HD 8", 89, "USD",  tablet));
     }
 }

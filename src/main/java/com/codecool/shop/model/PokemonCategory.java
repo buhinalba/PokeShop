@@ -7,7 +7,7 @@ public class PokemonCategory extends BaseModel {
     private String category;
     private List<Pokemon> pokemons;
 
-    public PokemonCategory(String name, String category, String description) {
+    public PokemonCategory(String name, String category) {
         super(name);
         this.category = category;
         this.pokemons = new ArrayList<>();
@@ -42,7 +42,6 @@ public class PokemonCategory extends BaseModel {
                         "description: %4$s",
                 this.id,
                 this.name,
-                this.category,
-                this.description);
+                this.category);
     }
 }

@@ -1,6 +1,7 @@
 package com.codecool.shop.model;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Cart {
     private List<Pokemon> pokemons;
@@ -19,5 +20,19 @@ public class Cart {
 
     public void addPokemonToCart(Pokemon pokemon){
         this.pokemons.add(pokemon);
+    }
+
+    public void removePokemon(int id){
+        List<Pokemon> filtered = pokemons.stream()
+                .filter(pokemon -> pokemon.getId() == id)
+                .collect(Collectors.toList());
+        setPokemons(filtered);
+    }
+
+    public void removePokemon(String name){
+        List<Pokemon> filtered = pokemons.stream()
+                .filter(pokemon -> pokemon.getName().equals(name))
+                .collect(Collectors.toList());
+        setPokemons(filtered);
     }
 }

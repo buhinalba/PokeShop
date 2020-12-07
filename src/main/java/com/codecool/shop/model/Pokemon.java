@@ -2,19 +2,18 @@ package com.codecool.shop.model;
 
 import java.util.Currency;
 
-public class Product extends BaseModel {
-
+public class Pokemon extends BaseModel {
     private float defaultPrice;
     private Currency defaultCurrency;
-    private ProductCategory productCategory;
-    private Supplier supplier;
+    private PokemonCategory pokemonCategory;
+    private String spriteImageUrl;
 
 
-    public Product(String name, float defaultPrice, String currencyString, String description, ProductCategory productCategory, Supplier supplier) {
-        super(name, description);
+    public Pokemon(int id, String name, float defaultPrice, String currencyString, PokemonCategory pokemonCategory) {
+        super(name);
+        this.setId(id);
         this.setPrice(defaultPrice, currencyString);
-        this.setSupplier(supplier);
-        this.setProductCategory(productCategory);
+        this.setProductCategory(pokemonCategory);
     }
 
     public float getDefaultPrice() {
@@ -42,22 +41,21 @@ public class Product extends BaseModel {
         this.defaultCurrency = Currency.getInstance(currency);
     }
 
-    public ProductCategory getProductCategory() {
-        return productCategory;
+    public PokemonCategory getProductCategory() {
+        return pokemonCategory;
     }
 
-    public void setProductCategory(ProductCategory productCategory) {
-        this.productCategory = productCategory;
-        this.productCategory.addProduct(this);
+    public void setProductCategory(PokemonCategory pokemonCategory) {
+        this.pokemonCategory = pokemonCategory;
+        this.pokemonCategory.addPokemon(this);
     }
 
-    public Supplier getSupplier() {
-        return supplier;
+    public String getSpriteImageUrl() {
+        return spriteImageUrl;
     }
 
-    public void setSupplier(Supplier supplier) {
-        this.supplier = supplier;
-        this.supplier.addProduct(this);
+    public void setSpriteImageUrl(String spirit) {
+        this.spriteImageUrl = spirit;
     }
 
     @Override
@@ -67,12 +65,12 @@ public class Product extends BaseModel {
                         "defaultPrice: %3$f, " +
                         "defaultCurrency: %4$s, " +
                         "productCategory: %5$s, " +
-                        "supplier: %6$s",
+                        "spriteImageUrl: %6$s ",
                 this.id,
                 this.name,
                 this.defaultPrice,
                 this.defaultCurrency.toString(),
-                this.productCategory.getName(),
-                this.supplier.getName());
+                this.pokemonCategory.getName(),
+                this.spriteImageUrl);
     }
 }

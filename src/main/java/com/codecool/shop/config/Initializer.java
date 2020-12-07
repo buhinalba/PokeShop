@@ -1,13 +1,13 @@
 package com.codecool.shop.config;
 
-import com.codecool.shop.dao.ProductCategoryDao;
-import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.PokemonCategoryDao;
+import com.codecool.shop.dao.PokemonDao;
 import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.dao.implementation.PokemonCategoryDaoMem;
+import com.codecool.shop.dao.implementation.PokemonDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
-import com.codecool.shop.model.Product;
-import com.codecool.shop.model.ProductCategory;
+import com.codecool.shop.model.Pokemon;
+import com.codecool.shop.model.PokemonCategory;
 import com.codecool.shop.model.Supplier;
 
 import javax.servlet.ServletContextEvent;
@@ -19,8 +19,8 @@ public class Initializer implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        PokemonDao productDataStore = PokemonDaoMem.getInstance();
+        PokemonCategoryDao productCategoryDataStore = PokemonCategoryDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
 
         //setting up a new supplier
@@ -30,12 +30,12 @@ public class Initializer implements ServletContextListener {
         supplierDataStore.add(lenovo);
 
         //setting up a new product category
-        ProductCategory tablet = new ProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
+        PokemonCategory tablet = new PokemonCategory("Tablet", "Hardware");
         productCategoryDataStore.add(tablet);
 
         //setting up products and printing it
-        productDataStore.add(new Product("Amazon Fire", 49.9f, "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon));
-        productDataStore.add(new Product("Lenovo IdeaPad Miix 700", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet, lenovo));
-        productDataStore.add(new Product("Amazon Fire HD 8", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon));
+        productDataStore.add(new Pokemon(1, "Amazon Fire", 49.9f, "USD", tablet));
+        productDataStore.add(new Pokemon(2, "Lenovo IdeaPad Miix 700", 479, "USD",  tablet));
+        productDataStore.add(new Pokemon(3, "Amazon Fire HD 8", 89, "USD",  tablet));
     }
 }

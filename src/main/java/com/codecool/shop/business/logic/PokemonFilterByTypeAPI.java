@@ -6,14 +6,13 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 import javax.servlet.ServletException;
-import javax.servlet.WriteListener;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +22,13 @@ public class PokemonFilterByTypeAPI extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // todo separate this into dao and business layer ! (no api request happening here!)
         PrintWriter out = response.getWriter();
 
         String type = request.getParameter("type");
+        int offset = Integer.parseInt(request.getParameter("offset"));
+        int limit = Integer.parseInt(request.getParameter("offset"));
+
         HttpURLConnection con = getConnection("https://pokeapi.co/api/v2/type");
         String content = getResponse(con);
         con.disconnect();
@@ -42,19 +45,25 @@ public class PokemonFilterByTypeAPI extends HttpServlet {
             }
         }
 
-//        List<ProductCategory> filteredPokemonResponse = new ArrayList<>();
-//
-//        // here a possible exception throwing -> could handle it in javascript ?
-//        if (filteredTypeResponse != null) {
-//            JSONObject TypeResponseJson = (JSONObject) JSONValue.parse(filteredTypeResponse);
-//            JSONArray pokemonsOfType = (JSONArray) TypeResponseJson.get("pokemons");
-//            // define offset and limit -> fori & get
-//
-//        }
-        // read all pokemons
+        List<ProductCategory> filteredPokemonResponse = new ArrayList<>();   // todo create Category Instance
 
-        // put them in pokemon class
-        // convert it back to json and send back
+        // here a possible exception throwing -> could handle it in javascript ?
+        if (filteredTypeResponse != null) {
+            JSONObject TypeResponseJson = (JSONObject) JSONValue.parse(filteredTypeResponse);
+            JSONArray pokemonsOfType = (JSONArray) TypeResponseJson.get("pokemons");
+            // todo define offset and limit -> fori & .get() - should there even be offset/limit?
+            for (Object pokemonJson: pokemonsOfType) {
+                JSONObject poke = (JSONObject) ((JSONObject) pokemonJson).get("pokemon");
+                String pokeUrl = poke.get("url").toString();
+                HttpURLConnection pokeURL = getConnection(pokeUrl);
+                String pokeResponse = getResponse(pokeURL);
+                // convert pokeResponse into pokemon class
+                // add pokemon to category class
+            }
+        }
+
+        // send back pokemon category in json format
+
     }
 
 

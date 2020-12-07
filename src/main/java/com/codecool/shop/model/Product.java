@@ -7,13 +7,13 @@ public class Product extends BaseModel {
     private float defaultPrice;
     private Currency defaultCurrency;
     private ProductCategory productCategory;
-    private Supplier supplier;
+    private String spiritImageUrl;
 
 
-    public Product(String name, float defaultPrice, String currencyString, String description, ProductCategory productCategory, Supplier supplier) {
+    public Product(String name, float defaultPrice, String currencyString, String description, ProductCategory productCategory, String spirit) {
         super(name, description);
         this.setPrice(defaultPrice, currencyString);
-        this.setSupplier(supplier);
+        this.setSpiritImageUrl(spirit);
         this.setProductCategory(productCategory);
     }
 
@@ -51,13 +51,12 @@ public class Product extends BaseModel {
         this.productCategory.addProduct(this);
     }
 
-    public Supplier getSupplier() {
-        return supplier;
+    public String getSpiritImageUrl() {
+        return spiritImageUrl;
     }
 
-    public void setSupplier(Supplier supplier) {
-        this.supplier = supplier;
-        this.supplier.addProduct(this);
+    public void setSpiritImageUrl(String spirit) {
+        this.spiritImageUrl = spirit;
     }
 
     @Override
@@ -67,12 +66,12 @@ public class Product extends BaseModel {
                         "defaultPrice: %3$f, " +
                         "defaultCurrency: %4$s, " +
                         "productCategory: %5$s, " +
-                        "supplier: %6$s",
+                        "spiritImageUrl: %6$s ",
                 this.id,
                 this.name,
                 this.defaultPrice,
                 this.defaultCurrency.toString(),
                 this.productCategory.getName(),
-                this.supplier.getName());
+                this.spiritImageUrl);
     }
 }

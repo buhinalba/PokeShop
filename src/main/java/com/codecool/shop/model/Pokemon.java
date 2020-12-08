@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Pokemon extends BaseModel {
-    private float defaultPrice;
+    private int defaultPrice;
     private Currency defaultCurrency;
     private List<String> pokemonCategory;
     private String spriteImageUrl;
 
 
-    public Pokemon(int id, String name, float defaultPrice, List<String> pokemonCategory, String pokemonSprite) {
+    public Pokemon(int id, String name, int defaultPrice, List<String> pokemonCategory, String pokemonSprite) {
         super(name);
         this.setId(id);
         this.setPrice(defaultPrice);
@@ -24,7 +24,7 @@ public class Pokemon extends BaseModel {
         return defaultPrice;
     }
 
-    public void setDefaultPrice(float defaultPrice) {
+    public void setDefaultPrice(int defaultPrice) {
         this.defaultPrice = defaultPrice;
     }
 
@@ -32,7 +32,7 @@ public class Pokemon extends BaseModel {
         return String.valueOf(this.defaultPrice) + " " + this.defaultCurrency.toString();
     }
 
-    public void setPrice(float price) {
+    public void setPrice(int price) {
         this.defaultPrice = price;
     }
 
@@ -56,7 +56,7 @@ public class Pokemon extends BaseModel {
     public String toString() {
         return String.format("id: %1$d, " +
                         "name: %2$s, " +
-                        "defaultPrice: %3$f, " +
+                        "defaultPrice: %3$d, " +
                         "productCategory: %4$s, " +
                         "spriteImageUrl: %5$s ",
                 this.id,

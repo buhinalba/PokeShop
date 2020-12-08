@@ -44,4 +44,10 @@ public class PokemonCategoryDaoMem implements PokemonCategoryDao {
     public List<PokemonCategory> getAll() {
         return data;
     }
+
+
+    public List<String> getAllTypeNames() {
+        // todo fetch all type names
+        return null;
+    }
 }

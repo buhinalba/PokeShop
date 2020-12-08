@@ -24,6 +24,7 @@ public class PokemonFilterDaoByTypeDao implements PokemonFilterDao {
 
 
     public List<Pokemon> getPokemons(String type, int offset) throws IOException {
+        int MAX_LIMIT = 20;
 
         String typeResponse = getTypeResponse(type);
 
@@ -35,11 +36,13 @@ public class PokemonFilterDaoByTypeDao implements PokemonFilterDao {
 
             int size = pokemonsOfTypeJSON.size();
             offset = offset < size-1 ? offset : 0;
-            int limit = offset+20 < size ? 20 : size-offset;
+            int limit = offset+ MAX_LIMIT < size ? MAX_LIMIT : size-offset;
+
+            PokemonDaoMem pokemonDaoMem = PokemonDaoMem.getInstance();
             for (int i = offset; i < offset + limit; i++) {
                 JSONObject poke = (JSONObject) ((JSONObject) pokemonsOfTypeJSON.get(i)).get("pokemon");
                 String pokeUrl = poke.get("url").toString();
-                Pokemon pokemon = getPokemonFromUrl(pokeUrl);
+                Pokemon pokemon = pokemonDaoMem.getPokemonFromUrl(pokeUrl);
                 pokemonsOfType.add(pokemon);
             }
         }
@@ -77,22 +80,5 @@ public class PokemonFilterDaoByTypeDao implements PokemonFilterDao {
         return instance;
     }
 
-    public Pokemon getPokemonFromUrl(String url) throws IOException {
-        HttpURLConnection pokeURL = UtilDao.getHttpUrlConnection(url);
-        String pokeResponse = UtilDao.getResponse(pokeURL);
-        JSONObject pokemonJsonObject = (JSONObject) JSONValue.parse(pokeResponse);
 
-        int pokemonId = Integer.parseInt(pokemonJsonObject.get("id").toString());
-        String pokemonName = pokemonJsonObject.get("name").toString();
-        float pokemonPrice = Float.parseFloat(pokemonJsonObject.get("base_experience").toString()); // shouldn't money be in int ??
-        String pokemonSprite = (String) ((JSONObject) pokemonJsonObject.get("sprites")).get("front_default");
-        List<String> pokemonCategoryNames = new ArrayList<>();
-
-        JSONArray pokemonCategories = (JSONArray) pokemonJsonObject.get("types");
-        for (Object category :pokemonCategories) {
-            String pokemonCategoryName = (String) ((JSONObject) ((JSONObject) category).get("type")).get("name");
-            pokemonCategoryNames.add(pokemonCategoryName);
-        }
-        return new Pokemon(pokemonId, pokemonName, pokemonPrice, pokemonCategoryNames, pokemonSprite);
-    }
 }

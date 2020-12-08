@@ -35,7 +35,7 @@ export let dom = {
         for (let pokemon of pokemons) {
             loadedPokemons += `
                             <div class="card">
-                                <img href="${pokemon.spriteImageUrl}" alt=""/>
+                                <img src="${pokemon.spriteImageUrl}" alt=""/>
                                 <div class="card-header">
                                     <h4 class="card-title"> ${pokemon.name}</h4>
                                 </div>

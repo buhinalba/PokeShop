@@ -13,7 +13,7 @@ export let dataHandler = {
     },
 
     getPokemons: function (callback) {
-        this._api_get('/https://localhost:8080', (response) => {
+        this._api_get('localhost:8080', (response) => {
             this._data['pokemons'] = response;
             callback(response);
         });
@@ -26,8 +26,9 @@ export let dataHandler = {
         });
     },
 
+
     getPokemonsByType: function (pokemonType, callback) {
-        this._api_get(`/https://localhost:8080/filter-by-type?type=${pokemonType}`, (pokemonType, response) => {
+        this._api_get(`http://localhost:8080/filter-by-type?type=${pokemonType}`, (pokemonType, response) => {
             console.log(response);
             this._data['pokemons'] = response;
             callback(pokemonType, response);

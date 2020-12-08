@@ -1,19 +1,23 @@
 package com.codecool.shop.model;
 
+import java.util.Arrays;
 import java.util.Currency;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Pokemon extends BaseModel {
     private float defaultPrice;
     private Currency defaultCurrency;
-    private PokemonCategory pokemonCategory;
+    private List<String> pokemonCategory;
     private String spriteImageUrl;
 
 
-    public Pokemon(int id, String name, float defaultPrice, String currencyString, PokemonCategory pokemonCategory) {
+    public Pokemon(int id, String name, float defaultPrice, List<String> pokemonCategory, String pokemonSprite) {
         super(name);
         this.setId(id);
-        this.setPrice(defaultPrice, currencyString);
-        this.setProductCategory(pokemonCategory);
+        this.setPrice(defaultPrice);
+        this.setPokemonCategories(pokemonCategory);
+        this.setSpriteImageUrl(pokemonSprite);
     }
 
     public float getDefaultPrice() {
@@ -24,30 +28,20 @@ public class Pokemon extends BaseModel {
         this.defaultPrice = defaultPrice;
     }
 
-    public Currency getDefaultCurrency() {
-        return defaultCurrency;
-    }
-
-    public void setDefaultCurrency(Currency defaultCurrency) {
-        this.defaultCurrency = defaultCurrency;
-    }
-
     public String getPrice() {
         return String.valueOf(this.defaultPrice) + " " + this.defaultCurrency.toString();
     }
 
-    public void setPrice(float price, String currency) {
+    public void setPrice(float price) {
         this.defaultPrice = price;
-        this.defaultCurrency = Currency.getInstance(currency);
     }
 
-    public PokemonCategory getProductCategory() {
+    public List<String> getProductCategory() {
         return pokemonCategory;
     }
 
-    public void setProductCategory(PokemonCategory pokemonCategory) {
+    public void setPokemonCategories(List<String> pokemonCategory) {
         this.pokemonCategory = pokemonCategory;
-        this.pokemonCategory.addPokemon(this);
     }
 
     public String getSpriteImageUrl() {
@@ -63,14 +57,12 @@ public class Pokemon extends BaseModel {
         return String.format("id: %1$d, " +
                         "name: %2$s, " +
                         "defaultPrice: %3$f, " +
-                        "defaultCurrency: %4$s, " +
                         "productCategory: %5$s, " +
                         "spriteImageUrl: %6$s ",
                 this.id,
                 this.name,
                 this.defaultPrice,
-                this.defaultCurrency.toString(),
-                this.pokemonCategory.getName(),
+                this.pokemonCategory.stream().map(Object::toString).collect(Collectors.joining(", ")),
                 this.spriteImageUrl);
     }
 }

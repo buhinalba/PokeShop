@@ -1,6 +1,6 @@
 package com.codecool.shop.business.logic;
 
-import com.codecool.shop.model.ProductCategory;
+import com.codecool.shop.model.PokemonCategory;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -45,7 +45,7 @@ public class PokemonFilterByTypeAPI extends HttpServlet {
             }
         }
 
-        List<ProductCategory> filteredPokemonResponse = new ArrayList<>();   // todo create Category Instance
+        List<PokemonCategory> filteredPokemonResponse = new ArrayList<>();   // todo create Category Instance
 
         // here a possible exception throwing -> could handle it in javascript ?
         if (filteredTypeResponse != null) {

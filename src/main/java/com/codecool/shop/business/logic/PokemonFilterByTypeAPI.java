@@ -29,7 +29,6 @@ public class PokemonFilterByTypeAPI extends HttpServlet implements UtilDao {
         // todo separate this into dao and business layer ! (no api request happening here!)
         PrintWriter out = response.getWriter();
 
-
         String type = request.getParameter("type"); // todo
         int offset = request.getParameter("offset") != null ? Integer.parseInt(request.getParameter("offset")) : 0;
 

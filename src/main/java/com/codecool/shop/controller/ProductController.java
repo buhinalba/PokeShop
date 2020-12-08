@@ -54,7 +54,7 @@ public class ProductController extends HttpServlet implements UtilDao {
             JSONObject pokemonJsonObject = (JSONObject) JSONValue.parse(pokemon);
             int pokemonId = Integer.parseInt(pokemonJsonObject.get("id").toString());
             String pokemonName = (String) pokemonJsonObject.get("name");
-            int pokemonPrice = (Integer) pokemonJsonObject.get("base_experience");
+            int pokemonPrice = Integer.parseInt(pokemonJsonObject.get("base_experience").toString());
             String pokemonSprite = (String) ((JSONObject) pokemonJsonObject.get("sprites")).get("front_default");
             JSONArray pokemonCategories = (JSONArray) pokemonJsonObject.get("types");
             List<String> pokemonCategoryNames = new ArrayList<>();

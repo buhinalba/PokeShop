@@ -4,8 +4,6 @@ import { dom } from "./dom.js";
 function init() {
     // loads pokemons to the screen
     dom.init();
-
-
 }
 
 init();

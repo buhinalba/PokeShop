@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PokemonGetAllDao implements PokemonGetAllDaoInt {
 
@@ -32,9 +31,9 @@ public class PokemonGetAllDao implements PokemonGetAllDaoInt {
 
             JSONObject pokemonJsonObject = (JSONObject) JSONValue.parse(pokemon);
 
-            Integer pokemonId = Integer.parseInt(pokemonJsonObject.get("id").toString());
+            int pokemonId = Integer.parseInt(pokemonJsonObject.get("id").toString());
             String pokemonName = (String) pokemonJsonObject.get("name");
-            Long pokemonPrice = (Long) pokemonJsonObject.get("base_experience");
+            int pokemonPrice = Integer.parseInt(pokemonJsonObject.get("base_experience").toString());
             String pokemonSprite = (String) ((JSONObject) pokemonJsonObject.get("sprites")).get("front_default");
             pokemonSprite = pokemonSprite == null ? "No image" : pokemonSprite;
             JSONArray pokemonCategories = (JSONArray) pokemonJsonObject.get("types");

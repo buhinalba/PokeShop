@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface PokemonFilterDao extends UtilDao {
     List<Pokemon> getPokemons();
+
+    List<String> getAllTypes();
 }

@@ -4,21 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PokemonCategory extends BaseModel {
-    private String category;
     private List<Pokemon> pokemons;
 
-    public PokemonCategory(String name, String category) {
+    public PokemonCategory(String name) {
         super(name);
-        this.category = category;
         this.pokemons = new ArrayList<>();
     }
 
     public String getCategory() {
-        return category;
+        return getName();
     }
 
     public void setCategory(String category) {
-        this.category = category;
+        this.name = category;
     }
 
     public void setPokemons(ArrayList<Pokemon> pokemons) {
@@ -39,6 +37,6 @@ public class PokemonCategory extends BaseModel {
                     "id: %1$d," +
                     "category: %2$s, ",
                 this.id,
-                this.category);
+                this.name);
     }
 }

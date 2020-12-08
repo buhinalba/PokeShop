@@ -10,4 +10,9 @@ public class PokemonFilterDaoByTypeDao implements PokemonFilterDao {
     public List<Pokemon> getPokemons() {
         return null;
     }
+
+    @Override
+    public List<String> getAllTypes() {
+        return null;
+    }
 }

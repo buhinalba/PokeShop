@@ -30,7 +30,7 @@ public class Initializer implements ServletContextListener {
         supplierDataStore.add(lenovo);
 
         //setting up a new product category
-        PokemonCategory tablet = new PokemonCategory("Tablet", "Hardware");
+        PokemonCategory tablet = new PokemonCategory("Tablet");
         productCategoryDataStore.add(tablet);
 
         //setting up products and printing it

@@ -1,13 +1,10 @@
 package com.codecool.shop.model;
 
-import java.util.Arrays;
-import java.util.Currency;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Pokemon extends BaseModel {
     private float defaultPrice;
-    private Currency defaultCurrency;
     private List<String> pokemonCategory;
     private String spriteImageUrl;
 
@@ -28,16 +25,16 @@ public class Pokemon extends BaseModel {
         this.defaultPrice = defaultPrice;
     }
 
-    public String getPrice() {
-        return String.valueOf(this.defaultPrice) + " " + this.defaultCurrency.toString();
-    }
-
     public void setPrice(float price) {
         this.defaultPrice = price;
     }
 
-    public List<String> getProductCategory() {
+    public List<String> getPokemonCategory() {
         return pokemonCategory;
+    }
+
+    public String getPokemonCategoryString() {
+        return String.join(", ", this.pokemonCategory);
     }
 
     public void setPokemonCategories(List<String> pokemonCategory) {

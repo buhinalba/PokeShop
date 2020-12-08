@@ -7,6 +7,11 @@ import java.util.List;
 
 public interface PokemonGetAllDaoInt extends UtilDao {
 
-    List<Pokemon> getAll() throws IOException;
+    List<Pokemon> getAll(String urlString) throws IOException;
 
+    void addAllPokemonsToPokemonDaoMem(String urlString) throws IOException;
+
+    String getPreviousPokemons() throws IOException;
+
+    String getNextPokemons() throws IOException;
 }

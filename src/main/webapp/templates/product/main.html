@@ -42,10 +42,6 @@
 </div>
 
 <div class="container">
-    <div class="card">
-        <strong th:text="${category.name}">Category Title</strong>
-    </div>
-
     <div id="pokemons-container" class="row">
         <div class="card-container" th:each="pokemon, iterStat : ${pokemons}">
             <div class="card">

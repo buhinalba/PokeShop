@@ -39,7 +39,6 @@ public class PokemonFilterByTypeAPI extends HttpServlet implements UtilDao {
         Gson gson = new Gson();
 
         String filteredPokemonsJson = gson.toJson(filteredPokemons);
-
         out.println(filteredPokemonsJson);
     }
 }

@@ -1,13 +1,12 @@
 package com.codecool.shop.controller;
 
+import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.PokemonCategoryDao;
 import com.codecool.shop.dao.PokemonDao;
 import com.codecool.shop.dao.UtilDao;
 import com.codecool.shop.dao.implementation.PokemonCategoryDaoMem;
 import com.codecool.shop.dao.implementation.PokemonDaoMem;
-import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.model.Pokemon;
-import com.codecool.shop.model.PokemonCategory;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -19,13 +18,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @WebServlet(urlPatterns = {"/"})
@@ -58,15 +53,13 @@ public class ProductController extends HttpServlet implements UtilDao {
             String pokemonSprite = (String) ((JSONObject) pokemonJsonObject.get("sprites")).get("front_default");
             JSONArray pokemonCategories = (JSONArray) pokemonJsonObject.get("types");
             List<String> pokemonCategoryNames = new ArrayList<>();
-            for (Object category :pokemonCategories) {
+            for (Object category : pokemonCategories) {
                 String pokemonCategoryName = (String) ((JSONObject) ((JSONObject) category).get("type")).get("name");
                 pokemonCategoryNames.add(pokemonCategoryName);
             }
 
             pokemonList.add(new Pokemon(pokemonId, pokemonName, pokemonPrice, pokemonCategoryNames, pokemonSprite));
         }
-
-
 
 
         WebContext context = new WebContext(req, resp, req.getServletContext());

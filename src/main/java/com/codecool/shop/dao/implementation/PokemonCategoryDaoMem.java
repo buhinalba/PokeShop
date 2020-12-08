@@ -2,8 +2,14 @@ package com.codecool.shop.dao.implementation;
 
 
 import com.codecool.shop.dao.PokemonCategoryDao;
+import com.codecool.shop.dao.UtilDao;
 import com.codecool.shop.model.PokemonCategory;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,8 +52,19 @@ public class PokemonCategoryDaoMem implements PokemonCategoryDao {
     }
 
 
-    public List<String> getAllTypeNames() {
-        // todo fetch all type names
-        return null;
+    public List<String> getAllTypeNames() throws IOException {
+        HttpURLConnection con = UtilDao.getHttpUrlConnection("https://pokeapi.co/api/v2/type");
+        String content = UtilDao.getResponse(con);
+        con.disconnect();
+        JSONObject jsonResponse = (JSONObject) JSONValue.parse(content);
+        JSONArray responseTypes = (JSONArray) jsonResponse.get("results");
+
+        List<String> names = new ArrayList<>();
+
+        for (Object pokeType: responseTypes) {
+            names.add(((JSONObject) pokeType).get("name").toString());
+
+        }
+        return names;
     }
 }

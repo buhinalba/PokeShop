@@ -58,5 +58,4 @@ public class BaseModel {
         }
         return sb.toString();
     }
-
 }

@@ -57,12 +57,12 @@ public class Pokemon extends BaseModel {
         return String.format("id: %1$d, " +
                         "name: %2$s, " +
                         "defaultPrice: %3$f, " +
-                        "productCategory: %5$s, " +
-                        "spriteImageUrl: %6$s ",
+                        "productCategory: %4$s, " +
+                        "spriteImageUrl: %5$s ",
                 this.id,
                 this.name,
                 this.defaultPrice,
-                this.pokemonCategory.stream().map(Object::toString).collect(Collectors.joining(", ")),
+                String.join(", ", this.pokemonCategory),
                 this.spriteImageUrl);
     }
 }

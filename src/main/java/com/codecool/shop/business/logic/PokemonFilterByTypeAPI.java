@@ -1,7 +1,10 @@
 package com.codecool.shop.business.logic;
 
 import com.codecool.shop.dao.UtilDao;
+import com.codecool.shop.dao.implementation.PokemonFilterDaoByTypeDao;
+import com.codecool.shop.model.Pokemon;
 import com.codecool.shop.model.PokemonCategory;
+import com.google.gson.Gson;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -24,51 +27,19 @@ public class PokemonFilterByTypeAPI extends HttpServlet implements UtilDao {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // todo separate this into dao and business layer ! (no api request happening here!)
+        response.setContentType("application/json");response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
 
-
         String type = request.getParameter("type"); // todo
-//        int offset = request.getParameter("offset") != null ? Integer.parseInt(request.getParameter("offset")) : null;
-//        int limit = request.getParameter("offset") != null ? Integer.parseInt(request.getParameter("offset")) : null;
+        int offset = request.getParameter("offset") != null ? Integer.parseInt(request.getParameter("offset")) : 0;
 
-        HttpURLConnection con = UtilDao.getHttpUrlConnection("https://pokeapi.co/api/v2/type");
-        String content = UtilDao.getResponse(con);
-        con.disconnect();
-        JSONObject jsonResponse = (JSONObject) JSONValue.parse(content);
-        JSONArray responseTypes = (JSONArray) jsonResponse.get("results");
-        String filteredTypeResponse = null;
-        for (Object pokeType: responseTypes) {
-            System.out.println(((JSONObject) pokeType).get("name"));
-            if (((JSONObject) pokeType).get("name").equals(type)) {
-                System.out.println("GOT IT");
-                HttpURLConnection conType = UtilDao.getHttpUrlConnection(((JSONObject) pokeType).get("url").toString());
-                filteredTypeResponse = UtilDao.getResponse(conType);
-                conType.disconnect();
-            }
-        }
-        out.println(filteredTypeResponse);
+        PokemonFilterDaoByTypeDao filterDao = PokemonFilterDaoByTypeDao.getInstance();
+        List<Pokemon> filteredPokemons = filterDao.getPokemons(type, offset);
 
-        List<PokemonCategory> filteredPokemonResponse = new ArrayList<>();   // todo create Category Instance
+        Gson gson = new Gson();
 
-        // here a possible exception throwing -> could handle it in javascript ?
-//        if (filteredTypeResponse != null) {
-//            JSONObject TypeResponseJson = (JSONObject) JSONValue.parse(filteredTypeResponse);
-//            JSONArray pokemonsOfType = (JSONArray) TypeResponseJson.get("pokemons");
-//            // todo define offset and limit -> fori & .get() - should there even be offset/limit?
-//            pokemonsOfType.size();
-//            for (Object pokemonJson : pokemonsOfType) {
-//                JSONObject poke = (JSONObject) ((JSONObject) pokemonJson).get("pokemon");
-//                String pokeUrl = poke.get("url").toString();
-//                HttpURLConnection pokeURL = UtilDao.getHttpUrlConnection(pokeUrl);
-//                String pokeResponse = UtilDao.getResponse(pokeURL);
-//                // convert pokeResponse into pokemon class
-//                // add pokemon to category class
-//            }
-//
-//        }
+        String filteredPokemonsJson = gson.toJson(filteredPokemons);
 
-        // send back pokemon category in json format
+        out.println(filteredPokemonsJson);
     }
-
-
 }

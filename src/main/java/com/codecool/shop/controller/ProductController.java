@@ -52,7 +52,7 @@ public class ProductController extends HttpServlet implements UtilDao {
             connectionPokemon.disconnect();
 
             JSONObject pokemonJsonObject = (JSONObject) JSONValue.parse(pokemon);
-            Integer pokemonId = (Integer) pokemonJsonObject.get("id");
+            Integer pokemonId = Integer.parseInt(pokemonJsonObject.get("id").toString());
             String pokemonName = (String) pokemonJsonObject.get("name");
             Long pokemonPrice = (Long) pokemonJsonObject.get("base_experience");
             String pokemonSprite = (String) ((JSONObject) pokemonJsonObject.get("sprites")).get("front_default");
@@ -77,7 +77,6 @@ public class ProductController extends HttpServlet implements UtilDao {
         // params.put("category", productCategoryDataStore.find(1));
         // params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
         // context.setVariables(params);
-        engine.process("product/main.html", context, resp.getWriter());
+        engine.process("product/index.html", context, resp.getWriter());
     }
-
 }

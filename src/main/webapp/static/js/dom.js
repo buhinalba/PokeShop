@@ -56,6 +56,7 @@ export let dom = {
         }
 
         pokemonsContainer.insertAdjacentHTML('beforeend', loadedPokemons);
+        this.initAddToCartButton();
     },
 
     initAddToCartButton: function () {

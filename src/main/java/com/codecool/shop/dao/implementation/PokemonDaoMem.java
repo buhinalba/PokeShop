@@ -26,6 +26,11 @@ public class PokemonDaoMem implements PokemonDao {
     private PokemonDaoMem() {
     }
 
+    public void setData(List<Pokemon> pokemons) {
+        data = pokemons;
+    }
+
+
     public static PokemonDaoMem getInstance() {
         if (instance == null) {
             instance = new PokemonDaoMem();

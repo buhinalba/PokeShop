@@ -71,6 +71,9 @@ export let dom = {
     addReviewCartListener: function () {
         let reviewCartButton = document.querySelector(".navbar #review-cart-button");
         reviewCartButton.addEventListener("click", this.initCartModal);
+
+        let closeButton = document.querySelector(".modal .close");
+        closeButton.addEventListener("click", dom.closeModal);
     },
 
     addToCart: function (event) {
@@ -91,7 +94,15 @@ export let dom = {
 
     showCartModal: function (response) {
         console.log(response);
+        let modal = document.querySelector(".modal")
+        modal.classList.remove("hidden")
         // load up modal with data
         // set modal visible (not hidden)
+    },
+
+    closeModal: function (event) {
+        let closeButton = event.target;
+        let modal = closeButton.closest(".modal");
+        modal.classList.add("hidden");
     }
 }

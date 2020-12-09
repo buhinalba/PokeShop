@@ -27,7 +27,7 @@ public class ProductController extends HttpServlet implements UtilDao {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PokemonDaoMem pokemonDaoMem = PokemonDaoMem.getInstance();
-        PokemonCategoryDao productCategoryDataStore = PokemonCategoryDaoMem.getInstance();
+        PokemonCategoryDaoMem pokemonCategoryDaoMem = PokemonCategoryDaoMem.getInstance();
 
         String currentPage = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=20";
         String previousPage = pokemonGetAllDao.getPreviousPokemons();
@@ -41,6 +41,7 @@ public class ProductController extends HttpServlet implements UtilDao {
 
         WebContext context = new WebContext(req, resp, req.getServletContext());
         context.setVariable("pokemons", pokemonDaoMem.getAll());
+        context.setVariable("types", pokemonCategoryDaoMem.getAll());
         // // Alternative setting of the template context
         // Map<String, Object> params = new HashMap<>();
         // params.put("category", productCategoryDataStore.find(1));

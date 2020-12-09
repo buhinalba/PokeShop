@@ -23,9 +23,10 @@ public class PokemonCategoryDaoMem implements PokemonCategoryDao {
     private PokemonCategoryDaoMem() {
     }
 
-    public static PokemonCategoryDaoMem getInstance() {
+    public static PokemonCategoryDaoMem getInstance() throws IOException {
         if (instance == null) {
             instance = new PokemonCategoryDaoMem();
+            instance.getAllTypeNames();
         }
         return instance;
     }
@@ -49,13 +50,7 @@ public class PokemonCategoryDaoMem implements PokemonCategoryDao {
     @Override
     public List<PokemonCategory> getAll() { return data; }
 
-    public void addAll() throws IOException{
-        for(String typeName : getAllTypeNames()){
-            add(new PokemonCategory(typeName));
-        }
-    }
-
-    public List<String> getAllTypeNames() throws IOException {
+    public void getAllTypeNames() throws IOException {
         HttpURLConnection con = UtilDao.getHttpUrlConnection("https://pokeapi.co/api/v2/type");
         String content = UtilDao.getResponse(con);
         con.disconnect();
@@ -68,6 +63,12 @@ public class PokemonCategoryDaoMem implements PokemonCategoryDao {
             names.add(((JSONObject) pokeType).get("name").toString());
 
         }
-        return names;
+        addAll(names);
+    }
+
+    public void addAll(List<String> names) {
+        for(String typeName : names){
+            add(new PokemonCategory(typeName));
+        }
     }
 }

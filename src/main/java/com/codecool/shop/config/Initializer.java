@@ -13,6 +13,7 @@ import com.codecool.shop.model.Supplier;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import java.io.IOException;
 
 @WebListener
 public class Initializer implements ServletContextListener {
@@ -20,7 +21,13 @@ public class Initializer implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         PokemonDao productDataStore = PokemonDaoMem.getInstance();
-        PokemonCategoryDao productCategoryDataStore = PokemonCategoryDaoMem.getInstance();
+        PokemonCategoryDao pokemonCategoryDaoMem = null;
+        try {
+            pokemonCategoryDaoMem = PokemonCategoryDaoMem.getInstance();
+        } catch (IOException e) {
+            System.out.println("No instance of pokemonCategoryDaoMem initialized: " + e);
+            e.printStackTrace();
+        }
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
 
         //setting up a new supplier
@@ -31,7 +38,7 @@ public class Initializer implements ServletContextListener {
 
         //setting up a new product category
         PokemonCategory tablet = new PokemonCategory("Tablet");
-        productCategoryDataStore.add(tablet);
+        pokemonCategoryDaoMem.add(tablet);
 
         //setting up products and printing it
 //        productDataStore.add(new Pokemon(1, "Amazon Fire", 49.9f, "USD", tablet));

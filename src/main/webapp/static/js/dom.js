@@ -35,7 +35,7 @@ export let dom = {
         let loadedPokemons = "";
         for (let pokemon of pokemons) {
             loadedPokemons += `
-                            <div class="card">
+                            <div class="card" data-pokemon-id="${pokemon.id}">
                                 <img src="${pokemon.spriteImageUrl}" alt=""/>
                                 <div class="card-header">
                                     <h4 class="card-title"> ${pokemon.name}</h4>
@@ -48,7 +48,7 @@ export let dom = {
                                         <p class="lead">Price: ${pokemon.defaultPrice}</p>
                                     </div>
                                     <div class="card-text">
-                                        <a class="btn btn-success" href="#">Add to cart</a>
+                                        <button class="btn btn-success">Add to cart</button>
                                     </div>
                                 </div>
                             </div>
@@ -67,10 +67,10 @@ export let dom = {
     },
 
     addToCart: function (event) {
-        let button = event.currentTarget();
+        let button = event.currentTarget;
         let card = button.closest(".card")
         let pokemonId = card.dataset.pokemonId
 
-        dataHandler.addPokemonToCart(pokemonId);
+        dataHandler.addPokemonToCart(pokemonId, (response) => console.log(response));
     }
 }

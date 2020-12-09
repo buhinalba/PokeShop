@@ -26,6 +26,7 @@ public class CartDaoMem  implements CartDao {
     @Override
     public void add(Pokemon pokemon) {
         cart.addPokemonToCart(pokemon);
+        System.out.println("pokemon added: " +pokemon.toString());
     }
 
     @Override

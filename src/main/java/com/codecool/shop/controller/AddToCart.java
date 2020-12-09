@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet(urlPatterns = {"/add-to-cart"})
 public class AddToCart extends HttpServlet {
@@ -23,6 +24,7 @@ public class AddToCart extends HttpServlet {
 
         CartDaoMem cartDaoMem = CartDaoMem.getInstance();
         cartDaoMem.add(pokemon);
-
+        PrintWriter out = response.getWriter();
+        out.println(String.format("{\"cartSize\": %d}", cartDaoMem.getAll().size()));
     }
 }

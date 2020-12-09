@@ -108,3 +108,40 @@ select {
     0 0 50px #03e9f4,
     0 0 100px #03e9f4;
 }
+
+
+.card-container {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: 22%;
+    margin: 10px;
+    padding: 10px;
+    background-color: #E1FAF9;
+    color: #591F0A;
+    border: 1px solid #2a2d27;
+    border-radius: 5px;
+}
+
+.card .card-header {
+    font-size: 20px;
+    color: #2c3e50;
+}
+
+.card .btn.btn-success {
+    text-decoration: none;
+    color: #2a2d27;
+    background-color: #cffaf8;
+    padding: 5px;
+    border-radius: 10px;
+    border: 1px solid #2a2d27
+}
+
+
+.card .btn.btn-success:hover {
+    background-color: #7ef8f1;
+}

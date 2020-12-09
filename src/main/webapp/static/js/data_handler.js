@@ -33,5 +33,21 @@ export let dataHandler = {
             this._data['pokemons'] = response;
             callback(pokemonType, response);
         });
+    },
+
+    getNextPage: function (callback) {
+        this._api_get(`http://localhost:8080/pokemons/next`, (response) => {
+            console.log(response);
+            this._data['pokemons'] = response;
+            callback(response);
+        });
+    },
+
+    getPrevPage: function (callback) {
+        this._api_get(`http://localhost:8080/pokemons/prev`, (response) => {
+            console.log(response);
+            this._data['pokemons'] = response;
+            callback(response);
+        });
     }
 }

@@ -43,20 +43,11 @@ public class PokemonGetAllDao implements PokemonGetAllDaoInt {
     }
 
     @Override
-    public String getPreviousPokemons() throws IOException {
-        HttpURLConnection connection = UtilDao.getHttpUrlConnection("https://pokeapi.co/api/v2/pokemon/");
+    public String pokemonPagination(int offset) throws IOException {
+        HttpURLConnection connection = UtilDao.getHttpUrlConnection("https://pokeapi.co/api/v2/pokemon/?offset="+offset);
         String resultString = UtilDao.getResponse(connection);
         connection.disconnect();
 
-        return (String) ((JSONObject) JSONValue.parse(resultString)).get("next");
-    }
-
-    @Override
-    public String getNextPokemons() throws IOException {
-        HttpURLConnection connection = UtilDao.getHttpUrlConnection("https://pokeapi.co/api/v2/pokemon/");
-        String resultString = UtilDao.getResponse(connection);
-        connection.disconnect();
-
-        return (String) ((JSONObject) JSONValue.parse(resultString)).get("previous");
+        return (String) ((JSONObject) JSONValue.parse(resultString)).get("results");
     }
 }

@@ -2,7 +2,9 @@ body {
     background: #3c556f;
     color: white;
 }
-
+footer{
+    width: 99%;
+}
 .page-title {
     text-align: center;
     font-size: 50px;

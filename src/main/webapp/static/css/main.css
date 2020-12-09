@@ -9,6 +9,40 @@ body {
     font-family: fantasy;
 }
 
+.navbar {
+    color: white;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    height: 60px;
+    top: 0;
+    background: #2c3e50;
+    border-radius: .25em;
+}
+
+.navbar div {
+    margin: 15px;
+    text-decoration: none;
+    color: #cecccc;
+}
+.navbar div:hover {
+    cursor: pointer;
+    color: #ffffff;
+}
+
+.navbar div.active {
+    color: white;
+    font-style: oblique;
+}
+
+.navbar .brand-name a {
+    text-decoration: none!important;
+    color: white!important;
+    font-size: 25px;
+    font-family: "Courier 10 Pitch", SansSerif, serif;
+}
+
+
 .filter {
     color: white;
     position: sticky;

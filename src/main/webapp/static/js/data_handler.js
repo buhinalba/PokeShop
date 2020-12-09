@@ -42,7 +42,7 @@ export let dataHandler = {
     },
 
     getCartContent: function (callback) {
-        this._api_get(`url for getting back data`, (response) => {
+        this._api_get(`http://localhost:8080/cart-content`, (response) => {
             callback(response);
         })
     }

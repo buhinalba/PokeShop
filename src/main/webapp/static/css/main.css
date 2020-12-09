@@ -32,7 +32,6 @@ body {
 
 .navbar div.active {
     color: white;
-    font-style: oblique;
 }
 
 .navbar .brand-name a {

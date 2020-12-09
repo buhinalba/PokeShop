@@ -9,6 +9,7 @@ export let dom = {
             dom.loadPokemonsByType(selectedType.value);
         });
         this.initAddToCartButton();
+        this.addReviewCartListener();
     },
 
     loadPokemons: function () {
@@ -67,9 +68,9 @@ export let dom = {
         }
     },
 
-    initReviewCart: function () {
-        // todo set eventListener
-        // callback: initCartModal
+    addReviewCartListener: function () {
+        let reviewCartButton = document.querySelector(".navbar #review-cart-button");
+        reviewCartButton.addEventListener("click", this.initCartModal);
     },
 
     addToCart: function (event) {
@@ -81,11 +82,15 @@ export let dom = {
     },
 
     initCartModal: function (event) {
-        // set navbar item active
-        // request cart data from datahandler
+        console.log("button pushed");
+        let cartButton = event.target;
+
+        cartButton.classList.add("active")      // todo remove when closing modal
+        dataHandler.getCartContent(dom.showCartModal);
     },
 
     showCartModal: function (response) {
+        console.log(response);
         // load up modal with data
         // set modal visible (not hidden)
     }

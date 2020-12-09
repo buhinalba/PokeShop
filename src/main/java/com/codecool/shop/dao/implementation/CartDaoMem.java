@@ -5,9 +5,10 @@ import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.Pokemon;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-public class CartDaoMem  implements CartDao {
+public class CartDaoMem implements CartDao {
 
     private Cart cart = new Cart();
     private static CartDaoMem instance = null;
@@ -23,15 +24,19 @@ public class CartDaoMem  implements CartDao {
         return instance;
     }
 
-    @Override
-    public void add(Pokemon pokemon) {
-        cart.addPokemonToCart(pokemon);
+    public void add(Pokemon pokemon, int howMany) {
+        cart.addPokemonToCart(pokemon, howMany);
         System.out.println("pokemon added: " +pokemon.toString());
     }
 
     @Override
+    public void add(Pokemon pokemon) {
+
+    }
+
+    @Override
     public Pokemon findPokemon(int id) {
-        return cart.getPokemons().stream().filter(t -> t.getId() == id).findFirst().orElse(null);
+        return null; //cart.getPokemons().stream().filter(t -> t.getId() == id).findFirst().orElse(null);
     }
 
     @Override
@@ -40,5 +45,6 @@ public class CartDaoMem  implements CartDao {
     }
 
     @Override
-    public List<Pokemon> getAll() { return cart.getPokemons(); }
+    public HashMap<Pokemon, Integer> getAll() {
+        return cart.getPokemons(); }
 }

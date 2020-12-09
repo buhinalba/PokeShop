@@ -78,13 +78,6 @@ select {
     color: #12a7ac;
 }
 
-.lorem-ipsum {
-    position: relative;
-    align-content: center;
-    width: 25%;
-}
-
-
 .filter__button button {
     padding: 5px 10px;
     text-align: center;
@@ -102,7 +95,7 @@ select {
     cursor: pointer;
     background: #03e9f4;
     color: #fff;
-    border-radius: 5px;
+    border-radius: .25em;
     box-shadow: 0 0 5px #03e9f4,
     0 0 25px #03e9f4,
     0 0 50px #03e9f4,
@@ -144,4 +137,76 @@ select {
 
 .card .btn.btn-success:hover {
     background-color: #7ef8f1;
+}
+
+
+/*checkout page*/
+.cart-total {
+    color: white;
+    position: sticky;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    top: 0;
+    background: #2c3e50;
+    border-radius: .25em;
+}
+
+.container {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin: 0 -16px;
+}
+
+.checkout {
+    align-content: center;
+    color: #591F0A;
+    width: 35%;
+}
+
+.checkout-col {
+    -ms-flex: 50%;
+    flex: 50%;
+}
+
+.checkout-form-container {
+    -ms-flex: 75%;
+    flex: 75%;
+    background-color: #f2f2f2;
+    padding: 5px 20px 15px 20px;
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+}
+
+.checkout-col, .checkout-form-container {
+    padding: 0 16px;
+}
+
+.checkout-form {
+    background-color: #f2f2f2;
+    padding: 5px 20px 15px 20px;
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+}
+
+input {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+label {
+    margin-bottom: 10px;
+    display: block;
+}
+
+.icon-container {
+    margin-bottom: 20px;
+    padding: 7px 0;
+    font-size: 24px;
 }

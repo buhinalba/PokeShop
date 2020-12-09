@@ -56,4 +56,5 @@ export let dom = {
 
         pokemonsContainer.insertAdjacentHTML('beforeend', loadedPokemons);
     }
+
 }

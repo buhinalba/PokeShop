@@ -19,11 +19,24 @@ public class PokemonGetAllDao implements PokemonGetAllDaoInt {
         HttpURLConnection connection = UtilDao.getHttpUrlConnection(urlString);
         String resultString = UtilDao.getResponse(connection);
         connection.disconnect();
-        PokemonDaoMem pokemonDaoMem = PokemonDaoMem.getInstance();
-        List<Pokemon> pokemonList = new ArrayList<>();
 
+       var jsonArray = getJSONArrayFromUrlConnectionString(resultString);
+
+        return getPokemonsFromJSON(jsonArray);
+    }
+
+    public JSONArray getJSONArrayFromUrlConnectionString(String resultString){
         JSONObject jsonResponse = (JSONObject) JSONValue.parse(resultString);
         JSONArray jsonArray = (JSONArray) jsonResponse.get("results");
+        return jsonArray;
+    }
+
+    public List<Pokemon> getPokemonsFromJSON(JSONArray jsonArray) throws IOException {
+        /**
+         * iterates trough JSONArray and add elements to PokemonDaoMem which stores them during runtime
+         */
+        PokemonDaoMem pokemonDaoMem = PokemonDaoMem.getInstance();
+        List<Pokemon> pokemonList = new ArrayList<>();
 
         for (Object poki : jsonArray) {
             var pokemonTemp = pokemonDaoMem.getPokemonFromUrl(((JSONObject) poki).get("url").toString());
@@ -48,6 +61,9 @@ public class PokemonGetAllDao implements PokemonGetAllDaoInt {
         String resultString = UtilDao.getResponse(connection);
         connection.disconnect();
 
-        return (String) ((JSONObject) JSONValue.parse(resultString)).get("results");
+        var jsonArray = getJSONArrayFromUrlConnectionString(resultString);
+        getPokemonsFromJSON(jsonArray);
+
+        return  jsonArray.toJSONString();
     }
 }

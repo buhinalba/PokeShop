@@ -29,25 +29,16 @@ export let dataHandler = {
 
     getPokemonsByType: function (pokemonType, callback) {
         this._api_get(`http://localhost:8080/filter-by-type?type=${pokemonType}`, (pokemonType, response) => {
-            console.log(response);
             this._data['pokemons'] = response;
             callback(pokemonType, response);
         });
     },
 
-    getNextPage: function (callback) {
-        this._api_get(`http://localhost:8080/pokemons/next`, (response) => {
-            console.log(response);
+    getPage: function (offset, callback) {
+        this._api_get(`http://localhost:8080/pokemons/?offset=${offset}`, (offset, response) => {
             this._data['pokemons'] = response;
-            callback(response);
+            callback(offset, response);
         });
     },
 
-    getPrevPage: function (callback) {
-        this._api_get(`http://localhost:8080/pokemons/prev`, (response) => {
-            console.log(response);
-            this._data['pokemons'] = response;
-            callback(response);
-        });
-    }
 }

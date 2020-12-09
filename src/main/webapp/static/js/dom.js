@@ -34,12 +34,12 @@ export let dom = {
     },
 
     loadPage: function (offset) {
-        let tempOffset =document.querySelector(".page-title");
+        let tempOffset = document.querySelector(".page-title");
         if(parseInt(tempOffset.dataset.offset) + offset >= 0) {
             tempOffset.dataset.offset = parseInt(tempOffset.dataset.offset) + offset;
         }
         dataHandler.getPage(tempOffset.dataset.offset, (pokemons) => {
-            console.log(pokemons.length);
+            console.log(pokemons);
             if(pokemons.length > 0) {
                 dom.showPokemons(pokemons);
             } else{

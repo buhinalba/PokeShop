@@ -4,6 +4,7 @@ import com.codecool.shop.dao.PokemonDao;
 import com.codecool.shop.dao.PokemonGetAllDaoInt;
 import com.codecool.shop.dao.UtilDao;
 import com.codecool.shop.model.Pokemon;
+import com.google.gson.Gson;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -62,8 +63,10 @@ public class PokemonGetAllDao implements PokemonGetAllDaoInt {
         connection.disconnect();
 
         var jsonArray = getJSONArrayFromUrlConnectionString(resultString);
-        getPokemonsFromJSON(jsonArray);
+        List<Pokemon> pokemons = getPokemonsFromJSON(jsonArray);
+        Gson gson = new Gson();
+        String pokemonsJson = gson.toJson(pokemons);
 
-        return  jsonArray.toJSONString();
+        return pokemonsJson;
     }
 }

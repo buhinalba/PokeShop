@@ -47,10 +47,13 @@ public class PokemonCategoryDaoMem implements PokemonCategoryDao {
     }
 
     @Override
-    public List<PokemonCategory> getAll() {
-        return data;
-    }
+    public List<PokemonCategory> getAll() { return data; }
 
+    public void addAll() throws IOException{
+        for(String typeName : getAllTypeNames()){
+            add(new PokemonCategory(typeName));
+        }
+    }
 
     public List<String> getAllTypeNames() throws IOException {
         HttpURLConnection con = UtilDao.getHttpUrlConnection("https://pokeapi.co/api/v2/type");

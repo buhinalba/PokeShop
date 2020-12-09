@@ -9,7 +9,7 @@ import java.util.List;
 
 public class CartDaoMem  implements CartDao {
 
-    private List<Cart> data = new ArrayList<>();
+    private Cart cart = new Cart();
     private static CartDaoMem instance = null;
 
     private CartDaoMem() {
@@ -24,21 +24,20 @@ public class CartDaoMem  implements CartDao {
     }
 
     @Override
-    public void add(Cart cart) {
-        cart.setId(data.size() + 1);
-        data.add(cart);
+    public void add(Pokemon pokemon) {
+        cart.addPokemonToCart(pokemon);
     }
 
     @Override
-    public Cart find(int id) {
-        return data.stream().filter(t -> t.getId() == id).findFirst().orElse(null);
+    public Pokemon findPokemon(int id) {
+        return cart.getPokemons().stream().filter(t -> t.getId() == id).findFirst().orElse(null);
     }
 
     @Override
-    public void remove(int id) {
-        data.remove(find(id));
+    public void removePokemon(int id) {
+        cart.removePokemon(id);
     }
 
     @Override
-    public List<Cart> getAll() { return data; }
+    public List<Pokemon> getAll() { return cart.getPokemons(); }
 }

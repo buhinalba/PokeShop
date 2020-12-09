@@ -1,10 +1,11 @@
 package com.codecool.shop.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Cart {
-    private List<Pokemon> pokemons;
+    private List<Pokemon> pokemons = new ArrayList<>();
     private int id;
     private String userName;
 

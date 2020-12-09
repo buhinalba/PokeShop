@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class PokemonDaoMem implements PokemonDao {
@@ -24,6 +25,11 @@ public class PokemonDaoMem implements PokemonDao {
      */
     private PokemonDaoMem() {
     }
+
+    public void setData(List<Pokemon> pokemons) {
+        data = pokemons;
+    }
+
 
     public static PokemonDaoMem getInstance() {
         if (instance == null) {
@@ -77,5 +83,15 @@ public class PokemonDaoMem implements PokemonDao {
             pokemonCategoryNames.add(pokemonCategoryName);
         }
         return new Pokemon(pokemonId, pokemonName, pokemonPrice, pokemonCategoryNames, pokemonSprite);
+    }
+
+
+    public Pokemon getPokemonById(int id) {
+        for(Pokemon pokemon: data) {
+            if (pokemon.getId() == id) {
+                return pokemon;
+            }
+        }
+        throw new NoSuchElementException("Pokemon with id " + id + " not found");
     }
 }

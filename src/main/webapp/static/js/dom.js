@@ -41,8 +41,10 @@ export let dom = {
                                 </div>
                                 <div class="card-body">
                                     <div class="card-text">
-                                        <p class="card-text">${pokemon.pokemonCategory}</p>
-                                        <p class="lead"> ${pokemon.defaultPrice}</p>
+                                        <p class="card-text">${pokemon.pokemonCategory.length > 1 ?
+                                                            "Types: " + pokemon.pokemonCategory.join(", ") :
+                                                            "Type: " + pokemon.pokemonCategory}</p>
+                                        <p class="lead">Price: ${pokemon.defaultPrice}</p>
                                     </div>
                                     <div class="card-text">
                                         <a class="btn btn-success" href="#">Add to cart</a>

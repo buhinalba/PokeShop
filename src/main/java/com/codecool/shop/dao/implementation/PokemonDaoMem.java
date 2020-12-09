@@ -32,12 +32,6 @@ public class PokemonDaoMem implements PokemonDao {
         return instance;
     }
 
-    public void addAll(List<Pokemon> pokemonList) {
-        for (Pokemon pokemon : pokemonList) {
-            add(pokemon);
-        }
-    }
-
     @Override
     public void add(Pokemon pokemon) {
         pokemon.setId(data.size() + 1);
@@ -61,7 +55,7 @@ public class PokemonDaoMem implements PokemonDao {
 
     @Override
     public List<Pokemon> getBy(PokemonCategory pokemonCategory) {
-        return data.stream().filter(t -> t.getProductCategory().equals(pokemonCategory)).collect(Collectors.toList());
+        return data.stream().filter(t -> t.getPokemonCategory().equals(pokemonCategory)).collect(Collectors.toList());
     }
 
     public Pokemon getPokemonFromUrl(String url) throws IOException {

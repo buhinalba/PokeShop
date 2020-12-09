@@ -5,6 +5,7 @@ import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.Pokemon;
 import com.codecool.shop.model.PokemonCategory;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface CartDao {
@@ -14,5 +15,5 @@ public interface CartDao {
 
     void removePokemon(int id);
 
-    List<Pokemon> getAll();
+    HashMap<Pokemon, Integer> getAll();
 }

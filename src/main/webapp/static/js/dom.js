@@ -94,8 +94,16 @@ export let dom = {
 
     showCartModal: function (response) {
         console.log(response);
-        let modal = document.querySelector(".modal")
-        modal.classList.remove("hidden")
+        let modal = document.querySelector(".modal");
+        modal.classList.remove("hidden");
+        let modalBody = modal.querySelector(".modal-body");
+
+        let cartList = "";
+        let totalPrice = response.totalPrice;
+        let cartContent = response.cartContent;
+
+        console.log(totalPrice)
+
         // load up modal with data
         // set modal visible (not hidden)
     },

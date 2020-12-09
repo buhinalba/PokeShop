@@ -1,6 +1,7 @@
 package com.codecool.shop.controller;
 
 
+import com.codecool.shop.dao.implementation.CartDaoMem;
 import com.codecool.shop.dao.implementation.PokemonDaoMem;
 import com.codecool.shop.model.Pokemon;
 
@@ -20,7 +21,8 @@ public class AddToCart extends HttpServlet {
 
         Pokemon pokemon = pokemonDaoMem.getPokemonById(pokemonId);
 
-
+        CartDaoMem cartDaoMem = CartDaoMem.getInstance();
+        cartDaoMem.add(pokemon);
 
     }
 }

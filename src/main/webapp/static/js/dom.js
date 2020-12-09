@@ -66,8 +66,11 @@ export let dom = {
         }
     },
 
-    addToCart: function () {
-        // get id
-        // send post request to backend
+    addToCart: function (event) {
+        let button = event.currentTarget();
+        let card = button.closest(".card")
+        let pokemonId = card.dataset.pokemonId
+
+        dataHandler.addPokemonToCart(pokemonId);
     }
 }

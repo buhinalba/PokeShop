@@ -39,8 +39,12 @@ export let dom = {
             tempOffset.dataset.offset = parseInt(tempOffset.dataset.offset) + offset;
         }
         dataHandler.getPage(tempOffset.dataset.offset, (pokemons) => {
-            console.log(pokemons);
-            dom.showPokemons(pokemons);
+            console.log(pokemons.length);
+            if(pokemons.length > 0) {
+                dom.showPokemons(pokemons);
+            } else{
+                tempOffset.dataset.offset = parseInt(tempOffset.dataset.offset) - offset;
+            }
         });
     },
 

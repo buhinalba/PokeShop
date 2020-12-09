@@ -13,6 +13,12 @@
 
 <body>
 
+<div class="navbar">
+    <div class="brand-name"><a href="/">Pokemon Shop</a></div>
+    <div id="review-cart-button">Cart</div>
+</div>
+
+
 <div class="page-title">
     <h1>Pokemon Shop</h1>
 </div>
@@ -61,6 +67,15 @@
 </div>
 
 <div th:replace="footer.html :: copy"></div>
+
+<div id="myModal" class="modal hidden">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="modal-body"><p>This has to be changed to the cart content</p></div>
+    </div>
+
+</div>
 
 </body>
 </html>

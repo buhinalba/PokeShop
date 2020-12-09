@@ -9,6 +9,39 @@ body {
     font-family: fantasy;
 }
 
+.navbar {
+    color: white;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    height: 60px;
+    top: 0;
+    background: #2c3e50;
+    border-radius: .25em;
+}
+
+.navbar div {
+    margin: 15px;
+    text-decoration: none;
+    color: #cecccc;
+}
+.navbar div:hover {
+    cursor: pointer;
+    color: #ffffff;
+}
+
+.navbar div.active {
+    color: white;
+}
+
+.navbar .brand-name a {
+    text-decoration: none!important;
+    color: white!important;
+    font-size: 25px;
+    font-family: "Courier 10 Pitch", SansSerif, serif;
+}
+
+
 .filter {
     color: white;
     position: sticky;
@@ -95,7 +128,7 @@ select {
     cursor: pointer;
     background: #03e9f4;
     color: #fff;
-    border-radius: .25em;
+    border-radius: 5px;
     box-shadow: 0 0 5px #03e9f4,
     0 0 25px #03e9f4,
     0 0 50px #03e9f4,
@@ -137,6 +170,46 @@ select {
 
 .card .btn.btn-success:hover {
     background-color: #7ef8f1;
+}
+
+.modal {
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+}
+
+.hidden {
+    display: none; /* Hidden by default */
+}
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    color: black;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 

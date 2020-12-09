@@ -24,6 +24,7 @@ public class AddToCart extends HttpServlet {
 
         CartDaoMem cartDaoMem = CartDaoMem.getInstance();
         cartDaoMem.add(pokemon);
+
         PrintWriter out = response.getWriter();
         out.println(String.format("{\"cartSize\": %d}", cartDaoMem.getAll().size()));
     }

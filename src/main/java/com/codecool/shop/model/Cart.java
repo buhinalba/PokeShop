@@ -34,7 +34,7 @@ public class Cart {
         this.pokemons = pokemons;
     }
 
-    public void addPokemonToCart(Pokemon pokemon, int howMany) {
+    public void addPokemonToCart(Pokemon pokemon) {
         Iterator<Map.Entry<Pokemon, Integer>> mapIterator = pokemons.entrySet().iterator();
         while (mapIterator.hasNext()) {
             Map.Entry<Pokemon, Integer> entry = mapIterator.next();

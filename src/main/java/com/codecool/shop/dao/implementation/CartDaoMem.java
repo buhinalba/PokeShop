@@ -14,7 +14,6 @@ public class CartDaoMem implements CartDao {
     private static CartDaoMem instance = null;
 
     private CartDaoMem() {
-
     }
 
     public static CartDaoMem getInstance() {
@@ -24,14 +23,10 @@ public class CartDaoMem implements CartDao {
         return instance;
     }
 
-    public void add(Pokemon pokemon, int howMany) {
-        cart.addPokemonToCart(pokemon, howMany);
-        System.out.println("pokemon added: " +pokemon.toString());
-    }
-
     @Override
     public void add(Pokemon pokemon) {
-
+        cart.addPokemonToCart(pokemon);
+        System.out.println("pokemon added: " +pokemon.toString());
     }
 
     @Override
@@ -47,4 +42,5 @@ public class CartDaoMem implements CartDao {
     @Override
     public HashMap<Pokemon, Integer> getAll() {
         return cart.getPokemons(); }
+
 }

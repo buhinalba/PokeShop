@@ -27,7 +27,6 @@ public class PokemonFilterByTypeAPI extends HttpServlet implements UtilDao {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // todo separate this into dao and business layer ! (no api request happening here!)
         response.setContentType("application/json");response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
 

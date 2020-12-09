@@ -7,7 +7,8 @@ export let dom = {
         let selectedType = document.querySelector("#select-type");
         selectorButton.addEventListener('click', () => {
             dom.loadPokemonsByType(selectedType.value);
-        })
+        });
+        this.initAddToCartButton();
     },
 
     loadPokemons: function () {
@@ -53,5 +54,18 @@ export let dom = {
         }
 
         pokemonsContainer.insertAdjacentHTML('beforeend', loadedPokemons);
+    },
+
+    initAddToCartButton: function () {
+        let addToCartButtons = document.querySelectorAll(".card-text .btn-success");
+
+        for (let button of addToCartButtons) {
+            button.addEventListener('click', this.addToCart)
+        }
+    },
+
+    addToCart: function () {
+        // get id
+        // send post request to backend
     }
 }

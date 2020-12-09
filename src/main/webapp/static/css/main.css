@@ -27,7 +27,6 @@ body {
 }
 
 
-
 select::-ms-expand {
     display: none;
 }

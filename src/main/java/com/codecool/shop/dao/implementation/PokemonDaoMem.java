@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class PokemonDaoMem implements PokemonDao {
@@ -25,17 +26,16 @@ public class PokemonDaoMem implements PokemonDao {
     private PokemonDaoMem() {
     }
 
+    public void setData(List<Pokemon> pokemons) {
+        data = pokemons;
+    }
+
+
     public static PokemonDaoMem getInstance() {
         if (instance == null) {
             instance = new PokemonDaoMem();
         }
         return instance;
-    }
-
-    public void addAll(List<Pokemon> pokemonList) {
-        for (Pokemon pokemon : pokemonList) {
-            add(pokemon);
-        }
     }
 
     @Override
@@ -61,7 +61,7 @@ public class PokemonDaoMem implements PokemonDao {
 
     @Override
     public List<Pokemon> getBy(PokemonCategory pokemonCategory) {
-        return data.stream().filter(t -> t.getProductCategory().equals(pokemonCategory)).collect(Collectors.toList());
+        return data.stream().filter(t -> t.getPokemonCategory().equals(pokemonCategory)).collect(Collectors.toList());
     }
 
     public Pokemon getPokemonFromUrl(String url) throws IOException {
@@ -83,5 +83,15 @@ public class PokemonDaoMem implements PokemonDao {
             pokemonCategoryNames.add(pokemonCategoryName);
         }
         return new Pokemon(pokemonId, pokemonName, pokemonPrice, pokemonCategoryNames, pokemonSprite);
+    }
+
+
+    public Pokemon getPokemonById(int id) {
+        for(Pokemon pokemon: data) {
+            if (pokemon.getId() == id) {
+                return pokemon;
+            }
+        }
+        throw new NoSuchElementException("Pokemon with id " + id + " not found");
     }
 }

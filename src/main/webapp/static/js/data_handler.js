@@ -39,5 +39,11 @@ export let dataHandler = {
         this._api_get(`http://localhost:8080/add-to-cart?pokemon-id=${pokemonID}`, (response) => {
             callback(response);
         })
+    },
+
+    getCartContent: function (callback) {
+        this._api_get(`url for getting back data`, (response) => {
+            callback(response);
+        })
     }
 }

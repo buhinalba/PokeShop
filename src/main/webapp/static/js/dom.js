@@ -67,11 +67,26 @@ export let dom = {
         }
     },
 
+    initReviewCart: function () {
+        // todo set eventListener
+        // callback: initCartModal
+    },
+
     addToCart: function (event) {
         let button = event.currentTarget;
         let card = button.closest(".card")
         let pokemonId = card.dataset.pokemonId
 
         dataHandler.addPokemonToCart(pokemonId, (response) => console.log(response));
+    },
+
+    initCartModal: function (event) {
+        // set navbar item active
+        // request cart data from datahandler
+    },
+
+    showCartModal: function (response) {
+        // load up modal with data
+        // set modal visible (not hidden)
     }
 }

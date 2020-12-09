@@ -93,7 +93,6 @@ export let dom = {
     },
 
     showCartModal: function (response) {
-        console.log(response);
         let modal = document.querySelector(".modal");
         modal.classList.remove("hidden");
         let modalBody = modal.querySelector(".modal-body");
@@ -101,11 +100,23 @@ export let dom = {
         let cartList = "";
         let totalPrice = response.totalPrice;
         let cartContent = response.cartContent;
-
-        console.log(totalPrice)
-
-        // load up modal with data
-        // set modal visible (not hidden)
+        for (let element of cartContent) {
+            let pokemon = element.pokemon;
+            cartList += `
+                <div class="list-element" data-pokemon-id="${pokemon.id}">
+                    <p class="name">Name: ${pokemon.name}</p>
+                    <p class="categories">Types: ${pokemon.pokemonCategory.join(", ")}</p>
+                    <p class="price">Single price: ${pokemon.defaultPrice}</p>
+                    <img src="${pokemon.spriteImageUrl}"/>
+                    <div class="counter">
+                        <button class="increase-count" type="button">&#43;</button>
+                        <p class="count">${element.count}</p>
+                        <button class="decrease-count" type="button">&#45;</button>
+                    </div>
+                </div>`;
+        }
+        cartList += `<div class="total-price"><p>Total Price: ${totalPrice}</p></div>`;
+        modalBody.innerHTML = cartList;
     },
 
     closeModal: function (event) {

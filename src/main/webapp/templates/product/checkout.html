@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="author" content="Codecool"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <title>Pokemon Shop - Checkout</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css"/>
+<!--    <script type="module" src="/static/js/main.js" defer></script>-->
+</head>
+
+<body>
+
+<div class="page-title">
+    <h1>Pokemon Shop - Checkout</h1>
+</div>
+
+<div class="cart-total">
+    <div class="container">
+        <i class="fa fa-shopping-cart"></i>
+        <p>Total items : 42 - Total price : 3230$</p>
+    </div>
+</div>
+
+<div class="container">
+    <div id="pokemons-container" class="checkout-row">
+        <div class="card-container">
+            <div class="card" th:attr="data-pokemon-id=${pokemon.getId()}" th:each="pokemon, iterStat : ${pokemons}">
+                <img src="https://css.gg/pokemon.css" th:attr="src=${pokemon.getSpriteImageUrl()}" alt=""/>
+                <div class="card-header">
+                    <h4 class="card-title" th:text="${pokemon.getName()}">Pokemon name</h4>
+                </div>
+                <div class="card-body">
+                    <div class="card-text">
+                        <p class="card-text" th:text="${pokemon.getPokemonCategoryString()}">Pokemon type</p>
+                        <p class="card-text" th:text="${pokemon.getPokemonCategoryString()}">Pokemon count</p>
+                        <p class="lead" th:text="${pokemon.getDefaultPrice()}">Price</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="checkout">
+    <div class="checkout-form-container">
+        <div class="checkout-form">
+            <div class="checkout-row">
+                <div class="checkout-col">
+                    <h3>Billing Address</h3>
+                    <label for="fname"><i class="fa fa-user"></i> Full Name</label>
+                    <input type="text" required id="fname" name="firstname" placeholder="John M. Doe">
+                    <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                    <input type="text" required id="email" name="email" placeholder="john@example.com">
+                    <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
+                    <input type="text" required id="adr" name="address" placeholder="542 W. 15th Street">
+                    <label for="city"><i class="fa fa-institution"></i> City</label>
+                    <input type="text" required id="city" name="city" placeholder="New York">
+
+                    <div class="checkout-row">
+                        <div class="checkout-col">
+                            <label for="state">State</label>
+                            <input type="text" id="state" name="state" placeholder="NY">
+                        </div>
+                        <div class="checkout-col">
+                            <label for="zip">Zip</label>
+                            <input type="text" id="zip" name="zip" placeholder="10001">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="checkout-col">
+                    <h3>Payment</h3>
+                    <label for="fname">Accepted Cards</label>
+                    <div class="icon-container">
+                        <i class="fa fa-cc-visa" style="color:navy;"></i>
+                        <i class="fa fa-cc-amex" style="color:blue;"></i>
+                        <i class="fa fa-cc-mastercard" style="color:red;"></i>
+                        <i class="fa fa-cc-discover" style="color:orange;"></i>
+                    </div>
+                    <input type="text" required id="ccname" name="cardname" placeholder="Name on Card">
+                    <input type="number" minlength="16" maxlength="16" required id="ccnum" name="cardnumber" placeholder="Credit card number">
+
+                    <div class="checkout-row">
+                        <div class="checkout-col">
+                            <input type="month" required id="expdate" name="expdate" placeholder="Expiration Date">
+                        </div>
+                        <div class="checkout-col">
+                            <input type="number" maxlength="3" required id="cvv" name="cvv" placeholder="CVV">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="filter__button">
+                <button type="submit" id="checkout-button">Checkout</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="footer.html :: copy"></div>
+
+</body>
+</html>

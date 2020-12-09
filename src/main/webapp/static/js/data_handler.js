@@ -35,9 +35,10 @@ export let dataHandler = {
     },
 
     getPage: function (offset, callback) {
-        this._api_get(`http://localhost:8080/pokemons/?offset=${offset}`, (offset, response) => {
+        this._api_get(`http://localhost:8080/pokemons/?offset=${offset}`, (response) => {
+            console.log("getPage offset: " + offset);
             this._data['pokemons'] = response;
-            callback(offset, response);
+            callback(response);
         });
     },
 

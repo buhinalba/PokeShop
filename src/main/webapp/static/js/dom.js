@@ -1,13 +1,47 @@
 import {dataHandler} from "./data_handler.js";
 
 export let dom = {
+
     init: function () {
-       // need to initialize event listeners for type selection
+        // need to initialize event listeners for type selection
+        dom.loadButtonFunctions();
+    },
+
+    loadButtonFunctions: function () {
+        dom.loadSelectorButton();
+        dom.loadPaginationButtons();
+    },
+
+    loadSelectorButton: function () {
         let selectorButton = document.querySelector("#submit-search");
         let selectedType = document.querySelector("#select-type");
         selectorButton.addEventListener('click', () => {
             dom.loadPokemonsByType(selectedType.value);
         })
+    },
+
+
+    loadPaginationButtons: function () {
+        let offset = document.querySelector(".page-title").dataset.offset;
+        let prevButton = document.querySelector("#prev-page");
+        let nextButton = document.querySelector("#next-page");
+        prevButton.addEventListener('click', () => {
+            dom.loadPage(-20);
+        });
+        nextButton.addEventListener('click', () => {
+            dom.loadPage(20);
+        })
+    },
+
+    loadPage: function (offset) {
+        let tempOffset =document.querySelector(".page-title");
+        if(parseInt(tempOffset.dataset.offset) + offset >= 0) {
+            tempOffset.dataset.offset = parseInt(tempOffset.dataset.offset) + offset;
+        }
+        dataHandler.getPage(tempOffset.dataset.offset, (pokemons) => {
+            console.log(pokemons);
+            dom.showPokemons(pokemons);
+        });
     },
 
     loadPokemons: function () {
@@ -28,7 +62,7 @@ export let dom = {
         });
     },
 
-    showPokemons: function (pokemons){
+    showPokemons: function (pokemons) {
         let pokemonsContainer = document.querySelector(".card-container");
         pokemonsContainer.innerHTML = "";
         let loadedPokemons = "";
@@ -42,8 +76,8 @@ export let dom = {
                                 <div class="card-body">
                                     <div class="card-text">
                                         <p class="card-text">${pokemon.pokemonCategory.length > 1 ?
-                                                            "Types: " + pokemon.pokemonCategory.join(", ") :
-                                                            "Type: " + pokemon.pokemonCategory}</p>
+                "Types: " + pokemon.pokemonCategory.join(", ") :
+                "Type: " + pokemon.pokemonCategory}</p>
                                         <p class="lead">Price: ${pokemon.defaultPrice}</p>
                                     </div>
                                     <div class="card-text">

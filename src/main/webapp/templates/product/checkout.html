@@ -20,23 +20,23 @@
 <div class="cart-total">
     <div class="container">
         <i class="fa fa-shopping-cart"></i>
-        <p>Total items : 42 - Total price : 3230$</p>
+        <p th:text="${'Total amount : ' + totalAmount + ' - Total price : ' + totalPrice}">Total items : 42 - Total price : 3230$</p>
     </div>
 </div>
 
 <div class="container">
     <div id="pokemons-container" class="checkout-row">
         <div class="card-container">
-            <div class="card" th:attr="data-pokemon-id=${pokemon.getId()}" th:each="pokemon, iterStat : ${pokemons}">
-                <img src="https://css.gg/pokemon.css" th:attr="src=${pokemon.getSpriteImageUrl()}" alt=""/>
+            <div class="card" th:each="entry : ${pokemonMap}">
+                <img src="https://css.gg/pokemon.css" th:attr="src=${entry.key.getSpriteImageUrl()}" alt=""/>
                 <div class="card-header">
-                    <h4 class="card-title" th:text="${pokemon.getName()}">Pokemon name</h4>
+                    <h4 class="card-title"  th:text="${'Name: ' + entry.key.getName()}">Pokemon name</h4>
                 </div>
                 <div class="card-body">
                     <div class="card-text">
-                        <p class="card-text" th:text="${pokemon.getPokemonCategoryString()}">Pokemon type</p>
-                        <p class="card-text" th:text="${pokemon.getPokemonCategoryString()}">Pokemon count</p>
-                        <p class="lead" th:text="${pokemon.getDefaultPrice()}">Price</p>
+                        <p class="card-text" th:text="${'Type(s): ' + entry.key.getPokemonCategoryString()}">Pokemon type</p>
+                        <p class="card-text" th:text="${'Count: ' + entry.value}">Pokemon count</p>
+                        <p class="lead" th:with="result=${entry.key.getDefaultPrice() * entry.value}" th:text="${'Price: ' + result}">Price</p>
                     </div>
                 </div>
             </div>

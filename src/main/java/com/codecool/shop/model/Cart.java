@@ -3,7 +3,7 @@ package com.codecool.shop.model;
 import java.util.*;
 
 public class Cart {
-    private HashMap<Pokemon, Integer> pokemons = new HashMap<Pokemon, Integer>();
+    private HashMap<Pokemon, Integer> pokemons = new HashMap<>();
     private int id;
     private String userName;
 

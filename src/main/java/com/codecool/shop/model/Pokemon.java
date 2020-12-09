@@ -21,10 +21,6 @@ public class Pokemon extends BaseModel {
         return defaultPrice;
     }
 
-    public void setDefaultPrice(int defaultPrice) {
-        this.defaultPrice = defaultPrice;
-    }
-
     public String getPrice() {
         return String.valueOf(this.defaultPrice) + " $";
     }

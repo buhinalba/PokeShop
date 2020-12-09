@@ -116,6 +116,7 @@ export let dom = {
                 </div>`;
         }
         cartList += `<div class="total-price"><p>Total Price: ${totalPrice}</p></div>`;
+        cartList += `<div id="checkout-cart-button"><a href="/checkout">Checkout</a></div>`
         modalBody.innerHTML = cartList;
     },
 

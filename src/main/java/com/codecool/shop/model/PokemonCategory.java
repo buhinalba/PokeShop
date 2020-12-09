@@ -15,11 +15,7 @@ public class PokemonCategory extends BaseModel {
         return getName();
     }
 
-    public void setCategory(String category) {
-        this.name = category;
-    }
-
-    public void setPokemons(ArrayList<Pokemon> pokemons) {
+    public void setPokemons(List<Pokemon> pokemons) {
         this.pokemons = pokemons;
     }
 

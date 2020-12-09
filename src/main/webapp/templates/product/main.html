@@ -25,9 +25,8 @@
     <div class="filter__select">
         <select name="select-type" id="select-type">
             <option selected disabled>Search by type</option>
-            <option value="normal">normal</option>
-            <option value="poison">poison</option>
-            <option value="flying">flying</option>
+            <option th:attr="value=${type.getCategory()}" th:each="type, iterStat : ${types}" th:text="${type.getCategory()}">
+            </option>
         </select>
     </div>
 
@@ -37,6 +36,7 @@
     </div>
 
 </div>
+
 
 <div class="container">
     <div id="pokemons-container" class="row">

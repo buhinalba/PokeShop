@@ -1,3 +1,5 @@
+import {dataHandler} from "./data_handler.js";
+
 const RE = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 const LETTERS = /^[a-zA-Z]+$/;
 const DIGITS = /\d/;
@@ -11,7 +13,9 @@ const CARD_NUM_LENGTH = 16;
 
 function initCheckout() {
     let checkOutButton = document.querySelector("#checkout-button");
-    checkOutButton.addEventListener("click", checkoutValidation)
+    let closeCheckoutButton = document.querySelector("#close-checkout-button");
+    checkOutButton.addEventListener("click", checkoutValidation);
+    closeCheckoutButton.addEventListener("click", closeSuccessfulCheckoutModal)
 }
 
 function checkoutValidation() {
@@ -21,7 +25,8 @@ function checkoutValidation() {
         window.alert("Invalid Payment Information!")
     } else {
         let jsonObject = JSON.stringify(objectFromInput());
-        console.log(jsonObject);
+        successfulCheckoutModal();
+        dataHandler.postCheckoutInformation(jsonObject, console.log(jsonObject))
     }
 }
 
@@ -151,6 +156,17 @@ function validCvv() {
         return false;
     }
     return true;
+}
+
+function successfulCheckoutModal() {
+    let checkoutModal = document.querySelector(".modal")
+    checkoutModal.classList.remove("hidden");
+}
+
+function closeSuccessfulCheckoutModal(event) {
+    let closeButton = event.target;
+    let modal = closeButton.closest("hidden");
+    modal.classList.add("hidden")
 }
 
 initCheckout();

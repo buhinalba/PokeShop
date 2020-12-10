@@ -151,7 +151,8 @@ export let dom = {
         }
         cartList += `<div class="total-price"><p>Total Price: ${totalPrice}</p></div>`;
 
-        if (cartContent.size === 0) {cartList += `<div id="checkout-cart-button"><a href="/checkout">Checkout</a></div>`}
+        // if (cartContent.size === 0) {cartList += `<div id="checkout-cart-button"><a href="/checkout">Checkout</a></div>`}
+        cartList += `<div id="checkout-cart-button"><a href="/checkout">Checkout</a></div>`
 
         modalBody.innerHTML = cartList;
 

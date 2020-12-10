@@ -107,7 +107,7 @@ export let dom = {
                     <table>
                         <tr>
                             <th>
-                                <button class="delete-button" type="button">❌</button>
+                                <button class="delete-button" type="button">&#x1F5D1;</button>
                             </th>                        
                             <th>
                                 <p class="name">Name: ${pokemon.name}</p>

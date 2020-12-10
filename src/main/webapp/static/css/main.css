@@ -209,7 +209,11 @@ select {
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 70%; /* Could be more or less, depending on screen size */
+    width: 50%; /* Could be more or less, depending on screen size */
+}
+
+tbody {
+    width: max-content;
 }
 
 table {
@@ -222,20 +226,18 @@ tr:hover {
 }
 
 tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #2c3e50;
 }
 
-table tr {
+tr {
     border-top: 1px solid #2c3e50;
     border-bottom: 1px solid #2c3e50;
     width: max-content;
 }
 
-.delete-button {
+.delete-button, .increase-count, .decrease-count {
     display: inline-block;
     Cursor: pointer;
-    width: 18px;
-    height: 17px;
 }
 
 /* The Close Button */

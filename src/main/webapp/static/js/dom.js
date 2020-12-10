@@ -17,7 +17,7 @@ export let dom = {
         let selectedType = document.querySelector("#select-type");
         selectorButton.addEventListener('click', () => {
             document.querySelector(".page-title").dataset.offset = "0";
-            dom.loadPokemonsByType(selectedType.value, 0);
+            dom.loadPokemonsByType(selectedType.value, document.querySelector(".page-title").dataset.offset);
         })
     },
 

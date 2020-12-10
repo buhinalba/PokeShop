@@ -37,6 +37,7 @@ public class PokemonGetAllDao implements PokemonGetAllDaoInt {
          * iterates trough JSONArray and add elements to PokemonDaoMem which stores them during runtime
          */
         PokemonDaoMem pokemonDaoMem = PokemonDaoMem.getInstance();
+        pokemonDaoMem.clearMem();
         List<Pokemon> pokemonList = new ArrayList<>();
 
         for (Object poki : jsonArray) {

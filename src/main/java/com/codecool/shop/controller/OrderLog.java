@@ -16,7 +16,6 @@ public class OrderLog {
 
     public OrderLog(Integer orderId) {
         this.orderId = orderId;
-        // orderLog.put(String.valueOf(LocalDateTime.now()), log);
     }
 
     public HashMap<String, String> getOrderLog() {

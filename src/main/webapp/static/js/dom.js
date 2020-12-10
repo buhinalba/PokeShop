@@ -15,26 +15,25 @@ export let dom = {
     loadSelectorButton: function () {
         let selectorButton = document.querySelector("#submit-search");
         let selectedType = document.querySelector("#select-type");
-        let offset = document.querySelector(".page-title").dataset.offset
         selectorButton.addEventListener('click', () => {
-            dom.loadPokemonsByType(selectedType.value, offset);
+            document.querySelector(".page-title").dataset.offset = "0";
+            dom.loadPokemonsByType(selectedType.value, 0);
         })
     },
 
 
     loadPaginationButtons: function () {
-        let search = document.querySelector(".page-title").dataset.search;
         let prevButton = document.querySelector("#prev-page");
         let nextButton = document.querySelector("#next-page");
         prevButton.addEventListener('click', () => {
-            if(search.length === 0) {
+            if(document.querySelector(".page-title").dataset.search.length === 0) {
                 dom.loadPage(-20);
             } else {
                 dom.loadPageByType(-20);
             }
         });
         nextButton.addEventListener('click', () => {
-            if(search.length === 0) {
+            if(document.querySelector(".page-title").dataset.search.length === 0) {
                 dom.loadPage(20);
             } else {
                 dom.loadPageByType(20);
@@ -56,23 +55,12 @@ export let dom = {
         });
     },
 
-    loadPokemons: function () {
-        dataHandler.getPokemons(function (pokemons) {
-            dom.showPokemons(pokemons);
-        });
-    },
-
-    loadPokemonById: function (pokemonId) {
-        dataHandler.getPokemonById(pokemonId, function (pokemons) {
-            dom.showPokemons(pokemons);
-        });
-    },
 
     loadPokemonsByType: function (type, offset) {
         let dataSearch = document.querySelector(".page-title");
-        dataSearch.dataset.search = "type";
+        let selectedType = document.querySelector("#select-type");
+        dataSearch.dataset.search = selectedType.value;
         dataHandler.getPokemonsByType(type, offset,function (pokemons) {
-            console.log(pokemons)
             dom.showPokemons(pokemons);
         });
     },
@@ -108,10 +96,12 @@ export let dom = {
 
     loadPageByType: function(offset){
         let tempOffset = document.querySelector(".page-title");
+        let selectedType = document.querySelector("#select-type");
+        let type = selectedType.value;
         if(parseInt(tempOffset.dataset.offset) + offset >= 0) {
             tempOffset.dataset.offset = parseInt(tempOffset.dataset.offset) + offset;
         }
-        dataHandler.getPokemonsByType(tempOffset.dataset.offset, (pokemons) => {
+        dataHandler.getPokemonsByType(type, tempOffset.dataset.offset, (pokemons) => {
             if(pokemons.length > 0) {
                 dom.showPokemons(pokemons);
             } else{

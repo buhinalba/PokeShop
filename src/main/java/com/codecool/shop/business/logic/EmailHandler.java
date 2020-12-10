@@ -11,6 +11,7 @@ import java.util.Properties;
 
 public class EmailHandler {
     private static final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+    private static final int TIME_OF_DELIVERY = 5;
 
     public EmailHandler(){
 
@@ -74,7 +75,7 @@ public class EmailHandler {
             Calendar c = Calendar.getInstance();
             c.setTime(currentDate);
             // manipulate date
-            c.add(Calendar.DATE, 5);
+            c.add(Calendar.DATE, TIME_OF_DELIVERY);
             // convert calendar to date
             Date estimatedDelivery = c.getTime();
             return dateFormat.format(estimatedDelivery);

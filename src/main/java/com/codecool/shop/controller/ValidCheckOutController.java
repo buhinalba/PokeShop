@@ -23,7 +23,8 @@ public class ValidCheckOutController extends HttpServlet implements UtilDao {
         CartDaoMem cartDaoMem = CartDaoMem.getInstance();
         StringBuilder sb = new StringBuilder();
 
-        sb.append("<p>Here you can see your order details: </p><br><br>" +
+        sb.append("Dear adventurer, <br>"+
+                "<p>Here you can see your order details: </p><br><br>" +
                 "<table>" +
                     "<th>Name</th>" +
                     "<th>Categories</th>" +

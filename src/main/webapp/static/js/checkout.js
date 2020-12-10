@@ -2,13 +2,16 @@ const RE = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^
 const LETTERS = /^[a-zA-Z]+$/;
 const DIGITS = /\d/;
 const MIN_LENGTH = 2;
-const MIN_NAME_LENGTH = 8;
+const MIN_NAME_LENGTH = 5;
 const CVV_LENGTH = 3;
 const CARD_NUM_LENGTH = 16;
 
 
+// TODO check valid date
+
 function initCheckout() {
-    checkoutValidation();
+    let checkOutButton = document.querySelector("#checkout-button");
+    checkOutButton.addEventListener("click", checkoutValidation)
 }
 
 function checkoutValidation() {
@@ -17,14 +20,39 @@ function checkoutValidation() {
     } else if (!validPaymentInformation()){
         window.alert("Invalid Payment Information!")
     } else {
-        // Todo Create JSON object from input data
+        let jsonObject = JSON.stringify(objectFromInput());
+        console.log(jsonObject);
     }
 }
 
-function jsonObjectFromInput() {
-    let billingObject = new Object();
-    let paymentObject = new Object();
+function objectFromInput() {
     let inputObject = new Object();
+    inputObject.billing_information = jsonObjectFromBillingInfo();
+    inputObject.payment_information = jsonObjectFromPaymentInfo();
+
+    return inputObject;
+}
+
+function jsonObjectFromBillingInfo() {
+    let billingInfoObject = new Object();
+    billingInfoObject.full_name = document.querySelector("#fname").value;
+    billingInfoObject.email = document.querySelector("#email").value;
+    billingInfoObject.address = document.querySelector("#adr").value;
+    billingInfoObject.city = document.querySelector("#city").value;
+    billingInfoObject.state = document.querySelector("#state").value;
+    billingInfoObject.zip = document.querySelector("#zip").value;
+
+    return billingInfoObject;
+}
+
+function jsonObjectFromPaymentInfo() {
+    let paymentInfoObject = new Object();
+    paymentInfoObject.card_name = document.querySelector("#ccname").value;
+    paymentInfoObject.card_number = document.querySelector("#ccnum").value;
+    paymentInfoObject.exp_date = document.querySelector("#expdate").value;
+    paymentInfoObject.cvv = document.querySelector("#cvv").value;
+
+    return paymentInfoObject;
 }
 
 function validBillingInformaion() {
@@ -44,7 +72,7 @@ function validFullnameInput() {
 function validEmailInput() {
     let email = document.querySelector("#email");
     email.classList.remove("error");
-    if (email.value.length < MIN_NAME_LENGTH || RE.test(email.value)) {
+    if (email.value.length < MIN_NAME_LENGTH || !email.value.match(RE)) {
         email.classList.add("error");
         return false;
     }

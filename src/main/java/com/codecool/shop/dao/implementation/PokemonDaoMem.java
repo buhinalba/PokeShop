@@ -85,6 +85,10 @@ public class PokemonDaoMem implements PokemonDao {
         return new Pokemon(pokemonId, pokemonName, pokemonPrice, pokemonCategoryNames, pokemonSprite);
     }
 
+    public void clearMem(){
+        data.clear();
+    }
+
 
     public Pokemon getPokemonById(int id) {
         for(Pokemon pokemon: data) {

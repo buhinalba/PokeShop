@@ -1,16 +1,12 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.dao.PokemonCategoryDao;
-import com.codecool.shop.dao.PokemonDao;
 import com.codecool.shop.dao.UtilDao;
 import com.codecool.shop.dao.implementation.PokemonCategoryDaoMem;
 import com.codecool.shop.dao.implementation.PokemonDaoMem;
 import com.codecool.shop.dao.implementation.PokemonGetAllDao;
-
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,8 +26,8 @@ public class ProductController extends HttpServlet implements UtilDao {
         PokemonCategoryDaoMem pokemonCategoryDaoMem = PokemonCategoryDaoMem.getInstance();
 
         String currentPage = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=20";
-        String previousPage = pokemonGetAllDao.getPreviousPokemons();
-        String nextPage = pokemonGetAllDao.getNextPokemons();
+
+        String page = req.getParameter("page");
 
         pokemonGetAllDao.addAllPokemonsToPokemonDaoMem(currentPage);
 

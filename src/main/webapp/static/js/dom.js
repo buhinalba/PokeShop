@@ -1,36 +1,72 @@
 import {dataHandler} from "./data_handler.js";
 
 export let dom = {
+
     init: function () {
-       // need to initialize event listeners for type selection
-        let selectorButton = document.querySelector("#submit-search");
-        let selectedType = document.querySelector("#select-type");
-        selectorButton.addEventListener('click', () => {
-            dom.loadPokemonsByType(selectedType.value);
-        });
+        dom.loadButtonFunctions();
+    },
+
+    loadButtonFunctions: function () {
+        dom.loadSelectorButton();
+        dom.loadPaginationButtons();
         this.initAddToCartButton();
         this.addReviewCartListener();
     },
 
-    loadPokemons: function () {
-        dataHandler.getPokemons(function (pokemons) {
+    loadSelectorButton: function () {
+        let selectorButton = document.querySelector("#submit-search");
+        let selectedType = document.querySelector("#select-type");
+        selectorButton.addEventListener('click', () => {
+            document.querySelector(".page-title").dataset.offset = "0";
+            dom.loadPokemonsByType(selectedType.value, document.querySelector(".page-title").dataset.offset);
+        });
+    },
+
+
+    loadPaginationButtons: function () {
+        let prevButton = document.querySelector("#prev-page");
+        let nextButton = document.querySelector("#next-page");
+        prevButton.addEventListener('click', () => {
+            if(document.querySelector(".page-title").dataset.search.length === 0) {
+                dom.loadPage(-20);
+            } else {
+                dom.loadPageByType(-20);
+            }
+        });
+        nextButton.addEventListener('click', () => {
+            if(document.querySelector(".page-title").dataset.search.length === 0) {
+                dom.loadPage(20);
+            } else {
+                dom.loadPageByType(20);
+            }
+        })
+    },
+
+    loadPage: function (offset) {
+        let tempOffset = document.querySelector(".page-title");
+        if(parseInt(tempOffset.dataset.offset) + offset >= 0) {
+            tempOffset.dataset.offset = parseInt(tempOffset.dataset.offset) + offset;
+        }
+        dataHandler.getPage(tempOffset.dataset.offset, (pokemons) => {
+            if(pokemons.length > 0) {
+                dom.showPokemons(pokemons);
+            } else{
+                tempOffset.dataset.offset = parseInt(tempOffset.dataset.offset) - offset;
+            }
+        });
+    },
+
+
+    loadPokemonsByType: function (type, offset) {
+        let dataSearch = document.querySelector(".page-title");
+        let selectedType = document.querySelector("#select-type");
+        dataSearch.dataset.search = selectedType.value;
+        dataHandler.getPokemonsByType(type, offset,function (pokemons) {
             dom.showPokemons(pokemons);
         });
     },
 
-    loadPokemonById: function (pokemonId) {
-        dataHandler.getPokemonById(pokemonId, function (pokemons) {
-            dom.showPokemons(pokemons);
-        });
-    },
-
-    loadPokemonsByType: function (type) {
-        dataHandler.getPokemonsByType(type, function (pokemons) {
-            dom.showPokemons(pokemons);
-        });
-    },
-
-    showPokemons: function (pokemons){
+    showPokemons: function (pokemons) {
         let pokemonsContainer = document.querySelector(".card-container");
         pokemonsContainer.innerHTML = "";
         let loadedPokemons = "";
@@ -44,8 +80,8 @@ export let dom = {
                                 <div class="card-body">
                                     <div class="card-text">
                                         <p class="card-text">${pokemon.pokemonCategory.length > 1 ?
-                                                            "Types: " + pokemon.pokemonCategory.join(", ") :
-                                                            "Type: " + pokemon.pokemonCategory}</p>
+                "Types: " + pokemon.pokemonCategory.join(", ") :
+                "Type: " + pokemon.pokemonCategory}</p>
                                         <p class="lead">Price: ${pokemon.defaultPrice}</p>
                                     </div>
                                     <div class="card-text">
@@ -58,6 +94,22 @@ export let dom = {
 
         pokemonsContainer.insertAdjacentHTML('beforeend', loadedPokemons);
         this.initAddToCartButton();
+        },
+
+    loadPageByType: function(offset){
+        let tempOffset = document.querySelector(".page-title");
+        let selectedType = document.querySelector("#select-type");
+        let type = selectedType.value;
+        if(parseInt(tempOffset.dataset.offset) + offset >= 0) {
+            tempOffset.dataset.offset = parseInt(tempOffset.dataset.offset) + offset;
+        }
+        dataHandler.getPokemonsByType(type, tempOffset.dataset.offset, (pokemons) => {
+            if(pokemons.length === 20) {
+                dom.showPokemons(pokemons);
+            } else {
+                tempOffset.dataset.offset = parseInt(tempOffset.dataset.offset) - offset;
+            }
+        });
     },
 
     initAddToCartButton: function () {
@@ -104,15 +156,34 @@ export let dom = {
             let pokemon = element.pokemon;
             cartList += `
                 <div class="list-element" data-pokemon-id="${pokemon.id}">
-                    <p class="name">Name: ${pokemon.name}</p>
-                    <p class="categories">Types: ${pokemon.pokemonCategory.join(", ")}</p>
-                    <p class="price">Single price: ${pokemon.defaultPrice}</p>
-                    <img src="${pokemon.spriteImageUrl}"/>
-                    <div class="counter">
-                        <button class="increase-count" type="button">&#43;</button>
-                        <p class="count">${element.count}</p>
-                        <button class="decrease-count" type="button">&#45;</button>
-                    </div>
+                    <table>
+                        <tr>
+                            <th>
+                                <button class="delete-button" type="button">&#x1F5D1;</button>
+                            </th>                        
+                            <th>
+                                <p class="name">Name: ${pokemon.name}</p>
+                            </th>
+                            <th>
+                                <p class="categories">Types: ${pokemon.pokemonCategory.join(", ")}</p>
+                            </th>
+                            <th>
+                                <p class="price">Single price: ${pokemon.defaultPrice}</p>
+                            </th>
+                            <th>
+                                <img src="${pokemon.spriteImageUrl}"/>
+                            </th>
+                            <th>
+                                <button class="increase-count" type="button">&#43;</button>
+                            </th>
+                            <th>
+                                <p class="count">${element.count}</p>
+                            </th>
+                            <th>
+                                <button class="decrease-count" type="button">&#45;</button>
+                            </th>
+                        </tr>
+                    </table>
                 </div>`;
         }
         cartList += `<div class="total-price"><p>Total Price: ${totalPrice}</p></div>`;

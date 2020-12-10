@@ -2,7 +2,7 @@ import {dataHandler} from "./data_handler.js";
 
 export let dom = {
     init: function () {
-       // need to initialize event listeners for type selection
+        // need to initialize event listeners for type selection
         let selectorButton = document.querySelector("#submit-search");
         let selectedType = document.querySelector("#select-type");
         selectorButton.addEventListener('click', () => {
@@ -30,7 +30,7 @@ export let dom = {
         });
     },
 
-    showPokemons: function (pokemons){
+    showPokemons: function (pokemons) {
         let pokemonsContainer = document.querySelector(".card-container");
         pokemonsContainer.innerHTML = "";
         let loadedPokemons = "";
@@ -44,8 +44,8 @@ export let dom = {
                                 <div class="card-body">
                                     <div class="card-text">
                                         <p class="card-text">${pokemon.pokemonCategory.length > 1 ?
-                                                            "Types: " + pokemon.pokemonCategory.join(", ") :
-                                                            "Type: " + pokemon.pokemonCategory}</p>
+                "Types: " + pokemon.pokemonCategory.join(", ") :
+                "Type: " + pokemon.pokemonCategory}</p>
                                         <p class="lead">Price: ${pokemon.defaultPrice}</p>
                                     </div>
                                     <div class="card-text">
@@ -104,15 +104,34 @@ export let dom = {
             let pokemon = element.pokemon;
             cartList += `
                 <div class="list-element" data-pokemon-id="${pokemon.id}">
-                    <p class="name">Name: ${pokemon.name}</p>
-                    <p class="categories">Types: ${pokemon.pokemonCategory.join(", ")}</p>
-                    <p class="price">Single price: ${pokemon.defaultPrice}</p>
-                    <img src="${pokemon.spriteImageUrl}"/>
-                    <div class="counter">
-                        <button class="increase-count" type="button">&#43;</button>
-                        <p class="count">${element.count}</p>
-                        <button class="decrease-count" type="button">&#45;</button>
-                    </div>
+                    <table>
+                        <tr>
+                            <th>
+                                <button class="delete-button" type="button">&#x1F5D1;</button>
+                            </th>                        
+                            <th>
+                                <p class="name">Name: ${pokemon.name}</p>
+                            </th>
+                            <th>
+                                <p class="categories">Types: ${pokemon.pokemonCategory.join(", ")}</p>
+                            </th>
+                            <th>
+                                <p class="price">Single price: ${pokemon.defaultPrice}</p>
+                            </th>
+                            <th>
+                                <img src="${pokemon.spriteImageUrl}"/>
+                            </th>
+                            <th>
+                                <button class="increase-count" type="button">&#43;</button>
+                            </th>
+                            <th>
+                                <p class="count">${element.count}</p>
+                            </th>
+                            <th>
+                                <button class="decrease-count" type="button">&#45;</button>
+                            </th>
+                        </tr>
+                    </table>
                 </div>`;
         }
         cartList += `<div class="total-price"><p>Total Price: ${totalPrice}</p></div>`;

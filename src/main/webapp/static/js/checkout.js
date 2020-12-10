@@ -25,8 +25,9 @@ function checkoutValidation() {
         window.alert("Invalid Payment Information!")
     } else {
         let jsonObject = JSON.stringify(objectFromInput());
+        dataHandler.postCheckoutInformation(jsonObject, () => console.log(jsonObject))
         successfulCheckoutModal();
-        dataHandler.postCheckoutInformation(jsonObject, console.log(jsonObject))
+
     }
 }
 
@@ -165,7 +166,7 @@ function successfulCheckoutModal() {
 
 function closeSuccessfulCheckoutModal(event) {
     let closeButton = event.target;
-    let modal = closeButton.closest("hidden");
+    let modal = closeButton.closest(".modal");
     modal.classList.add("hidden")
 }
 

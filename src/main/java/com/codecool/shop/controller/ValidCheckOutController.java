@@ -18,7 +18,7 @@ import java.io.IOException;
 public class ValidCheckOutController extends HttpServlet implements UtilDao {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         EmailHandler emailHandler = new EmailHandler();
         CartDaoMem cartDaoMem = CartDaoMem.getInstance();
         StringBuilder sb = new StringBuilder();

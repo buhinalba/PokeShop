@@ -151,6 +151,7 @@ export let dom = {
         modalBody.innerHTML = cartList;
     },
 
+
     closeModal: function (event) {
         let closeButton = event.target;
         let modal = closeButton.closest(".modal");

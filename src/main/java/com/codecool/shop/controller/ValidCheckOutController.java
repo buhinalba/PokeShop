@@ -7,18 +7,12 @@ import com.codecool.shop.dao.implementation.CartDaoMem;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
-import java.util.Properties;
-
 
 @WebServlet(urlPatterns = {"/valid-checkout"})
 public class ValidCheckOutController extends HttpServlet implements UtilDao {
@@ -27,9 +21,31 @@ public class ValidCheckOutController extends HttpServlet implements UtilDao {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         EmailHandler emailHandler = new EmailHandler();
         CartDaoMem cartDaoMem = CartDaoMem.getInstance();
+        StringBuilder sb = new StringBuilder();
 
+        sb.append("<p>Here you can see your order details: </p><br><br>" +
+                "<table>" +
+                    "<th>Name</th>" +
+                    "<th>Categories</th>" +
+                    "<th>Price</th>" +
+                    "<th>Image</th>" +
+                    "<th>Quantity</th>");
 
+        cartDaoMem.getAll().forEach((pokemon, integer) -> sb.append(
+                "<tr>" +
+                    "<td>"+pokemon.getName() + "</td>" +
+                    "<td>"+pokemon.getPokemonCategoryString() + "</td>" +
+                    "<td>"+pokemon.getPrice() + "</td>" +
+                    "<td><img src='"+pokemon.getSpriteImageUrl() + "'/></td>" +
+                    "<td>"+ integer + "</td>" +
+                "</tr>"));
 
+        sb.append("</table><br>"+
+                "<p><strong>Estimated delivery: "+ emailHandler.getEstimatedDelivery() +"</strong></p><br>"+
+                "<p><i>If you have any problem with your order, please contact customers@pokeshop.com </i></p><br>" +
+                "<p>Kind regards, pokeStaff </p><br>");
+
+        emailHandler.sendMail("Ash@getemall.com", sb.toString());
     }
 
 }

@@ -3,9 +3,14 @@ package com.codecool.shop.business.logic;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Properties;
 
 public class EmailHandler {
+    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
     public EmailHandler(){
 
@@ -50,7 +55,7 @@ public class EmailHandler {
             message.setSubject("Order details");
 
             // Put the content of your message
-            message.setText(orderDetails);
+            message.setContent(orderDetails, "text/html");
 
             // Send message
             Transport.send(message);
@@ -62,4 +67,17 @@ public class EmailHandler {
             throw new RuntimeException(e);
         }
     }
+        public String getEstimatedDelivery(){
+            Date currentDate = new Date();
+
+            // convert date to calendar
+            Calendar c = Calendar.getInstance();
+            c.setTime(currentDate);
+            // manipulate date
+            c.add(Calendar.DATE, 5);
+            // convert calendar to date
+            Date estimatedDelivery = c.getTime();
+            return dateFormat.format(estimatedDelivery);
+        }
+
 }

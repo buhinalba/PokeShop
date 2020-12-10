@@ -1,6 +1,7 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.business.logic.EmailHandler;
+import com.codecool.shop.business.logic.SaveOrderDetailsToJson;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.UtilDao;
 import com.codecool.shop.dao.implementation.CartDaoMem;
@@ -20,6 +21,7 @@ public class ValidCheckOutController extends HttpServlet implements UtilDao {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         EmailHandler emailHandler = new EmailHandler();
+        SaveOrderDetailsToJson saveOrderDetailsToJson = new SaveOrderDetailsToJson(req);
         CartDaoMem cartDaoMem = CartDaoMem.getInstance();
         StringBuilder sb = new StringBuilder();
         String fullname = req.getParameter("fullname");

@@ -11,7 +11,6 @@ public interface PokemonGetAllDaoInt extends UtilDao {
 
     void addAllPokemonsToPokemonDaoMem(String urlString) throws IOException;
 
-    String getPreviousPokemons() throws IOException;
+    String pokemonPagination(int offset) throws IOException;
 
-    String getNextPokemons() throws IOException;
 }

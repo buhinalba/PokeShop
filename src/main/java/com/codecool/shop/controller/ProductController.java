@@ -26,8 +26,6 @@ public class ProductController extends HttpServlet implements UtilDao {
         PokemonCategoryDaoMem pokemonCategoryDaoMem = PokemonCategoryDaoMem.getInstance();
 
         String currentPage = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=20";
-        String previousPage = pokemonGetAllDao.getPreviousPokemons();
-        String nextPage = pokemonGetAllDao.getNextPokemons();
 
         String page = req.getParameter("page");
 

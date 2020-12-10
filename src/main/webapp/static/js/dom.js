@@ -1,31 +1,67 @@
 import {dataHandler} from "./data_handler.js";
 
 export let dom = {
+
     init: function () {
-        // need to initialize event listeners for type selection
-        let selectorButton = document.querySelector("#submit-search");
-        let selectedType = document.querySelector("#select-type");
-        selectorButton.addEventListener('click', () => {
-            dom.loadPokemonsByType(selectedType.value);
-        });
+        dom.loadButtonFunctions();
+    },
+
+    loadButtonFunctions: function () {
+        dom.loadSelectorButton();
+        dom.loadPaginationButtons();
         this.initAddToCartButton();
         this.addReviewCartListener();
     },
 
-    loadPokemons: function () {
-        dataHandler.getPokemons(function (pokemons) {
-            dom.showPokemons(pokemons);
+    loadSelectorButton: function () {
+        let selectorButton = document.querySelector("#submit-search");
+        let selectedType = document.querySelector("#select-type");
+        selectorButton.addEventListener('click', () => {
+            document.querySelector(".page-title").dataset.offset = "0";
+            dom.loadPokemonsByType(selectedType.value, document.querySelector(".page-title").dataset.offset);
         });
     },
 
-    loadPokemonById: function (pokemonId) {
-        dataHandler.getPokemonById(pokemonId, function (pokemons) {
-            dom.showPokemons(pokemons);
+
+    loadPaginationButtons: function () {
+        let prevButton = document.querySelector("#prev-page");
+        let nextButton = document.querySelector("#next-page");
+        prevButton.addEventListener('click', () => {
+            if(document.querySelector(".page-title").dataset.search.length === 0) {
+                dom.loadPage(-20);
+            } else {
+                dom.loadPageByType(-20);
+            }
+        });
+        nextButton.addEventListener('click', () => {
+            if(document.querySelector(".page-title").dataset.search.length === 0) {
+                dom.loadPage(20);
+            } else {
+                dom.loadPageByType(20);
+            }
+        })
+    },
+
+    loadPage: function (offset) {
+        let tempOffset = document.querySelector(".page-title");
+        if(parseInt(tempOffset.dataset.offset) + offset >= 0) {
+            tempOffset.dataset.offset = parseInt(tempOffset.dataset.offset) + offset;
+        }
+        dataHandler.getPage(tempOffset.dataset.offset, (pokemons) => {
+            if(pokemons.length > 0) {
+                dom.showPokemons(pokemons);
+            } else{
+                tempOffset.dataset.offset = parseInt(tempOffset.dataset.offset) - offset;
+            }
         });
     },
 
-    loadPokemonsByType: function (type) {
-        dataHandler.getPokemonsByType(type, function (pokemons) {
+
+    loadPokemonsByType: function (type, offset) {
+        let dataSearch = document.querySelector(".page-title");
+        let selectedType = document.querySelector("#select-type");
+        dataSearch.dataset.search = selectedType.value;
+        dataHandler.getPokemonsByType(type, offset,function (pokemons) {
             dom.showPokemons(pokemons);
         });
     },
@@ -58,6 +94,22 @@ export let dom = {
 
         pokemonsContainer.insertAdjacentHTML('beforeend', loadedPokemons);
         this.initAddToCartButton();
+        },
+
+    loadPageByType: function(offset){
+        let tempOffset = document.querySelector(".page-title");
+        let selectedType = document.querySelector("#select-type");
+        let type = selectedType.value;
+        if(parseInt(tempOffset.dataset.offset) + offset >= 0) {
+            tempOffset.dataset.offset = parseInt(tempOffset.dataset.offset) + offset;
+        }
+        dataHandler.getPokemonsByType(type, tempOffset.dataset.offset, (pokemons) => {
+            if(pokemons.length === 20) {
+                dom.showPokemons(pokemons);
+            } else {
+                tempOffset.dataset.offset = parseInt(tempOffset.dataset.offset) - offset;
+            }
+        });
     },
 
     initAddToCartButton: function () {

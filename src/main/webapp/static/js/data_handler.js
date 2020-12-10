@@ -45,5 +45,19 @@ export let dataHandler = {
         this._api_get(`http://localhost:8080/cart-content`, (response) => {
             callback(response);
         })
+    },
+
+    deletePokemon: function (pokemonId, callback) {
+
+    },
+
+    decreasePokemon: function (pokemonId, callback) {
+        this._api_get(`http://localhost:8080/edit/decrease?pokemon-id=${pokemonId}`, (response) => {
+            callback(response);
+        })
+    },
+
+    increasePokemon: function (pokemonId, callback) {
+
     }
 }

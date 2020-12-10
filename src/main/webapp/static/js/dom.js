@@ -85,7 +85,6 @@ export let dom = {
     },
 
     initCartModal: function (event) {
-        console.log("button pushed");
         let cartButton = event.target;
 
         cartButton.classList.add("active")      // todo remove when closing modal
@@ -133,14 +132,16 @@ export let dom = {
                                 <img src="${pokemon.spriteImageUrl}"/>
                             </td>
                             <td>
-                                <button class="increase-count" type="button">&#43;</button>
+                                <button class="decrease-count" type="button">&#45;</button>
                             </td>
+                            
                             <td>
                                 <p class="count">${element.count}</p>
                             </td>
                             <td>
-                                <button class="decrease-count" type="button">&#45;</button>
+                                <button class="increase-count" type="button">&#43;</button>
                             </td>
+                            
                         </tr>
                         `;
         }
@@ -149,6 +150,8 @@ export let dom = {
         cartList += `<div class="total-price"><p>Total Price: ${totalPrice}</p></div>`;
         cartList += `<div id="checkout-cart-button"><a href="/checkout">Checkout</a></div>`
         modalBody.innerHTML = cartList;
+
+        dom.initEditCartButtons();
     },
 
 
@@ -156,5 +159,56 @@ export let dom = {
         let closeButton = event.target;
         let modal = closeButton.closest(".modal");
         modal.classList.add("hidden");
+    },
+
+    initEditCartButtons: function () {
+        let deleteButtons = document.querySelectorAll(".delete-button");
+        let decreaseButtons = document.querySelectorAll(".decrease-count");
+        let increaseButtons = document.querySelectorAll(".increase-count");
+
+        for (let deleteButton of deleteButtons) {
+            deleteButton.addEventListener('click', dom.deletePokemon)
+        }
+
+        for (let decreaseButton of decreaseButtons) {
+            decreaseButton.addEventListener('click', dom.decreasePokemon)
+        }
+
+        for (let increaseButton of increaseButtons) {
+            increaseButton.addEventListener('click', dom.increasePokemon)
+        }
+    },
+
+    deletePokemon: function (event) {
+        let button = event.target;
+        let pokemonId = button.closest("tr").dataset.pokemonId;
+        dataHandler.deletePokemon(pokemonId, dom.removePokemonFromList)
+    },
+
+    decreasePokemon: function (event) {
+        let button = event.target;
+        let pokemonId = button.closest("tr").dataset.pokemonId;
+        dataHandler.decreasePokemon(pokemonId, dom.updateCount)
+    },
+
+    increasePokemon: function (event) {
+        let button = event.target;
+        let pokemonId = button.closest("tr").dataset.pokemonId;
+        dataHandler.increasePokemon(pokemonId, dom.updateCount)
+    },
+
+    updateCount: function (response) {
+        console.log(response)
+        let count = response.count;
+        let pokemonId = response.pokemonId;
+
+        let affectedRow = document.querySelector(`tr[data-pokemon-id="${pokemonId}"]`)
+        let countDisplayer = affectedRow.querySelector(".count");
+
+        countDisplayer.innerHTML = count;
+    },
+
+    removePokemonFromList: function (response) {
+        // delete tr based on pokemon id
     }
 }

@@ -40,9 +40,10 @@ public class ValidCheckOutController extends HttpServlet implements UtilDao {
                     "<td>"+ integer + "</td>" +
                 "</tr>"));
 
-        sb.append("</table><br>"+
+        sb.append("</table><br><br>"+
+                "<p><strong>Total price: " + cartDaoMem.getTotalPrice() + " $ </strong><br>"+
                 "<p><strong>Estimated delivery: "+ emailHandler.getEstimatedDelivery() +"</strong></p><br>"+
-                "<p><i>If you have any problem with your order, please contact customers@pokeshop.com </i></p><br>" +
+                "<p><i>If you have any problem with your order, please contact: customers@pokeshop.com </i></p>" +
                 "<p>Kind regards, pokeStaff </p><br>");
 
         emailHandler.sendMail("Ash@getemall.com", sb.toString());

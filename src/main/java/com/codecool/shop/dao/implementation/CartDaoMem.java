@@ -2,9 +2,11 @@ package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.controller.OrderLog;
 import com.codecool.shop.dao.CartDao;
+import com.codecool.shop.dao.PokemonDao;
 import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.Pokemon;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,9 +51,10 @@ public class CartDaoMem implements CartDao {
         log.writeLog("Decreased pokemon count", findPokemon(id));
     }
 
-    public void deletePokemon(int id) {
+    public void deletePokemon(int id) throws IOException {
         cart.deletePokemon(id);
-        log.writeLog("Deleted specific pokemon species from cart", findPokemon(id));
+        PokemonDaoMem pokemonDaoMem = PokemonDaoMem.getInstance();
+        log.writeLog("Deleted specific pokemon species from cart", pokemonDaoMem.getPokemonFromUrl("https://pokeapi.co/api/v2/pokemon/" + id));
     }
 
     @Override

@@ -48,7 +48,9 @@ export let dataHandler = {
     },
 
     deletePokemon: function (pokemonId, callback) {
-
+        this._api_get(`http://localhost:8080/edit/delete?pokemon-id=${pokemonId}`, (response) => {
+            callback(response);
+        })
     },
 
     decreasePokemon: function (pokemonId, callback) {
@@ -58,6 +60,8 @@ export let dataHandler = {
     },
 
     increasePokemon: function (pokemonId, callback) {
-
+        this._api_get(`http://localhost:8080/edit/increase?pokemon-id=${pokemonId}`, (response) => {
+            callback(response);
+        })
     }
 }

@@ -81,8 +81,10 @@ export let dom = {
         let card = button.closest(".card")
         let pokemonId = card.dataset.pokemonId
 
-        dataHandler.addPokemonToCart(pokemonId, (response) => console.log(response));
+        dataHandler.addPokemonToCart(pokemonId, (response) => {
+        });
     },
+
 
     initCartModal: function (event) {
         let cartButton = event.target;
@@ -198,7 +200,6 @@ export let dom = {
     },
 
     updateCount: function (response) {
-        console.log(response)
         let count = response.count;
         let pokemonId = response.pokemonId;
 
@@ -209,6 +210,8 @@ export let dom = {
     },
 
     removePokemonFromList: function (response) {
-        // delete tr based on pokemon id
+        let pokemonId = response.pokemonId;
+        let affectedRow = document.querySelector(`tr[data-pokemon-id="${pokemonId}"]`)
+        affectedRow.remove();
     }
 }

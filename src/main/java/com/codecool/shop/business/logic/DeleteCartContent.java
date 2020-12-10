@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet(urlPatterns = {"/edit/delete"})
 public class DeleteCartContent extends HttpServlet {
@@ -19,5 +20,8 @@ public class DeleteCartContent extends HttpServlet {
         CartDaoMem cartDaoMem = CartDaoMem.getInstance();
         cartDaoMem.deletePokemon(Integer.parseInt(pokemonId));
 
+        PrintWriter out = resp.getWriter();
+
+        out.println("{\"pokemonId\": " + pokemonId + "}");
     }
 }

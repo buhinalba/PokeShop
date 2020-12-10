@@ -42,7 +42,7 @@ public class GetCartContentAPI extends HttpServlet {
 
         String cartInfo = String.format(
                 "{\"totalPrice\": %d, " +
-                "\"cartContent\": %s}", 100, cartContentJson        // todo replace 100 with cartDao.getTotalPrice()
+                "\"cartContent\": %s}", cartDao.getTotalPrice(), cartContentJson        // todo replace 100 with cartDao.getTotalPrice()
         );
 
         PrintWriter out = response.getWriter();

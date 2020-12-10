@@ -100,12 +100,15 @@ export let dom = {
         let cartList = "";
         let totalPrice = response.totalPrice;
         let cartContent = response.cartContent;
+        if (cartContent.length === 0) {
+            cartList = "Your cart is empty"
+        } else {
         cartList += `
             <table>
                 <th></th>
                 <th>Name</th>
                 <th>Types</th>
-                <th>Single Price</th>
+                <th>Single Price</th>100
                 <th></th>
                 <th></th>
                 <th>Count</th>
@@ -142,6 +145,7 @@ export let dom = {
                         `;
         }
         cartList += "</table>"
+        }
         cartList += `<div class="total-price"><p>Total Price: ${totalPrice}</p></div>`;
         cartList += `<div id="checkout-cart-button"><a href="/checkout">Checkout</a></div>`
         modalBody.innerHTML = cartList;

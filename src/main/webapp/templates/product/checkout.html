@@ -8,7 +8,7 @@
     <title>Pokemon Shop - Checkout</title>
 
     <link rel="stylesheet" type="text/css" href="/static/css/main.css"/>
-<!--    <script type="module" src="/static/js/main.js" defer></script>-->
+    <script type="module" src="/static/js/checkout.js" defer></script>
 </head>
 
 <body>
@@ -20,7 +20,8 @@
 <div class="cart-total">
     <div class="container">
         <i class="fa fa-shopping-cart"></i>
-        <p th:text="${'Total amount : ' + totalAmount + ' - Total price : ' + totalPrice}">Total items : 42 - Total price : 3230$</p>
+        <p th:text="${'Total amount : ' + totalAmount + ' - Total price : ' + totalPrice}">Total items : 42 - Total
+            price : 3230$</p>
     </div>
 </div>
 
@@ -30,13 +31,15 @@
             <div class="card" th:each="entry : ${pokemonMap}">
                 <img src="https://css.gg/pokemon.css" th:attr="src=${entry.key.getSpriteImageUrl()}" alt=""/>
                 <div class="card-header">
-                    <h4 class="card-title"  th:text="${'Name: ' + entry.key.getName()}">Pokemon name</h4>
+                    <h4 class="card-title" th:text="${'Name: ' + entry.key.getName()}">Pokemon name</h4>
                 </div>
                 <div class="card-body">
                     <div class="card-text">
-                        <p class="card-text" th:text="${'Type(s): ' + entry.key.getPokemonCategoryString()}">Pokemon type</p>
+                        <p class="card-text" th:text="${'Type(s): ' + entry.key.getPokemonCategoryString()}">Pokemon
+                            type</p>
                         <p class="card-text" th:text="${'Count: ' + entry.value}">Pokemon count</p>
-                        <p class="lead" th:with="result=${entry.key.getDefaultPrice() * entry.value}" th:text="${'Price: ' + result}">Price</p>
+                        <p class="lead" th:with="result=${entry.key.getDefaultPrice() * entry.value}"
+                           th:text="${'Price: ' + result}">Price</p>
                     </div>
                 </div>
             </div>
@@ -45,63 +48,38 @@
 </div>
 
 <div class="checkout">
-    <div class="checkout-form-container">
+    <form name="checkout" action="/valid-checkout" method="post">
         <div class="checkout-form">
-            <div class="checkout-row">
-                <div class="checkout-col">
-                    <h3>Billing Address</h3>
-                    <label for="fname"><i class="fa fa-user"></i> Full Name</label>
-                    <input type="text" required id="fname" name="firstname" placeholder="John M. Doe">
-                    <label for="email"><i class="fa fa-envelope"></i> Email</label>
-                    <input type="text" required id="email" name="email" placeholder="john@example.com">
-                    <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
-                    <input type="text" required id="adr" name="address" placeholder="542 W. 15th Street">
-                    <label for="city"><i class="fa fa-institution"></i> City</label>
-                    <input type="text" required id="city" name="city" placeholder="New York">
+            <div class="checkout-col">
+                <h3>Billing Address</h3>
+                <label for="fname"><i class="fa fa-user"></i> Full Name</label>
+                <input type="text" required id="fname" name="fullname" placeholder="John M. Doe">
+                <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                <input type="text" required id="email" name="email" placeholder="john@example.com">
+                <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
+                <input type="text" required id="adr" name="address" placeholder="542 W. 15th Street">
+                <label for="city"><i class="fa fa-institution"></i> City</label>
+                <input type="text" required id="city" name="city" placeholder="New York">
+                <label for="state">State</label>
+                <input type="text" id="state" name="state" placeholder="NY">
+                <label for="zip">Zip</label>
+                <input type="text" id="zip" name="zip" placeholder="10001">
+            </div>
 
-                    <div class="checkout-row">
-                        <div class="checkout-col">
-                            <label for="state">State</label>
-                            <input type="text" id="state" name="state" placeholder="NY">
-                        </div>
-                        <div class="checkout-col">
-                            <label for="zip">Zip</label>
-                            <input type="text" id="zip" name="zip" placeholder="10001">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="checkout-col">
-                    <h3>Payment</h3>
-                    <label for="fname">Accepted Cards</label>
-                    <div class="icon-container">
-                        <i class="fa fa-cc-visa" style="color:navy;"></i>
-                        <i class="fa fa-cc-amex" style="color:blue;"></i>
-                        <i class="fa fa-cc-mastercard" style="color:red;"></i>
-                        <i class="fa fa-cc-discover" style="color:orange;"></i>
-                    </div>
-                    <input type="text" required id="ccname" name="cardname" placeholder="Name on Card">
-                    <input type="number" minlength="16" maxlength="16" required id="ccnum" name="cardnumber" placeholder="Credit card number">
-
-                    <div class="checkout-row">
-                        <div class="checkout-col">
-                            <input type="month" required id="expdate" name="expdate" placeholder="Expiration Date">
-                        </div>
-                        <div class="checkout-col">
-                            <input type="number" maxlength="3" required id="cvv" name="cvv" placeholder="CVV">
-                        </div>
-                    </div>
-                </div>
-
+            <div class="checkout-col">
+                <h3>Payment</h3>
+                <input type="text" required id="ccname" name="cardname" placeholder="Name on Card">
+                <input type="text" required id="ccnum" name="cardnumber" placeholder="Credit card number">
+                <input type="month" required id="expdate" name="expdate" placeholder="Expiration Date">
+                <input type="text" required id="cvv" name="cvv" placeholder="CVV">
             </div>
             <div class="filter__button">
                 <button type="submit" id="checkout-button">Checkout</button>
             </div>
         </div>
-    </div>
+    </form>
 </div>
 
 <div th:replace="footer.html :: copy"></div>
-
 </body>
 </html>

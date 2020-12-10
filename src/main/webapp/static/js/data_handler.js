@@ -11,6 +11,22 @@ export let dataHandler = {
             .then(response => response.json())  // parse the response as JSON
             .then(json_response => callback(json_response));  // Call the `callback` with the returned object
     },
+    _api_post: function (url, data, callback) {
+        // it is not called from outside
+        // sends the data to the API, and calls callback function
+
+        fetch(url, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data),
+            credentials: "same-origin"
+        })
+            .then(response => response.json())  // parse the response as JSON
+            .then(json_response => callback(json_response))
+            .catch(error => {
+                console.log("Fetch error: " + error);
+            });
+    },
 
     getPokemons: function (callback) {
         this._api_get('localhost:8080', (response) => {
@@ -50,6 +66,12 @@ export let dataHandler = {
 
     getCartContent: function (callback) {
         this._api_get(`http://localhost:8080/cart-content`, (response) => {
+            callback(response);
+        })
+    },
+
+    postCheckoutInformation: function (data, callback) {
+        this._api_post('http://localhost:8080/valid-checkout', {checkout_information: data}, (response) => {
             callback(response);
         })
     }

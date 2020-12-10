@@ -82,6 +82,7 @@ export let dom = {
         let pokemonId = card.dataset.pokemonId
 
         dataHandler.addPokemonToCart(pokemonId, (response) => {
+            // todo change cart size (next to cart there is an icon)
         });
     },
 
@@ -207,11 +208,15 @@ export let dom = {
         let countDisplayer = affectedRow.querySelector(".count");
 
         countDisplayer.innerHTML = count;
+
+        // todo update total price
     },
 
     removePokemonFromList: function (response) {
         let pokemonId = response.pokemonId;
         let affectedRow = document.querySelector(`tr[data-pokemon-id="${pokemonId}"]`)
         affectedRow.remove();
+        // todo update total price
+
     }
 }

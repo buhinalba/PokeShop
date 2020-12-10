@@ -1,28 +1,21 @@
 package com.codecool.shop.controller;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
-import java.io.FileWriter;
-import java.io.IOException;
+import com.codecool.shop.model.Cart;
+import com.codecool.shop.model.Pokemon;
+import org.json.simple.*;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 public class OrderLog {
     //(date, log)
     private HashMap<String, String> orderLog = new HashMap<String, String>();
     private Integer orderId;
 
-    public OrderLog(Integer orderId) {
+    public OrderLog(Integer orderId, String log) {
         this.orderId = orderId;
-    }
-
-    public OrderLog(Integer orderId, String date, String log) {
-        this.orderId = orderId;
-        orderLog.put(date, log);
+        orderLog.put(String.valueOf(LocalDateTime.now()), log);
     }
 
     public HashMap<String, String> getOrderLog() {
@@ -45,29 +38,32 @@ public class OrderLog {
         orderLog.put(date, log);
     }
 
+    //message, cartId, pokemon.getId()
+    public static String writeLog(String message, int cartId, Pokemon pokemon) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDateTime now = LocalDateTime.now();
+        String logMessage = "User " + message + " " + pokemon.getName() + " in cart " + cartId;
+        return logMessage;
+    }
+
     public void saveFile() {
         JSONObject newLogRow = new JSONObject();
-        JSONArray newLogRows = new JSONArray();
-        Iterator<Map.Entry<String, String>> mapIterator = orderLog.entrySet().iterator();
-        while (mapIterator.hasNext()) {
-            Map.Entry<String, String> entry = mapIterator.next();
+        //Write JSON file
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDateTime now = LocalDateTime.now();
+        String fileName = "log_" + orderId + "_" + (dtf.format(now)) + ".json";
 
+        for (Map.Entry<String, String> entry : orderLog.entrySet()) {
+            newLogRow = new JSONObject();
             newLogRow.put("date", entry.getKey());
             newLogRow.put("action", entry.getValue());
-            newLogRows.add(newLogRow);
-            newLogRow = new JSONObject();
-        }
 
-        //Write JSON file
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        LocalDateTime now = LocalDateTime.now();
-        String fileName = orderId + "_" + (dtf.format(now)) + ".json";
-
-        try (FileWriter file = new FileWriter(fileName)) {
-            file.write(newLogRows.toJSONString()); //append kéne
-            file.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
+            try (FileWriter file = new FileWriter(fileName, true)) {
+                file.write(newLogRow.toJSONString());
+                file.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

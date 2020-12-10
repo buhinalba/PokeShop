@@ -1,5 +1,7 @@
 package com.codecool.shop.model;
 
+import com.codecool.shop.controller.OrderLog;
+
 import java.util.*;
 
 public class Cart {
@@ -44,6 +46,8 @@ public class Cart {
             }
         }
         pokemons.put(pokemon, 1);
+        OrderLog logThis = new OrderLog(id, OrderLog.writeLog("added", id, pokemon));
+        logThis.saveFile();
     }
 
     @Override
@@ -55,10 +59,12 @@ public class Cart {
     }
 
     public void removePokemon(int id) {
+        Pokemon pokemon = null;
         Iterator<Map.Entry<Pokemon, Integer>> mapIterator = pokemons.entrySet().iterator();
         while (mapIterator.hasNext()) {
             Map.Entry<Pokemon, Integer> entry = mapIterator.next();
             if ((entry.getKey()).getId() == id) {
+                pokemon = entry.getKey();
                 if (entry.getValue().equals(1)) {
                     mapIterator.remove();
                 }
@@ -67,5 +73,8 @@ public class Cart {
                 }
             }
         }
+
+        OrderLog logThis = new OrderLog(id, OrderLog.writeLog("remove", id, pokemon));
+        logThis.saveFile();
     }
 }

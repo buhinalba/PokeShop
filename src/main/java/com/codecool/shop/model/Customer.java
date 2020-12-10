@@ -1,14 +1,16 @@
 package com.codecool.shop.model;
 
+import java.sql.Date;
+
 public class Customer extends BaseModel {
     private String email;
     private String address;
     private String city;
     private String state;
-    private String zip;
+    private int zip;
     private String cardName;
     private int cardNumber;
-    private int expDate;
+    private Date expDate;
     private int cvv;
 
     public Customer(String name) {
@@ -47,11 +49,11 @@ public class Customer extends BaseModel {
         this.state = state;
     }
 
-    public String getZip() {
+    public int getZip() {
         return zip;
     }
 
-    public void setZip(String zip) {
+    public void setZip(int zip) {
         this.zip = zip;
     }
 
@@ -71,11 +73,11 @@ public class Customer extends BaseModel {
         this.cardNumber = cardNumber;
     }
 
-    public int getExpDate() {
+    public Date getExpDate() {
         return expDate;
     }
 
-    public void setExpDate(int expDate) {
+    public void setExpDate(Date expDate) {
         this.expDate = expDate;
     }
 

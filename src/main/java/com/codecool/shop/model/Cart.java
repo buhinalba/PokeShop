@@ -68,7 +68,6 @@ public class Cart {
     }
 
     public void decreasePokemonCount(int id) {
-    public void removePokemon(int id) {
         Pokemon pokemon = null;
         Iterator<Map.Entry<Pokemon, Integer>> mapIterator = pokemons.entrySet().iterator();
         while (mapIterator.hasNext()) {

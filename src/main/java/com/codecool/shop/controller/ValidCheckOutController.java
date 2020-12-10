@@ -22,8 +22,9 @@ public class ValidCheckOutController extends HttpServlet implements UtilDao {
         EmailHandler emailHandler = new EmailHandler();
         CartDaoMem cartDaoMem = CartDaoMem.getInstance();
         StringBuilder sb = new StringBuilder();
-
-        sb.append("Dear adventurer, <br>"+
+        String fullname = req.getParameter("fullname");
+        System.out.println(fullname);
+        sb.append("Dear "+ fullname +" <br>"+
                 "<p>Here you can see your order details: </p><br><br>" +
                 "<table>" +
                     "<th>Name</th>" +
@@ -48,6 +49,7 @@ public class ValidCheckOutController extends HttpServlet implements UtilDao {
                 "<p>Kind regards, pokeStaff </p><br>");
 
         emailHandler.sendMail("Ash@getemall.com", sb.toString());
+        resp.sendRedirect(req.getContextPath() + "/");
     }
 
 }

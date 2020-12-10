@@ -48,7 +48,7 @@
 </div>
 
 <div class="checkout">
-    <form name="checkout">
+    <form name="checkout" action="/valid-checkout" method="post">
         <div class="checkout-form">
             <div class="checkout-col">
                 <h3>Billing Address</h3>
@@ -80,19 +80,6 @@
     </form>
 </div>
 
-
 <div th:replace="footer.html :: copy"></div>
-
-<div id="checkout-modal" class="modal hidden">
-    <!-- Modal content -->
-    <div class="checkout-modal-container">
-        <span class="close">&times;</span>
-        <div class="checkout-modal-body">
-            <p>Successful order!</p><br>
-            <button id="close-checkout-button"><a href="/">Back to Main page</a></button>
-        </div>
-    </div>
-</div>
-
 </body>
 </html>

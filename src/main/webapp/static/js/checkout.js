@@ -8,57 +8,21 @@ const MIN_NAME_LENGTH = 5;
 const CVV_LENGTH = 3;
 const CARD_NUM_LENGTH = 16;
 
-
-// TODO check valid date
-
 function initCheckout() {
     let checkOutButton = document.querySelector("#checkout-button");
-    let closeCheckoutButton = document.querySelector("#close-checkout-button");
     checkOutButton.addEventListener("click", checkoutValidation);
-    closeCheckoutButton.addEventListener("click", closeSuccessfulCheckoutModal)
 }
 
-function checkoutValidation() {
+function checkoutValidation(event) {
     if (!validBillingInformaion()) {
         window.alert("Invalid Billing Information!")
+        event.preventDefault();
     } else if (!validPaymentInformation()){
         window.alert("Invalid Payment Information!")
-    } else {
-        let jsonObject = JSON.stringify(objectFromInput());
-        dataHandler.postCheckoutInformation(jsonObject, () => console.log(jsonObject))
-        successfulCheckoutModal();
-
+        event.preventDefault();
+    } else{
+        window.alert("Successfully submitted order");
     }
-}
-
-function objectFromInput() {
-    let inputObject = new Object();
-    inputObject.billing_information = jsonObjectFromBillingInfo();
-    inputObject.payment_information = jsonObjectFromPaymentInfo();
-
-    return inputObject;
-}
-
-function jsonObjectFromBillingInfo() {
-    let billingInfoObject = new Object();
-    billingInfoObject.full_name = document.querySelector("#fname").value;
-    billingInfoObject.email = document.querySelector("#email").value;
-    billingInfoObject.address = document.querySelector("#adr").value;
-    billingInfoObject.city = document.querySelector("#city").value;
-    billingInfoObject.state = document.querySelector("#state").value;
-    billingInfoObject.zip = document.querySelector("#zip").value;
-
-    return billingInfoObject;
-}
-
-function jsonObjectFromPaymentInfo() {
-    let paymentInfoObject = new Object();
-    paymentInfoObject.card_name = document.querySelector("#ccname").value;
-    paymentInfoObject.card_number = document.querySelector("#ccnum").value;
-    paymentInfoObject.exp_date = document.querySelector("#expdate").value;
-    paymentInfoObject.cvv = document.querySelector("#cvv").value;
-
-    return paymentInfoObject;
 }
 
 function validBillingInformaion() {
@@ -159,15 +123,5 @@ function validCvv() {
     return true;
 }
 
-function successfulCheckoutModal() {
-    let checkoutModal = document.querySelector(".modal")
-    checkoutModal.classList.remove("hidden");
-}
-
-function closeSuccessfulCheckoutModal(event) {
-    let closeButton = event.target;
-    let modal = closeButton.closest(".modal");
-    modal.classList.add("hidden")
-}
 
 initCheckout();

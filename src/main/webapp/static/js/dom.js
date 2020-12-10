@@ -3,7 +3,6 @@ import {dataHandler} from "./data_handler.js";
 export let dom = {
 
     init: function () {
-        // need to initialize event listeners for type selection
         dom.loadButtonFunctions();
     },
 

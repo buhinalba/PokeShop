@@ -18,13 +18,16 @@ public class ValidCheckOutController extends HttpServlet implements UtilDao {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         EmailHandler emailHandler = new EmailHandler();
+
         SaveCustomerToJson saveCustomerToJson = new SaveCustomerToJson(req);
+        saveCustomerToJson.save();
+
         Customer customer = saveCustomerToJson.getCustomer();
+
         CartDaoMem cartDaoMem = CartDaoMem.getInstance();
         StringBuilder sb = new StringBuilder();
 
-
-        sb.append("Dear "+ customer.getName() +" <br>"+
+        sb.append("Dear "+ customer.getName() +", <br>"+
                 "<p>Here you can see your order details: </p><br><br>" +
                 "<table>" +
                     "<th>Name</th>" +

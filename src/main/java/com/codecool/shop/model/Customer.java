@@ -9,8 +9,8 @@ public class Customer extends BaseModel {
     private String state;
     private int zip;
     private String cardName;
-    private int cardNumber;
-    private Date expDate;
+    private String cardNumber;
+    private String expDate;
     private int cvv;
 
     public Customer(String name) {
@@ -65,19 +65,19 @@ public class Customer extends BaseModel {
         this.cardName = cardName;
     }
 
-    public int getCardNumber() {
+    public String getCardNumber() {
         return cardNumber;
     }
 
-    public void setCardNumber(int cardNumber) {
+    public void setCardNumber(String cardNumber) {
         this.cardNumber = cardNumber;
     }
 
-    public Date getExpDate() {
+    public String getExpDate() {
         return expDate;
     }
 
-    public void setExpDate(Date expDate) {
+    public void setExpDate(String expDate) {
         this.expDate = expDate;
     }
 
@@ -87,5 +87,10 @@ public class Customer extends BaseModel {
 
     public void setCvv(int cvv) {
         this.cvv = cvv;
+    }
+
+    public String getSaveName(){
+        String saveName = name.replaceAll("\\s+","_") + getId();
+        return saveName;
     }
 }

@@ -102,9 +102,9 @@ export let dom = {
             tempOffset.dataset.offset = parseInt(tempOffset.dataset.offset) + offset;
         }
         dataHandler.getPokemonsByType(type, tempOffset.dataset.offset, (pokemons) => {
-            if(pokemons.length > 0) {
+            if(pokemons.length === 20) {
                 dom.showPokemons(pokemons);
-            } else{
+            } else {
                 tempOffset.dataset.offset = parseInt(tempOffset.dataset.offset) - offset;
             }
         });

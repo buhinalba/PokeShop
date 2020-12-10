@@ -1,5 +1,7 @@
 package com.codecool.shop.model;
 
+import com.codecool.shop.controller.OrderLog;
+
 import java.util.*;
 
 public class Cart {
@@ -64,18 +66,18 @@ public class Cart {
     }
 
     public void decreasePokemonCount(int id) {
-        Iterator<Map.Entry<Pokemon, Integer>> mapIterator = pokemons.entrySet().iterator();
-        while (mapIterator.hasNext()) {
-            Map.Entry<Pokemon, Integer> entry = mapIterator.next();
+        Pokemon pokemon = null;
+        for (Map.Entry<Pokemon, Integer> entry : pokemons.entrySet()) {
             if ((entry.getKey()).getId() == id) {
+                pokemon = entry.getKey();
                 if (entry.getValue().equals(1)) {
                     return;
-                }
-                else {
+                } else {
                     entry.setValue(entry.getValue() - 1);
                 }
             }
         }
+
     }
 
     public void deletePokemon(int id) {
@@ -89,5 +91,14 @@ public class Cart {
             }
         }
         return 0;
+    }
+
+    public Pokemon findPokemon(int id) {
+        for(Map.Entry<Pokemon, Integer> entry: pokemons.entrySet()) {
+            if (entry.getKey().getId() == id) {
+                return entry.getKey();
+            }
+        }
+        throw new NoSuchElementException("Pokemon with id " + id + "  not found in cart!");
     }
 }

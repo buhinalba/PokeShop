@@ -1,6 +1,7 @@
 package com.codecool.shop.business.logic;
 
 import com.codecool.shop.dao.implementation.CartDaoMem;
+import org.json.simple.JSONObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,8 +21,11 @@ public class DeleteCartContent extends HttpServlet {
         CartDaoMem cartDaoMem = CartDaoMem.getInstance();
         cartDaoMem.deletePokemon(Integer.parseInt(pokemonId));
 
-        PrintWriter out = resp.getWriter();
+        JSONObject responseJson = new JSONObject();
+        responseJson.put("pokemonId", pokemonId);
+        responseJson.put("totalPrice", cartDaoMem.getTotalPrice());
 
-        out.println("{\"pokemonId\": " + pokemonId + "}");
+        PrintWriter out = resp.getWriter();
+        out.println(responseJson.toJSONString());
     }
 }

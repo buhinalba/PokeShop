@@ -69,7 +69,7 @@ export let dom = {
     },
 
     addReviewCartListener: function () {
-        let reviewCartButton = document.querySelector(".navbar #review-cart-button");
+        let reviewCartButton = document.querySelector("#review-cart-button");
         reviewCartButton.addEventListener("click", this.initCartModal);
 
         let closeButton = document.querySelector(".modal .close");
@@ -90,7 +90,6 @@ export let dom = {
     initCartModal: function (event) {
         let cartButton = event.target;
 
-        cartButton.classList.add("active")      // todo remove when closing modal
         dataHandler.getCartContent(dom.showCartModal);
     },
 
@@ -110,7 +109,7 @@ export let dom = {
                 <th></th>
                 <th>Name</th>
                 <th>Types</th>
-                <th>Single Price</th>100
+                <th>Single Price</th>
                 <th></th>
                 <th></th>
                 <th>Count</th>
@@ -151,7 +150,9 @@ export let dom = {
         cartList += "</table>"
         }
         cartList += `<div class="total-price"><p>Total Price: ${totalPrice}</p></div>`;
-        cartList += `<div id="checkout-cart-button"><a href="/checkout">Checkout</a></div>`
+
+        if (cartContent.size === 0) {cartList += `<div id="checkout-cart-button"><a href="/checkout">Checkout</a></div>`}
+
         modalBody.innerHTML = cartList;
 
         dom.initEditCartButtons();
@@ -209,16 +210,14 @@ export let dom = {
 
         countDisplayer.innerHTML = count;
 
-        // todo update total price
+        document.querySelector(".modal .total-price p").innerHTML = "Total price: " + response.totalPrice;
     },
 
     removePokemonFromList: function (response) {
         let pokemonId = response.pokemonId;
         let affectedRow = document.querySelector(`tr[data-pokemon-id="${pokemonId}"]`)
         affectedRow.remove();
-        // todo update total price
+        document.querySelector(".modal .total-price p").innerHTML = "Total price: " + response.totalPrice;
 
     }
 }
-
-// todo merge navbar with search

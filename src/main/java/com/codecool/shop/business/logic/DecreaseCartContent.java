@@ -26,6 +26,7 @@ public class DecreaseCartContent extends HttpServlet {
         JSONObject responseJson = new JSONObject();
         responseJson.put("count", count);
         responseJson.put("pokemonId", pokemonId);
+        responseJson.put("totalPrice", cartDaoMem.getTotalPrice());
 
         String response = responseJson.toJSONString();
         out.println(response);

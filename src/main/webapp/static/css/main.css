@@ -11,7 +11,7 @@ footer{
     font-family: fantasy;
 }
 
-.navbar {
+.filter {
     color: white;
     display: flex;
     justify-content: left;
@@ -22,21 +22,21 @@ footer{
     border-radius: .25em;
 }
 
-.navbar div {
+.filter div {
     margin: 15px;
     text-decoration: none;
     color: #cecccc;
 }
-.navbar div:hover {
+.filter div:hover {
     cursor: pointer;
     color: #ffffff;
 }
 
-.navbar div.active {
+.filter div.active {
     color: white;
 }
 
-.navbar .brand-name a {
+.filter .brand-name a {
     text-decoration: none!important;
     color: white!important;
     font-size: 25px;
@@ -219,15 +219,21 @@ tbody {
 }
 
 table {
+    margin-top: 20px;
+    margin-left: 15px;
     text-align: center;
     padding: 15px;
+    border-collapse: collapse;
+    width: 95%;
 }
 
-tr:hover {
-    background-color: #888;
+td {
+    border-left: transparent;
+    border-right: transparent;
 }
 
 tr:nth-child(even) {
+    color: white;
     background-color: #2c3e50;
 }
 
@@ -255,4 +261,71 @@ tr {
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+/*checkout*/
+.cart-total {
+    color: white;
+    position: sticky;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    background: #2c3e50;
+    border-radius: .25em;
+    width: 100%; /* Could be more or less, depending on screen size */
+}
+
+.container {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin: 0 -16px;
+}
+
+.checkout {
+    margin-top: 35px;
+    margin-bottom: 35px;
+    align-content: center;
+    color: #591F0A;
+    width: 35%;
+}
+
+.checkout-col {
+    -ms-flex: 50%;
+    flex: 50%;
+}
+
+
+
+.checkout-col {
+    padding: 0 16px;
+}
+
+.checkout-form {
+    background-color: #f2f2f2;
+    padding: 5px 20px 15px 20px;
+    border: 2px solid lightgrey;
+    border-radius: 5px;
+    flex: 75%;
+
+}
+
+input {
+    width: 100%;
+    margin-bottom: 20px;
+
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+label {
+    margin-bottom: 10px;
+    display: block;
+}
+
+.error {
+    border: 3px solid red;
 }

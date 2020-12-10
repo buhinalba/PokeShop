@@ -25,7 +25,6 @@ public class CheckOutController extends HttpServlet implements UtilDao {
         context.setVariable("pokemonMap", cartDaoMem.getAll());
         context.setVariable("totalPrice", cartDaoMem.getTotalPrice());
         context.setVariable("totalAmount", cartDaoMem.getTotalAmount());
-        // Todo need total price, total items, each price for each pokemon
 
         engine.process("product/checkout.html", context, resp.getWriter());
     }

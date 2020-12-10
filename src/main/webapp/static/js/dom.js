@@ -121,7 +121,7 @@ export let dom = {
     },
 
     addReviewCartListener: function () {
-        let reviewCartButton = document.querySelector(".navbar #review-cart-button");
+        let reviewCartButton = document.querySelector("#review-cart-button");
         reviewCartButton.addEventListener("click", this.initCartModal);
 
         let closeButton = document.querySelector(".modal .close");
@@ -133,14 +133,15 @@ export let dom = {
         let card = button.closest(".card")
         let pokemonId = card.dataset.pokemonId
 
-        dataHandler.addPokemonToCart(pokemonId, (response) => console.log(response));
+        dataHandler.addPokemonToCart(pokemonId, (response) => {
+            // todo change cart size (next to cart there is an icon)
+        });
     },
 
+
     initCartModal: function (event) {
-        console.log("button pushed");
         let cartButton = event.target;
 
-        cartButton.classList.add("active")      // todo remove when closing modal
         dataHandler.getCartContent(dom.showCartModal);
     },
 
@@ -152,48 +153,123 @@ export let dom = {
         let cartList = "";
         let totalPrice = response.totalPrice;
         let cartContent = response.cartContent;
+        if (cartContent.length === 0) {
+            cartList = "Your cart is empty"
+        } else {
+        cartList += `
+            <table>
+                <th></th>
+                <th>Name</th>
+                <th>Types</th>
+                <th>Single Price</th>
+                <th></th>
+                <th></th>
+                <th>Count</th>
+                <th></th>`
         for (let element of cartContent) {
             let pokemon = element.pokemon;
             cartList += `
-                <div class="list-element" data-pokemon-id="${pokemon.id}">
-                    <table>
-                        <tr>
-                            <th>
+                        <tr class="list-element" data-pokemon-id="${pokemon.id}">
+                            <td>
                                 <button class="delete-button" type="button">&#x1F5D1;</button>
-                            </th>                        
-                            <th>
-                                <p class="name">Name: ${pokemon.name}</p>
-                            </th>
-                            <th>
-                                <p class="categories">Types: ${pokemon.pokemonCategory.join(", ")}</p>
-                            </th>
-                            <th>
-                                <p class="price">Single price: ${pokemon.defaultPrice}</p>
-                            </th>
-                            <th>
+                            </td>                        
+                            <td>
+                                <p class="name">${pokemon.name}</p>
+                            </td>
+                            <td>
+                                <p class="categories">${pokemon.pokemonCategory.join(", ")}</p>
+                            </td>
+                            <td>
+                                <p class="price">${pokemon.defaultPrice}</p>
+                            </td>
+                            <td>
                                 <img src="${pokemon.spriteImageUrl}"/>
-                            </th>
-                            <th>
-                                <button class="increase-count" type="button">&#43;</button>
-                            </th>
-                            <th>
-                                <p class="count">${element.count}</p>
-                            </th>
-                            <th>
+                            </td>
+                            <td>
                                 <button class="decrease-count" type="button">&#45;</button>
-                            </th>
+                            </td>
+                            
+                            <td>
+                                <p class="count">${element.count}</p>
+                            </td>
+                            <td>
+                                <button class="increase-count" type="button">&#43;</button>
+                            </td>
+                            
                         </tr>
-                    </table>
-                </div>`;
+                        `;
+        }
+        cartList += "</table>"
         }
         cartList += `<div class="total-price"><p>Total Price: ${totalPrice}</p></div>`;
-        cartList += `<div id="checkout-cart-button"><a href="/checkout">Checkout</a></div>`
+
+        if (cartContent.length !== 0) {cartList += `<div id="checkout-cart-button"><a href="/checkout">Checkout</a></div>`}
         modalBody.innerHTML = cartList;
+
+        dom.initEditCartButtons();
     },
+
+
 
     closeModal: function (event) {
         let closeButton = event.target;
         let modal = closeButton.closest(".modal");
         modal.classList.add("hidden");
+    },
+
+    initEditCartButtons: function () {
+        let deleteButtons = document.querySelectorAll(".delete-button");
+        let decreaseButtons = document.querySelectorAll(".decrease-count");
+        let increaseButtons = document.querySelectorAll(".increase-count");
+
+        for (let deleteButton of deleteButtons) {
+            deleteButton.addEventListener('click', dom.deletePokemon)
+        }
+
+        for (let decreaseButton of decreaseButtons) {
+            decreaseButton.addEventListener('click', dom.decreasePokemon)
+        }
+
+        for (let increaseButton of increaseButtons) {
+            increaseButton.addEventListener('click', dom.increasePokemon)
+        }
+    },
+
+    deletePokemon: function (event) {
+        let button = event.target;
+        let pokemonId = button.closest("tr").dataset.pokemonId;
+        dataHandler.deletePokemon(pokemonId, dom.removePokemonFromList)
+    },
+
+    decreasePokemon: function (event) {
+        let button = event.target;
+        let pokemonId = button.closest("tr").dataset.pokemonId;
+        dataHandler.decreasePokemon(pokemonId, dom.updateCount)
+    },
+
+    increasePokemon: function (event) {
+        let button = event.target;
+        let pokemonId = button.closest("tr").dataset.pokemonId;
+        dataHandler.increasePokemon(pokemonId, dom.updateCount)
+    },
+
+    updateCount: function (response) {
+        let count = response.count;
+        let pokemonId = response.pokemonId;
+
+        let affectedRow = document.querySelector(`tr[data-pokemon-id="${pokemonId}"]`)
+        let countDisplayer = affectedRow.querySelector(".count");
+
+        countDisplayer.innerHTML = count;
+
+        document.querySelector(".modal .total-price p").innerHTML = "Total price: " + response.totalPrice;
+    },
+
+    removePokemonFromList: function (response) {
+        let pokemonId = response.pokemonId;
+        let affectedRow = document.querySelector(`tr[data-pokemon-id="${pokemonId}"]`)
+        affectedRow.remove();
+        document.querySelector(".modal .total-price p").innerHTML = "Total price: " + response.totalPrice;
+
     }
 }

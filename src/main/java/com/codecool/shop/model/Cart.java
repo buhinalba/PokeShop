@@ -50,6 +50,15 @@ public class Cart {
         logThis.saveFile();
     }
 
+    public void addPokemonToCart(int pokemonId) {
+        for (Map.Entry<Pokemon, Integer> entry : pokemons.entrySet()) {
+            if ((entry.getKey()).getId() == pokemonId) {
+                entry.setValue(entry.getValue() + 1);
+                return;
+            }
+        }
+    }
+
     @Override
     public String toString() {
         return String.format("id: %1$d, " +
@@ -58,6 +67,7 @@ public class Cart {
                 this.userName);
     }
 
+    public void decreasePokemonCount(int id) {
     public void removePokemon(int id) {
         Pokemon pokemon = null;
         Iterator<Map.Entry<Pokemon, Integer>> mapIterator = pokemons.entrySet().iterator();
@@ -66,7 +76,7 @@ public class Cart {
             if ((entry.getKey()).getId() == id) {
                 pokemon = entry.getKey();
                 if (entry.getValue().equals(1)) {
-                    mapIterator.remove();
+                    return;
                 }
                 else {
                     entry.setValue(entry.getValue() - 1);
@@ -76,5 +86,20 @@ public class Cart {
 
         OrderLog logThis = new OrderLog(id, OrderLog.writeLog("remove", id, pokemon));
         logThis.saveFile();
+    }
+
+
+    public void deletePokemon(int id) {
+        pokemons.entrySet().removeIf(entry -> (entry.getKey()).getId() == id);
+
+    }
+
+    public int getPokemonCount(int pokemonId) {
+        for(Map.Entry<Pokemon, Integer> entry: pokemons.entrySet()) {
+            if (entry.getKey().getId() == pokemonId) {
+                return entry.getValue();
+            }
+        }
+        return 0;
     }
 }

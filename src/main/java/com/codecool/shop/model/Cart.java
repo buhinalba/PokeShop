@@ -78,10 +78,8 @@ public class Cart {
         }
     }
 
-
     public void deletePokemon(int id) {
         pokemons.entrySet().removeIf(entry -> (entry.getKey()).getId() == id);
-
     }
 
     public int getPokemonCount(int pokemonId) {

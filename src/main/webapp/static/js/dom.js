@@ -100,40 +100,48 @@ export let dom = {
         let cartList = "";
         let totalPrice = response.totalPrice;
         let cartContent = response.cartContent;
+        cartList += `
+            <table>
+                <th></th>
+                <th>Name</th>
+                <th>Types</th>
+                <th>Single Price</th>
+                <th></th>
+                <th></th>
+                <th>Count</th>
+                <th></th>`
         for (let element of cartContent) {
             let pokemon = element.pokemon;
             cartList += `
-                <div class="list-element" data-pokemon-id="${pokemon.id}">
-                    <table>
-                        <tr>
-                            <th>
+                        <tr class="list-element" data-pokemon-id="${pokemon.id}">
+                            <td>
                                 <button class="delete-button" type="button">&#x1F5D1;</button>
-                            </th>                        
-                            <th>
-                                <p class="name">Name: ${pokemon.name}</p>
-                            </th>
-                            <th>
-                                <p class="categories">Types: ${pokemon.pokemonCategory.join(", ")}</p>
-                            </th>
-                            <th>
-                                <p class="price">Single price: ${pokemon.defaultPrice}</p>
-                            </th>
-                            <th>
+                            </td>                        
+                            <td>
+                                <p class="name">${pokemon.name}</p>
+                            </td>
+                            <td>
+                                <p class="categories">${pokemon.pokemonCategory.join(", ")}</p>
+                            </td>
+                            <td>
+                                <p class="price">${pokemon.defaultPrice}</p>
+                            </td>
+                            <td>
                                 <img src="${pokemon.spriteImageUrl}"/>
-                            </th>
-                            <th>
+                            </td>
+                            <td>
                                 <button class="increase-count" type="button">&#43;</button>
-                            </th>
-                            <th>
+                            </td>
+                            <td>
                                 <p class="count">${element.count}</p>
-                            </th>
-                            <th>
+                            </td>
+                            <td>
                                 <button class="decrease-count" type="button">&#45;</button>
-                            </th>
+                            </td>
                         </tr>
-                    </table>
-                </div>`;
+                        `;
         }
+        cartList += "</table>"
         cartList += `<div class="total-price"><p>Total Price: ${totalPrice}</p></div>`;
         cartList += `<div id="checkout-cart-button"><a href="/checkout">Checkout</a></div>`
         modalBody.innerHTML = cartList;

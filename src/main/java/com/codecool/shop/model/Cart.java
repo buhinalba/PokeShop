@@ -46,8 +46,6 @@ public class Cart {
             }
         }
         pokemons.put(pokemon, 1);
-        OrderLog logThis = new OrderLog(id, OrderLog.writeLog("added", id, pokemon));
-        logThis.saveFile();
     }
 
     public void addPokemonToCart(int pokemonId) {
@@ -69,28 +67,22 @@ public class Cart {
 
     public void decreasePokemonCount(int id) {
         Pokemon pokemon = null;
-        Iterator<Map.Entry<Pokemon, Integer>> mapIterator = pokemons.entrySet().iterator();
-        while (mapIterator.hasNext()) {
-            Map.Entry<Pokemon, Integer> entry = mapIterator.next();
+        for (Map.Entry<Pokemon, Integer> entry : pokemons.entrySet()) {
             if ((entry.getKey()).getId() == id) {
                 pokemon = entry.getKey();
                 if (entry.getValue().equals(1)) {
                     return;
-                }
-                else {
+                } else {
                     entry.setValue(entry.getValue() - 1);
                 }
             }
         }
 
-        OrderLog logThis = new OrderLog(id, OrderLog.writeLog("remove", id, pokemon));
-        logThis.saveFile();
     }
 
 
     public void deletePokemon(int id) {
         pokemons.entrySet().removeIf(entry -> (entry.getKey()).getId() == id);
-
     }
 
     public int getPokemonCount(int pokemonId) {
@@ -100,5 +92,14 @@ public class Cart {
             }
         }
         return 0;
+    }
+
+    public Pokemon findPokemon(int id) {
+        for(Map.Entry<Pokemon, Integer> entry: pokemons.entrySet()) {
+            if (entry.getKey().getId() == id) {
+                return entry.getKey();
+            }
+        }
+        throw new NoSuchElementException("Pokemon with id " + id + "  not found in cart!");
     }
 }

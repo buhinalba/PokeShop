@@ -1,5 +1,6 @@
 package com.codecool.shop.dao.implementation;
 
+import com.codecool.shop.controller.OrderLog;
 import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.Pokemon;
@@ -13,8 +14,10 @@ public class CartDaoMem implements CartDao {
 
     private Cart cart = new Cart();
     private static CartDaoMem instance = null;
+    OrderLog log;
 
     private CartDaoMem() {
+        log = new OrderLog(cart.getId());
     }
 
     public static CartDaoMem getInstance() {
@@ -27,24 +30,28 @@ public class CartDaoMem implements CartDao {
     @Override
     public void add(Pokemon pokemon) {
         cart.addPokemonToCart(pokemon);
-    }
-
-    public void increasePokemonCount(int pokemonId) {
-        cart.addPokemonToCart(pokemonId);
+        log.writeLog("added", pokemon);
     }
 
     @Override
     public Pokemon findPokemon(int id) {
-        return null; //cart.getPokemons().stream().filter(t -> t.getId() == id).findFirst().orElse(null);
+        return cart.findPokemon(id);
+    }
+
+    public void increasePokemonCount(int pokemonId) {
+        cart.addPokemonToCart(pokemonId);
+        log.writeLog("Increased pokemon count", findPokemon(pokemonId));
     }
 
     @Override
     public void decreasePokemon(int id) {
         cart.decreasePokemonCount(id);
+        log.writeLog("Decreased pokemon count", findPokemon(id));
     }
 
     public void deletePokemon(int id) {
         cart.deletePokemon(id);
+        log.writeLog("Deleted specific pokemon species from cart", findPokemon(id));
     }
 
     @Override

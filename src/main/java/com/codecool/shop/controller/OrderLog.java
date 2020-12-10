@@ -13,9 +13,9 @@ public class OrderLog {
     private HashMap<String, String> orderLog = new HashMap<String, String>();
     private Integer orderId;
 
-    public OrderLog(Integer orderId, String log) {
+    public OrderLog(Integer orderId) {
         this.orderId = orderId;
-        orderLog.put(String.valueOf(LocalDateTime.now()), log);
+        // orderLog.put(String.valueOf(LocalDateTime.now()), log);
     }
 
     public HashMap<String, String> getOrderLog() {
@@ -38,13 +38,22 @@ public class OrderLog {
         orderLog.put(date, log);
     }
 
-    //message, cartId, pokemon.getId()
-    public static String writeLog(String message, int cartId, Pokemon pokemon) {
+
+    public void writeLog(String message, Pokemon pokemon) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime now = LocalDateTime.now();
-        String logMessage = "User " + message + " " + pokemon.getName() + " in cart " + cartId;
-        return logMessage;
+        String logMessage = "User " + message + " " + pokemon.getName() + " in cart " + orderId;
+
+        String fileName = "log_" + orderId + "_" + (dtf.format(now)) + ".json";
+
+        try (FileWriter file = new FileWriter(fileName, true)) {
+            file.write(logMessage);
+            file.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 
     public void saveFile() {
         JSONObject newLogRow = new JSONObject();

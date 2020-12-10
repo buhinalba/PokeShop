@@ -42,4 +42,15 @@ export let dataHandler = {
         });
     },
 
+    addPokemonToCart: function (pokemonID, callback) {
+        this._api_get(`http://localhost:8080/add-to-cart?pokemon-id=${pokemonID}`, (response) => {
+            callback(response);
+        })
+    },
+
+    getCartContent: function (callback) {
+        this._api_get(`http://localhost:8080/cart-content`, (response) => {
+            callback(response);
+        })
+    }
 }

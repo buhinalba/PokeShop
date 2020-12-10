@@ -14,6 +14,13 @@
 <body>
 
 <div class="page-title" data-offset="0" data-search="">
+<div class="navbar">
+    <div class="brand-name"><a href="/">Pokemon Shop</a></div>
+    <div id="review-cart-button">Cart</div>
+</div>
+
+
+<div class="page-title">
     <h1>Pokemon Shop</h1>
 </div>
 
@@ -31,8 +38,7 @@
     </div>
 
     <div class="filter__button">
-        <button type="submit" id="submit-search">Search
-        </button>
+        <button type="submit" id="submit-search">Search</button>
     </div>
 
 </div>
@@ -41,8 +47,8 @@
 <div class="container">
     <div id="pokemons-container" class="row">
         <div class="card-container">
-            <div class="card" th:each="pokemon, iterStat : ${pokemons}">
-                <img src="https://css.gg/pokemon.css" th:attr="src=${pokemon.getSpriteImageUrl()}" alt=""/>
+            <div class="card" th:attr="data-pokemon-id=${pokemon.getId()}" th:each="pokemon : ${pokemons}">
+                <img class="card-image" src="https://css.gg/pokemon.css" th:attr="src=${pokemon.getSpriteImageUrl()}" height="150" width="150"/>
                 <div class="card-header">
                     <h4 class="card-title" th:text="${pokemon.getName()}">Pokemon name</h4>
                 </div>
@@ -52,7 +58,7 @@
                         <p class="lead" th:text="${pokemon.getDefaultPrice()}">Price</p>
                     </div>
                     <div class="card-text">
-                        <a class="btn btn-success" href="#">Add to cart</a>
+                        <a class="btn-success" href="#">Add to cart</a>
                     </div>
                 </div>
             </div>
@@ -63,6 +69,15 @@
 </div>
 
 <div th:replace="footer.html :: copy"></div>
+
+<div id="myModal" class="modal hidden">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="modal-body"><p>This has to be changed to the cart content</p></div>
+    </div>
+
+</div>
 
 </body>
 </html>

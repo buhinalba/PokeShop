@@ -22,7 +22,7 @@ public class Pokemon extends BaseModel {
     }
 
     public String getPrice() {
-        return String.valueOf(this.defaultPrice) + " $";
+        return this.defaultPrice + " $";
     }
 
     public void setPrice(int price) {
@@ -53,7 +53,7 @@ public class Pokemon extends BaseModel {
     public String toString() {
         return String.format("id: %1$d, " +
                         "name: %2$s, " +
-                        "defaultPrice: %3$f, " +
+                        "defaultPrice: %3$d, " +
                         "productCategory: %4$s, " +
                         "spriteImageUrl: %5$s ",
                 this.id,

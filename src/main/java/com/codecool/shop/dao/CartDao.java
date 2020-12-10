@@ -2,14 +2,18 @@ package com.codecool.shop.dao;
 
 import com.codecool.shop.model.Cart;
 
+import com.codecool.shop.model.Pokemon;
 import com.codecool.shop.model.PokemonCategory;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface CartDao {
-    void add(Cart cart);
-    Cart find(int id);
-    void remove(int id);
+    void add(Pokemon pokemon);
 
-    List<Cart> getAll();
+    Pokemon findPokemon(int id);
+
+    void removePokemon(int id);
+
+    HashMap<Pokemon, Integer> getAll();
 }

@@ -1,6 +1,7 @@
 package com.codecool.shop.business.logic;
 
 import com.codecool.shop.dao.UtilDao;
+import com.codecool.shop.dao.implementation.PokemonDaoMem;
 import com.codecool.shop.dao.implementation.PokemonFilterDaoByTypeDao;
 import com.codecool.shop.model.Pokemon;
 import com.codecool.shop.model.PokemonCategory;
@@ -26,7 +27,6 @@ public class PokemonFilterByTypeAPI extends HttpServlet implements UtilDao {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // todo separate this into dao and business layer ! (no api request happening here!)
         response.setContentType("application/json");response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
 
@@ -35,6 +35,9 @@ public class PokemonFilterByTypeAPI extends HttpServlet implements UtilDao {
 
         PokemonFilterDaoByTypeDao filterDao = PokemonFilterDaoByTypeDao.getInstance();
         List<Pokemon> filteredPokemons = filterDao.getPokemons(type, offset);
+
+        PokemonDaoMem pokemonDaoMem = PokemonDaoMem.getInstance();
+        pokemonDaoMem.setData(filteredPokemons);
 
         Gson gson = new Gson();
 

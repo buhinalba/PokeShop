@@ -5,15 +5,16 @@ import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.Pokemon;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class CartDaoMem  implements CartDao {
+public class CartDaoMem implements CartDao {
 
-    private List<Cart> data = new ArrayList<>();
+    private Cart cart = new Cart();
     private static CartDaoMem instance = null;
 
     private CartDaoMem() {
-
     }
 
     public static CartDaoMem getInstance() {
@@ -24,21 +25,39 @@ public class CartDaoMem  implements CartDao {
     }
 
     @Override
-    public void add(Cart cart) {
-        cart.setId(data.size() + 1);
-        data.add(cart);
+    public void add(Pokemon pokemon) {
+        cart.addPokemonToCart(pokemon);
     }
 
     @Override
-    public Cart find(int id) {
-        return data.stream().filter(t -> t.getId() == id).findFirst().orElse(null);
+    public Pokemon findPokemon(int id) {
+        return null; //cart.getPokemons().stream().filter(t -> t.getId() == id).findFirst().orElse(null);
     }
 
     @Override
-    public void remove(int id) {
-        data.remove(find(id));
+    public void removePokemon(int id) {
+        cart.removePokemon(id);
     }
 
     @Override
-    public List<Cart> getAll() { return data; }
+    public HashMap<Pokemon, Integer> getAll() {
+        return cart.getPokemons();
+    }
+
+    public int getTotalPrice() {
+        int sum = 0;
+        for (Map.Entry<Pokemon, Integer> entry : this.getAll().entrySet()) {
+            sum += entry.getKey().getDefaultPrice() * entry.getValue();
+        }
+        return sum;
+    }
+
+    public int getTotalAmount() {
+        int sum = 0;
+        for (Map.Entry<Pokemon, Integer> entry : this.getAll().entrySet()) {
+            sum += entry.getValue();
+        }
+        return sum;
+    }
+
 }

@@ -13,7 +13,7 @@ public interface CartDao {
 
     Pokemon findPokemon(int id);
 
-    void removePokemon(int id);
+    void decreasePokemon(int id);
 
     HashMap<Pokemon, Integer> getAll();
 }

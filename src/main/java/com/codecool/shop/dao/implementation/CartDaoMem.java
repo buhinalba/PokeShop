@@ -29,14 +29,22 @@ public class CartDaoMem implements CartDao {
         cart.addPokemonToCart(pokemon);
     }
 
+    public void increasePokemonCount(int pokemonId) {
+        cart.addPokemonToCart(pokemonId);
+    }
+
     @Override
     public Pokemon findPokemon(int id) {
         return null; //cart.getPokemons().stream().filter(t -> t.getId() == id).findFirst().orElse(null);
     }
 
     @Override
-    public void removePokemon(int id) {
-        cart.removePokemon(id);
+    public void decreasePokemon(int id) {
+        cart.decreasePokemonCount(id);
+    }
+
+    public void deletePokemon(int id) {
+        cart.deletePokemon(id);
     }
 
     @Override
@@ -58,6 +66,10 @@ public class CartDaoMem implements CartDao {
             sum += entry.getValue();
         }
         return sum;
+    }
+
+    public int getPokemonCount(int pokemonId) {
+        return cart.getPokemonCount(pokemonId);
     }
 
 }

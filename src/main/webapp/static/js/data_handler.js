@@ -74,5 +74,23 @@ export let dataHandler = {
         this._api_post('http://localhost:8080/valid-checkout', {checkout_information: data}, (response) => {
             callback(response);
         })
+    },
+
+    deletePokemon: function (pokemonId, callback) {
+        this._api_get(`http://localhost:8080/edit/delete?pokemon-id=${pokemonId}`, (response) => {
+            callback(response);
+        })
+    },
+
+    decreasePokemon: function (pokemonId, callback) {
+        this._api_get(`http://localhost:8080/edit/decrease?pokemon-id=${pokemonId}`, (response) => {
+            callback(response);
+        })
+    },
+
+    increasePokemon: function (pokemonId, callback) {
+        this._api_get(`http://localhost:8080/edit/increase?pokemon-id=${pokemonId}`, (response) => {
+            callback(response);
+        })
     }
 }

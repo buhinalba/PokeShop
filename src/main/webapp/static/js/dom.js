@@ -129,6 +129,7 @@ export let dom = {
     },
 
     addToCart: function (event) {
+        event.preventDefault();
         let button = event.currentTarget;
         let card = button.closest(".card")
         let pokemonId = card.dataset.pokemonId

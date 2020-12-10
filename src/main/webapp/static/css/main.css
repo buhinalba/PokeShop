@@ -177,15 +177,16 @@ select {
 
 .card .btn-success {
     text-decoration: none;
-    color: #2a2d27;
-    background-color: #cffaf8;
-    padding: 5px;
-    border-radius: 10px;
+    color: white;
+    background-color: #486684; /* 2c3e50 */
+    padding: 10px;
+    border-radius: 15px;
     border: 1px solid #2a2d27
 }
 
 .card .btn-success:hover {
-    background-color: #7ef8f1;
+    background-color: #6189b1;
+    color: white;
 }
 
 /*Modal*/
@@ -334,16 +335,23 @@ label {
     margin-left: 15px;
 }
 
-#checkout-cart-button a {
+#checkout-cart-button a, .pagination {
     margin-left: 15px;
     padding: 10px;
     text-decoration: none;
     background-color: #2c3e50;
     color: white;
-    border: 1px solid #2c3e50;
+    border: 1px solid #E1FAF9;
     border-radius: 15px;
 }
 
-#checkout-cart-button a:hover {
+#checkout-cart-button a:hover, .pagination:hover {
+    cursor: pointer;
     background-color: #486684;
 }
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+}
+

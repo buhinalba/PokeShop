@@ -220,3 +220,5 @@ export let dom = {
 
     }
 }
+
+// todo merge navbar with search

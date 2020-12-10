@@ -9,7 +9,7 @@ body {
     font-family: fantasy;
 }
 
-.navbar {
+.filter {
     color: white;
     display: flex;
     justify-content: left;
@@ -20,21 +20,21 @@ body {
     border-radius: .25em;
 }
 
-.navbar div {
+.filter div {
     margin: 15px;
     text-decoration: none;
     color: #cecccc;
 }
-.navbar div:hover {
+.filter div:hover {
     cursor: pointer;
     color: #ffffff;
 }
 
-.navbar div.active {
+.filter div.active {
     color: white;
 }
 
-.navbar .brand-name a {
+.filter .brand-name a {
     text-decoration: none!important;
     color: white!important;
     font-size: 25px;

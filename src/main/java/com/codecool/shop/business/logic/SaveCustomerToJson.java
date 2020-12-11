@@ -19,7 +19,6 @@ public class SaveCustomerToJson {
 
     public void save() throws IOException {
         Gson gson = new Gson();
-        // TODO fix, so it cant be null
         String fileName = customer.getSaveName();
         FileOutputStream fileOut = new FileOutputStream("src/main/saves/" + fileName + ".json", false);
         ObjectOutputStream out = new ObjectOutputStream(fileOut);
@@ -30,7 +29,7 @@ public class SaveCustomerToJson {
     }
 
     private void setUpCustomerDetails(HttpServletRequest req){
-        Customer customer = new Customer(req.getParameter("fullname"));
+        this.customer = new Customer(req.getParameter("fullname"));
         customer.setEmail(req.getParameter("email"));
         customer.setAddress(req.getParameter("address"));
         customer.setCity(req.getParameter("city"));

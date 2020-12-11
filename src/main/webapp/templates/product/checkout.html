@@ -18,9 +18,12 @@
 </div>
 
 <div class="cart-total">
+
+    <div class="brand-name"><a href="/">Pokemon Shop</a></div>
+
     <div class="container">
         <i class="fa fa-shopping-cart"></i>
-        <p th:text="${'Total amount : ' + totalAmount + ' - Total price : ' + totalPrice}">Total items : 42 - Total
+        <p class="total" th:text="${'Total amount : ' + totalAmount + ' - Total price : ' + totalPrice}">Total items : 42 - Total
             price : 3230$</p>
     </div>
 </div>
@@ -29,14 +32,16 @@
     <div id="pokemons-container" class="checkout-row">
         <div class="card-container">
             <div class="card" th:each="entry : ${pokemonMap}">
-                <img src="https://css.gg/pokemon.css" th:attr="src=${entry.key.getSpriteImageUrl()}" alt=""/>
+                <img class="card-image" th:attr="src=${entry.key.getSpriteImageUrl()}" height="150" width="150" alt=""/>
                 <div class="card-header">
                     <h4 class="card-title" th:text="${'Name: ' + entry.key.getName()}">Pokemon name</h4>
                 </div>
                 <div class="card-body">
                     <div class="card-text">
-                        <p class="card-text" th:text="${'Type(s): ' + entry.key.getPokemonCategoryString()}">Pokemon
-                            type</p>
+                        <p class="card-text" th:if="${entry.key.getPokemonCategory().size() > 1}"
+                           th:text="${'Types: ' + entry.key.getPokemonCategoryString()}">Pokemon type</p>
+                        <p class="card-text" th:unless="${entry.key.getPokemonCategory().size() > 1}"
+                           th:text="${'Type: ' + entry.key.getPokemonCategoryString()}">Pokemon type</p>
                         <p class="card-text" th:text="${'Count: ' + entry.value}">Pokemon count</p>
                         <p class="lead" th:with="result=${entry.key.getDefaultPrice() * entry.value}"
                            th:text="${'Price: ' + result}">Price</p>

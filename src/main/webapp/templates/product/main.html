@@ -48,8 +48,11 @@
                 </div>
                 <div class="card-body">
                     <div class="card-text">
-                        <p class="card-text" th:text="${pokemon.getPokemonCategoryString()}">Pokemon type</p>
-                        <p class="lead" th:text="${pokemon.getDefaultPrice()}">Price</p>
+                        <p class="card-text" th:if="${pokemon.getPokemonCategory().size() > 1}"
+                           th:text="${'Types: ' + pokemon.getPokemonCategoryString()}">Pokemon type</p>
+                        <p class="card-text" th:unless="${pokemon.getPokemonCategory().size() > 1}"
+                           th:text="${'Type: ' + pokemon.getPokemonCategoryString()}">Pokemon type</p>
+                        <p class="lead" th:text="${'Price: ' + pokemon.getDefaultPrice()}">Price</p>
                     </div>
                     <div class="card-text">
                         <a class="btn-success" href="#">Add to cart</a>
@@ -74,7 +77,6 @@
         <span class="close">&times;</span>
         <div class="modal-body"><p>This has to be changed to the cart content</p></div>
     </div>
-
 </div>
 
 </body>

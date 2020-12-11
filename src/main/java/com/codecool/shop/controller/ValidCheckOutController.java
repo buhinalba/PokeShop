@@ -51,7 +51,7 @@ public class ValidCheckOutController extends HttpServlet implements UtilDao {
                 "<p><i>If you have any problem with your order, please contact: customers@pokeshop.com </i></p>" +
                 "<p>Kind regards, pokeStaff </p><br>");
 
-        emailHandler.sendMail("Ash@getemall.com", sb.toString());
+        emailHandler.sendMail(customer.getEmail(), sb.toString());
         resp.sendRedirect(req.getContextPath() + "/");
     }
 

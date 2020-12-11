@@ -5,10 +5,8 @@ import com.google.gson.Gson;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.sql.Date;
 
 public class SaveCustomerToJson {
     private Customer customer;

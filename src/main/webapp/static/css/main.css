@@ -1,0 +1,388 @@
+body {
+    background: #3c556f;
+    color: white;
+}
+.card.footer{
+    align-content: center;
+}
+.page-title {
+    text-align: center;
+    font-size: 50px;
+    font-family: fantasy;
+}
+
+.filter {
+    color: white;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    height: 60px;
+    top: 0;
+    background: #2c3e50;
+    border-radius: .25em;
+}
+
+.filter div {
+    margin: 15px;
+    text-decoration: none;
+    color: #cecccc;
+}
+.filter div:hover {
+    cursor: pointer;
+    color: #ffffff;
+}
+
+.filter div.active {
+    color: white;
+}
+
+.filter .brand-name a {
+    text-decoration: none!important;
+    color: white!important;
+    font-size: 25px;
+    font-family: "Courier 10 Pitch", SansSerif, serif;
+}
+
+.filter {
+    color: white;
+    position: sticky;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    top: 0;
+    background: #2c3e50;
+    border-radius: .25em;
+}
+
+.filter__select, .filter__price, .filter__button {
+    display: inline-block;
+    margin: 0 30px;
+}
+
+
+select::-ms-expand {
+    display: none;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    outline: 0;
+    box-shadow: none;
+    border: 0 !important;
+    background: #3c556f none;
+}
+
+select {
+    flex: 1;
+    padding: 0 .5em;
+    color: #fff;
+    cursor: pointer;
+}
+
+.filter__select {
+    position: relative;
+    display: flex;
+    width: 20em;
+    height: 3em;
+    line-height: 3;
+    background: #2c3e50;
+    overflow: hidden;
+    border-radius: .25em;
+}
+
+.filter__select::after {
+    content: '\25BC';
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 1em;
+    background: #34495e;
+    cursor: pointer;
+    pointer-events: none;
+    -webkit-transition: .25s all ease;
+    -o-transition: .25s all ease;
+    transition: .25s all ease;
+}
+
+.filter__select:hover::after {
+    color: #12a7ac;
+}
+
+.filter__button button {
+    padding: 5px 10px;
+    text-align: center;
+    color: white;
+    background: #3c556f;
+    font-size: 15px;
+    text-decoration: none;
+    overflow: hidden;
+    transition: .5s;
+    letter-spacing: 4px;
+    border-radius: .25em;
+}
+
+.filter__button button:hover {
+    cursor: pointer;
+    background: #03e9f4;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #03e9f4,
+    0 0 25px #03e9f4,
+    0 0 50px #03e9f4,
+    0 0 100px #03e9f4;
+}
+
+/*Card*/
+.card-container {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: 10%;
+    margin: 20px;
+    padding: 25px;
+    background-color: #E1FAF9;
+    color: #591F0A;
+    border: 1px solid #2a2d27;
+    border-radius: 5px;
+}
+
+.card .card-header {
+    font-size: 20px;
+    color: #2c3e50;
+}
+
+.card-header {
+    font-size: 30px;
+    color: #2c3e50;
+}
+
+.card-header, .card-body {
+    text-align: center;
+}
+
+.card-image {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.card .btn-success {
+    text-decoration: none;
+    color: white;
+    background-color: #486684; /* 2c3e50 */
+    padding: 10px;
+    border-radius: 15px;
+    border: 1px solid #2a2d27
+}
+
+.card .btn-success:hover {
+    background-color: #6189b1;
+    color: white;
+}
+
+/*Modal*/
+.modal {
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+}
+
+.hidden {
+    display: none; /* Hidden by default */
+}
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    color: black;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%; /* Could be more or less, depending on screen size */
+}
+
+tbody {
+    width: max-content;
+}
+
+table {
+    margin-top: 20px;
+    margin-left: 15px;
+    text-align: center;
+    padding: 15px;
+    border-collapse: collapse;
+    width: 95%;
+}
+
+td {
+    border-left: transparent;
+    border-right: transparent;
+}
+
+tr:nth-child(even) {
+    color: white;
+    background-color: #2c3e50;
+}
+
+tr {
+    border-top: 1px solid #2c3e50;
+    border-bottom: 1px solid #2c3e50;
+    width: max-content;
+}
+
+.delete-button, .increase-count, .decrease-count {
+    display: inline-block;
+    Cursor: pointer;
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/*checkout*/
+.cart-total {
+    color: white;
+    position: sticky;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    background: #2c3e50;
+    border-radius: .25em;
+    width: 100%; /* Could be more or less, depending on screen size */
+}
+
+.cart-total .brand-name a, .total{
+    margin-right: 45px;
+    text-decoration: none!important;
+    color: white!important;
+    font-size: 25px;
+    font-family: "Courier 10 Pitch", SansSerif, serif;
+}
+
+.container {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin: 0 -16px;
+}
+
+form {
+    text-align: center;
+}
+
+.checkout {
+    /*margin-top: 35px;*/
+    /*margin-bottom: 35px;*/
+    align-content: center;
+    color: #591F0A;
+    width: 35%;
+    margin: auto;
+}
+
+.pokemons-container {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.checkout-col {
+    -ms-flex: 50%;
+    flex: 50%;
+}
+
+.checkout-row {
+    width: 100%;
+    align-content: center;
+}
+
+.checkout-col {
+    padding: 0 16px;
+}
+
+.checkout-form {
+    background-color: #f2f2f2;
+    padding: 10px 40px 20px 20px;
+    border: 2px solid lightgrey;
+    border-radius: 20px;
+    flex: 75%;
+
+}
+
+input {
+    width: 100%;
+    margin-bottom: 20px;
+
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+label {
+    margin-bottom: 10px;
+    display: block;
+}
+
+.error {
+    border: 3px solid red;
+}
+
+.total-price {
+    margin-left: 15px;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#checkout-cart-button {
+    text-align: center;
+}
+
+#checkout-cart-button a, .pagination {
+    /*margin-left: 15px;*/
+    padding: 10px;
+    text-decoration: none;
+    background-color: #2c3e50;
+    color: white;
+    border: 1px solid #E1FAF9;
+    border-radius: 15px;
+}
+
+#checkout-cart-button a:hover, .pagination:hover {
+    cursor: pointer;
+    background-color: #486684;
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+.card.footer {
+    margin: auto;
+}

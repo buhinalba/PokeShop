@@ -65,7 +65,9 @@ public class PokemonDaoMem implements PokemonDao {
     }
 
     public Pokemon getPokemonFromUrl(String url) throws IOException {
+
         HttpURLConnection pokeURL = UtilDao.getHttpUrlConnection(url);
+
         String pokeResponse = UtilDao.getResponse(pokeURL);
         JSONObject pokemonJsonObject = (JSONObject) JSONValue.parse(pokeResponse);
 
@@ -78,12 +80,13 @@ public class PokemonDaoMem implements PokemonDao {
         List<String> pokemonCategoryNames = new ArrayList<>();
 
         JSONArray pokemonCategories = (JSONArray) pokemonJsonObject.get("types");
-        for (Object category :pokemonCategories) {
+        for (Object category : pokemonCategories) {
             String pokemonCategoryName = (String) ((JSONObject) ((JSONObject) category).get("type")).get("name");
             pokemonCategoryNames.add(pokemonCategoryName);
         }
         return new Pokemon(pokemonId, pokemonName, pokemonPrice, pokemonCategoryNames, pokemonSprite);
     }
+
 
     public void clearMem(){
         data.clear();

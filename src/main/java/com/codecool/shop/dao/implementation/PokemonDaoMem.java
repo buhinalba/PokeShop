@@ -8,6 +8,7 @@ import com.codecool.shop.model.PokemonCategory;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+import org.thymeleaf.util.StringUtils;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -64,14 +65,16 @@ public class PokemonDaoMem implements PokemonDao {
         return data.stream().filter(t -> t.getPokemonCategory().equals(pokemonCategory)).collect(Collectors.toList());
     }
 
-    public Pokemon getPokemonFromUrl(String url) throws IOException {
+    public JSONObject getPokemonJsonObjectFromUrl(String url) throws IOException {
         HttpURLConnection pokeURL = UtilDao.getHttpUrlConnection(url);
         String pokeResponse = UtilDao.getResponse(pokeURL);
-        JSONObject pokemonJsonObject = (JSONObject) JSONValue.parse(pokeResponse);
+        return (JSONObject) JSONValue.parse(pokeResponse);
+    }
 
+    public Pokemon getPokemonFromJsonObject(JSONObject pokemonJsonObject) {
         int pokemonId = Integer.parseInt(pokemonJsonObject.get("id").toString());
         String pokemonName = pokemonJsonObject.get("name").toString();
-        int pokemonPrice = Integer.parseInt(pokemonJsonObject.get("base_experience").toString()); // shouldn't money be in int ??
+        int pokemonPrice = Integer.parseInt(pokemonJsonObject.get("base_experience").toString());
         String pokemonSprite = (String) ((JSONObject) pokemonJsonObject.get("sprites")).get("front_default");
         pokemonSprite = pokemonSprite == null ? "No Image" : pokemonSprite;
 

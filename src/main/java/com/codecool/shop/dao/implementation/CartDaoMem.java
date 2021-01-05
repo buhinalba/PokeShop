@@ -2,14 +2,12 @@ package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.controller.OrderLog;
 import com.codecool.shop.dao.CartDao;
-import com.codecool.shop.dao.PokemonDao;
 import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.Pokemon;
+import org.json.simple.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class CartDaoMem implements CartDao {
@@ -54,7 +52,8 @@ public class CartDaoMem implements CartDao {
     public void deletePokemon(int id) throws IOException {
         cart.deletePokemon(id);
         PokemonDaoMem pokemonDaoMem = PokemonDaoMem.getInstance();
-        log.writeLog("Deleted specific pokemon species from cart", pokemonDaoMem.getPokemonFromUrl("https://pokeapi.co/api/v2/pokemon/" + id));
+        JSONObject pokeJsonObject = pokemonDaoMem.getPokemonJsonObjectFromUrl("https://pokeapi.co/api/v2/pokemon/" + id); // changes for testing
+        log.writeLog("Deleted specific pokemon species from cart", pokemonDaoMem.getPokemonFromJsonObject(pokeJsonObject));
     }
 
     @Override

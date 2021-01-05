@@ -20,13 +20,12 @@ public class PokemonDaoJdbc implements PokemonDao {
     @Override
     public void add(Pokemon pokemon) {
         try(Connection conn = dataSource.getConnection()) {
-            String sql = "INSERT INTO pokemon (id, name, default_price, pokemon_category, sprite) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO pokemon (id, name, price, sprite_url) VALUES (?, ?, ?, ?)";
             PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             st.setInt(1, pokemon.getId());
             st.setString(2, pokemon.getName());
             st.setDouble(3, pokemon.getDefaultPrice());
-            st.setArray(4, (Array) pokemon.getPokemonCategory());
-            st.setString(5, pokemon.getSpriteImageUrl());
+            st.setString(4, pokemon.getSpriteImageUrl());
             st.executeUpdate();
             ResultSet rs = st.getGeneratedKeys();
             rs.next();
@@ -41,7 +40,11 @@ public class PokemonDaoJdbc implements PokemonDao {
     @Override
     public Pokemon find(int id) {
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "SELECT name, default_price, pokemon_category, sprite FROM pokemon WHERE id = ?";
+            String sql = "SELECT name, price, CONCAT_WS(',' , ct.name) AS pokemon_category, sprite_url FROM pokemon AS p " +
+                    "JOIN pokemon_category AS pc ON pc.pokemon_id = p.id" +
+                    "JOIN category AS ct ON ct.id = pc.category_id " +
+                    "WHERE p.id = ?";
+
             PreparedStatement st = conn.prepareStatement(sql);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
@@ -70,7 +73,10 @@ public class PokemonDaoJdbc implements PokemonDao {
     @Override
     public List<Pokemon> getAll() {
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "SELECT id, name, default_price, pokemon_category, sprite FROM pokemon";
+            String sql = "SELECT p.name, price, CONCAT_WS(',' , ct.name) AS pokemon_category, sprite_url FROM pokemon AS p " +
+                    "JOIN pokemon_category AS pc ON pc.pokemon_id = p.id" +
+                    "JOIN category AS ct ON ct.id = pc.category_id" +
+                    "GROUP BY p.id";
             ResultSet rs = conn.createStatement().executeQuery(sql);
             List<Pokemon> result = new ArrayList<>();
             while (rs.next()) {
@@ -86,7 +92,10 @@ public class PokemonDaoJdbc implements PokemonDao {
 
     public List<Pokemon> getBy(PokemonCategory pokemonCategory){
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "SELECT id, name, default_price, pokemon_category, sprite FROM pokemon WHERE pokemon_category = ? ";
+            String sql = "SELECT id, name, price, CONCAT_WS(',' , ct.name) AS pokemon_category, sprite_url FROM pokemon AS p" +
+                    "JOIN pokemon_category AS pc ON  pc.pokemon_id = p.id" +
+                    "JOIN category as ct ON pc.category_id = ct.id " +
+                    "WHERE ct.name = ?  GROUP BY p.id";
             ResultSet rs = conn.createStatement().executeQuery(sql);
             List<Pokemon> result = new ArrayList<>();
             while (rs.next()) {

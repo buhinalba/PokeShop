@@ -3,7 +3,7 @@ package com.codecool.shop.mem.dao.test;
 import org.junit.jupiter.api.Test;
 
 class PokemonDaoMemTest {
-    // TODO test cartDaoMem(?)?, pokemonCategoryDaoMem(getAllTypeNames)?
+    // TODO test cartDaoMem(getTotalPrice or getTotalAmount)?, pokemonCategoryDaoMem(getPokemonCategoriesListFromJsonArray)?
 
     @Test
     void getPokemonFromUrl_validPokemonUrl_returnsPokemon() {

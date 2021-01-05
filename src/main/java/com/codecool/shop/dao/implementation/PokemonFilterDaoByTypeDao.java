@@ -40,7 +40,7 @@ public class PokemonFilterDaoByTypeDao implements PokemonFilterDao {
             for (int i = offset; i < offset + limit; i++) {
                 JSONObject poke = (JSONObject) ((JSONObject) pokemonsOfTypeJSON.get(i)).get("pokemon");
                 String pokeUrl = poke.get("url").toString();
-                JSONObject pokeJsonObject = pokemonDaoMem.getPokemonJsonObjectFromUrl(pokeUrl); // changes for testing
+                JSONObject pokeJsonObject = pokemonDaoMem.getPokemonJsonObjectFromUrl(pokeUrl);
                 Pokemon pokemon = pokemonDaoMem.getPokemonFromJsonObject(pokeJsonObject);
                 pokemonsOfType.add(pokemon);
             }

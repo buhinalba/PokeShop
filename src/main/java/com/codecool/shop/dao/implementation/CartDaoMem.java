@@ -52,7 +52,7 @@ public class CartDaoMem implements CartDao {
     public void deletePokemon(int id) throws IOException {
         cart.deletePokemon(id);
         PokemonDaoMem pokemonDaoMem = PokemonDaoMem.getInstance();
-        JSONObject pokeJsonObject = pokemonDaoMem.getPokemonJsonObjectFromUrl("https://pokeapi.co/api/v2/pokemon/" + id); // changes for testing
+        JSONObject pokeJsonObject = pokemonDaoMem.getPokemonJsonObjectFromUrl("https://pokeapi.co/api/v2/pokemon/" + id);
         log.writeLog("Deleted specific pokemon species from cart", pokemonDaoMem.getPokemonFromJsonObject(pokeJsonObject));
     }
 

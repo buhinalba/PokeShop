@@ -41,7 +41,6 @@ public class PokemonGetAllDao implements PokemonGetAllDaoInt {
         List<Pokemon> pokemonList = new ArrayList<>();
 
         for (Object poki : jsonArray) {
-//            ((JSONObject) poki).get("url").toString() -- changes for testing
             JSONObject pokemonJsonObject = pokemonDaoMem.getPokemonJsonObjectFromUrl(((JSONObject) poki).get("url").toString());
             var pokemonTemp = pokemonDaoMem.getPokemonFromJsonObject(pokemonJsonObject);
             pokemonList.add(pokemonTemp);

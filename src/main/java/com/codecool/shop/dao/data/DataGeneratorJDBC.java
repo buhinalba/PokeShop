@@ -12,16 +12,18 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class DataGeneratorJDBC {
     private static PokemonGetAllDaoInt pokemonGetAllDao = new PokemonGetAllDao();
+    private static DataSource dataSource = DataManager.connectDataBase();
 
     private static final String apiURL = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=1118";
 
     public static void addPokemonsToDatabase() throws IOException {
-        DataSource dataSource = DataManager.connectDataBase();
         List<Pokemon> pokemons = pokemonGetAllDao.getAll(apiURL);
 
         for (Pokemon pokemon: pokemons) {
@@ -38,43 +40,72 @@ public class DataGeneratorJDBC {
             } catch (SQLException e) {
                 System.out.println("Pokemon addition to database failed");
                 e.printStackTrace();
+                break;
             }
         }
     }
 
 
     public static void addCategoriesToDatabase() throws IOException {
-        DataSource dataSource = DataManager.connectDataBase();
-
         PokemonCategoryDao categoryDao = new PokemonCategoryDaoMem();
         List<String> categories = categoryDao.getFullCategoryNameList();
-        for (String categoryName : categories) {
-            try (Connection conn = dataSource.getConnection()) {
-                String query = "INSERT INTO category VALUES (DEFAULT, ?)";
+        int id = 1;
+        try (Connection conn = dataSource.getConnection()) {
+            for (String categoryName : categories) {
+                String query = "INSERT INTO category (id, name) VALUES (?, ?)";
                 PreparedStatement st = conn.prepareStatement(query);
-                st.setString(1, categoryName);
-                st.executeUpdate();
-            } catch (SQLException e) {
+                st.setInt(1, id++);
+                st.setString(2, categoryName);
+                st.execute();
+            }
+        } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }
     }
 
 
-    public static void connectCategoriesToPokemons(Connection conn, List<String> categories, int pokemonId) throws IOException {
+    public static void connectCategoriesToPokemons(Connection conn, List<String> categories, int pokemonId) throws IOException, SQLException {
         for(String category: categories) {
-            int id = getIdFromCategoryName(category);
-
+            int categoryId = getIdFromCategoryName(category);
+            String query = "INSERT INTO pokemon_category VALUES (?, ?)";
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setInt(1, pokemonId);
+            st.setInt(2, categoryId);
+            st.executeUpdate();
         }
     }
 
     private static int getIdFromCategoryName(String name) {
-        return -1;
+        try (Connection conn = dataSource.getConnection()) {
+            String query = "SELECT id FROM category WHERE name = ?";
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setString(1, name);
+            ResultSet rs = st.executeQuery();
+            if (!rs.next()) {
+                throw new SQLException("Category Does NOt Exist in database!");
+            }
+            return rs.getInt(1);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        throw new NoSuchElementException("Category Does NOt Exist in database!");
+    }
+
+    public static void resetDataBase() {
+        try (Connection conn = dataSource.getConnection()) {
+            String query = "DELETE from pokemon_category; DELETE from category; DELETE from pokemon";
+            PreparedStatement s = conn.prepareStatement(query);
+            s.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 
     public static void main(String[] args) {
         try {
+            resetDataBase();
             addCategoriesToDatabase();
             addPokemonsToDatabase();
         } catch (IOException e) {

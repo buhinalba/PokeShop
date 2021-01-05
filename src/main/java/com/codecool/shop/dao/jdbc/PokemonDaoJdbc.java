@@ -3,13 +3,11 @@ package com.codecool.shop.dao.jdbc;
 import com.codecool.shop.dao.PokemonDao;
 import com.codecool.shop.model.Pokemon;
 import com.codecool.shop.model.PokemonCategory;
-import org.thymeleaf.expression.Lists;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class PokemonDaoJdbc implements PokemonDao {
@@ -31,7 +29,7 @@ public class PokemonDaoJdbc implements PokemonDao {
             st.setString(5, pokemon.getSpriteImageUrl());
             st.executeUpdate();
             ResultSet rs = st.getGeneratedKeys();
-            rs.next(); // Read next returned value - in this case the first one. See ResultSet docs for more explaination
+            rs.next();
             pokemon.setId(rs.getInt(1));
 
         } catch (SQLException throwables) {
@@ -75,7 +73,7 @@ public class PokemonDaoJdbc implements PokemonDao {
             String sql = "SELECT id, name, default_price, pokemon_category, sprite FROM pokemon";
             ResultSet rs = conn.createStatement().executeQuery(sql);
             List<Pokemon> result = new ArrayList<>();
-            while (rs.next()) { // while result set pointer is positioned before or on last row read pokemons
+            while (rs.next()) {
                 Pokemon pokemon = new Pokemon(rs.getInt(1), rs.getString(2), rs.getInt(3),
                         Arrays.asList(rs.getString(4)), rs.getString(5));
                 result.add(pokemon);
@@ -91,7 +89,7 @@ public class PokemonDaoJdbc implements PokemonDao {
             String sql = "SELECT id, name, default_price, pokemon_category, sprite FROM pokemon WHERE pokemon_category = ? ";
             ResultSet rs = conn.createStatement().executeQuery(sql);
             List<Pokemon> result = new ArrayList<>();
-            while (rs.next()) { // while result set pointer is positioned before or on last row read pokemons
+            while (rs.next()) {
                 Pokemon pokemon = new Pokemon(rs.getInt(1), rs.getString(2), rs.getInt(3),
                         Arrays.asList(rs.getString(4)), rs.getString(5));
                 result.add(pokemon);

@@ -1,7 +1,9 @@
 package com.codecool.shop.dao.data;
 
 import com.codecool.shop.config.DataManager;
+import com.codecool.shop.dao.PokemonCategoryDao;
 import com.codecool.shop.dao.PokemonGetAllDaoInt;
+import com.codecool.shop.dao.implementation.PokemonCategoryDaoMem;
 import com.codecool.shop.dao.implementation.PokemonGetAllDao;
 import com.codecool.shop.model.Pokemon;
 import com.codecool.shop.model.PokemonCategory;
@@ -42,12 +44,32 @@ public class DataGeneratorJDBC {
 
 
     public static void addCategoriesToDatabase() throws IOException {
-        // todo get all categories from api
+        DataSource dataSource = DataManager.connectDataBase();
+
+        PokemonCategoryDao categoryDao = new PokemonCategoryDaoMem();
+        List<String> categories = categoryDao.getFullCategoryNameList();
+        for (String categoryName : categories) {
+            try (Connection conn = dataSource.getConnection()) {
+                String query = "INSERT INTO category VALUES (DEFAULT, ?)";
+                PreparedStatement st = conn.prepareStatement(query);
+                st.setString(1, categoryName);
+                st.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
     public static void connectCategoriesToPokemons(Connection conn, List<String> categories, int pokemonId) throws IOException {
-        // todo get all category id from category table
+        for(String category: categories) {
+            int id = getIdFromCategoryName(category);
+
+        }
+    }
+
+    private static int getIdFromCategoryName(String name) {
+        return -1;
     }
 
 

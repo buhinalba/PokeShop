@@ -20,7 +20,7 @@ public class PokemonCategoryDaoMem implements PokemonCategoryDao {
 
     /* A private Constructor prevents any other class from instantiating.
      */
-    private PokemonCategoryDaoMem() {
+    public PokemonCategoryDaoMem() {
     }
 
     public static PokemonCategoryDaoMem getInstance() throws IOException {
@@ -51,6 +51,17 @@ public class PokemonCategoryDaoMem implements PokemonCategoryDao {
     public List<PokemonCategory> getAll() { return data; }
 
     public void getAllTypeNames() throws IOException {
+        List<String> names = getFullCategoryNameList();
+        addAll(names);
+    }
+
+    public void addAll(List<String> names) {
+        for(String typeName : names){
+            add(new PokemonCategory(typeName));
+        }
+    }
+
+    public List<String> getFullCategoryNameList() throws IOException {
         HttpURLConnection con = UtilDao.getHttpUrlConnection("https://pokeapi.co/api/v2/type");
         String content = UtilDao.getResponse(con);
         con.disconnect();
@@ -63,12 +74,6 @@ public class PokemonCategoryDaoMem implements PokemonCategoryDao {
             names.add(((JSONObject) pokeType).get("name").toString());
 
         }
-        addAll(names);
-    }
-
-    public void addAll(List<String> names) {
-        for(String typeName : names){
-            add(new PokemonCategory(typeName));
-        }
+        return names;
     }
 }

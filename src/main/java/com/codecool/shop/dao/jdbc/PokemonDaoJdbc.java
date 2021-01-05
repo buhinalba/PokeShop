@@ -59,7 +59,14 @@ public class PokemonDaoJdbc implements PokemonDao {
 
     @Override
     public void remove(int id){
-
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "DELETE FROM pokemon WHERE id = ?";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error while deleting pokemon with id: " + id, e);
+        }
     }
 
     @Override
@@ -80,6 +87,18 @@ public class PokemonDaoJdbc implements PokemonDao {
     }
 
     public List<Pokemon> getBy(PokemonCategory pokemonCategory){
-        return null;
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "SELECT id, name, default_price, pokemon_category, sprite FROM pokemon WHERE pokemon_category = ? ";
+            ResultSet rs = conn.createStatement().executeQuery(sql);
+            List<Pokemon> result = new ArrayList<>();
+            while (rs.next()) { // while result set pointer is positioned before or on last row read pokemons
+                Pokemon pokemon = new Pokemon(rs.getInt(1), rs.getString(2), rs.getInt(3),
+                        Arrays.asList(rs.getString(4)), rs.getString(5));
+                result.add(pokemon);
+            }
+            return result;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error while reading all pokemons", e);
+        }
     }
 }

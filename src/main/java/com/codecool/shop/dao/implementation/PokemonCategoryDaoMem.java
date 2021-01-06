@@ -54,6 +54,20 @@ public class PokemonCategoryDaoMem implements PokemonCategoryDao {
         List<String> names = getFullCategoryNameList();
         addAll(names);
     }
+    public List<String> getPokemonCategoriesListFromJsonArray(JSONArray responseCategories) {
+        List<String> names = new ArrayList<>();
+
+        for (Object pokeType: responseCategories) {
+            names.add(((JSONObject) pokeType).get("name").toString());
+        }
+        return names;
+    }
+    public JSONArray getPokemonCategoriesJsonArrayFromUrl(HttpURLConnection con) throws IOException {
+        String content = UtilDao.getResponse(con);
+        con.disconnect();
+        JSONObject jsonResponse = (JSONObject) JSONValue.parse(content);
+        return  (JSONArray) jsonResponse.get("results");
+    }
 
     public void addAll(List<String> names) {
         for(String typeName : names){
@@ -63,17 +77,7 @@ public class PokemonCategoryDaoMem implements PokemonCategoryDao {
 
     public List<String> getFullCategoryNameList() throws IOException {
         HttpURLConnection con = UtilDao.getHttpUrlConnection("https://pokeapi.co/api/v2/type");
-        String content = UtilDao.getResponse(con);
-        con.disconnect();
-        JSONObject jsonResponse = (JSONObject) JSONValue.parse(content);
-        JSONArray responseTypes = (JSONArray) jsonResponse.get("results");
-
-        List<String> names = new ArrayList<>();
-
-        for (Object pokeType: responseTypes) {
-            names.add(((JSONObject) pokeType).get("name").toString());
-
-        }
-        return names;
+        JSONArray responseTypes = getPokemonCategoriesJsonArrayFromUrl(con);
+        return getPokemonCategoriesListFromJsonArray(responseTypes);
     }
 }

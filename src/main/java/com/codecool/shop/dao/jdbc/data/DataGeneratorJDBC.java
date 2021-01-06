@@ -1,4 +1,4 @@
-package com.codecool.shop.dao.data;
+package com.codecool.shop.dao.jdbc.data;
 
 import com.codecool.shop.config.DataManager;
 import com.codecool.shop.dao.PokemonCategoryDao;
@@ -6,7 +6,6 @@ import com.codecool.shop.dao.PokemonGetAllDaoInt;
 import com.codecool.shop.dao.implementation.PokemonCategoryDaoMem;
 import com.codecool.shop.dao.implementation.PokemonGetAllDao;
 import com.codecool.shop.model.Pokemon;
-import com.codecool.shop.model.PokemonCategory;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -64,7 +63,7 @@ public class DataGeneratorJDBC {
     }
 
 
-    public static void connectCategoriesToPokemons(Connection conn, List<String> categories, int pokemonId) throws IOException, SQLException {
+    public static void connectCategoriesToPokemons(Connection conn, List<String> categories, int pokemonId) throws SQLException {
         for(String category: categories) {
             int categoryId = getIdFromCategoryName(category);
             String query = "INSERT INTO pokemon_category VALUES (?, ?)";

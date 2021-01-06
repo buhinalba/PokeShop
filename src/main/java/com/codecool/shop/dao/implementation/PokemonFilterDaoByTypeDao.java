@@ -3,8 +3,6 @@ package com.codecool.shop.dao.implementation;
 import com.codecool.shop.dao.PokemonFilterDao;
 import com.codecool.shop.dao.UtilDao;
 import com.codecool.shop.model.Pokemon;
-import com.codecool.shop.model.PokemonCategory;
-import com.google.gson.Gson;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -42,7 +40,8 @@ public class PokemonFilterDaoByTypeDao implements PokemonFilterDao {
             for (int i = offset; i < offset + limit; i++) {
                 JSONObject poke = (JSONObject) ((JSONObject) pokemonsOfTypeJSON.get(i)).get("pokemon");
                 String pokeUrl = poke.get("url").toString();
-                Pokemon pokemon = pokemonDaoMem.getPokemonFromUrl(pokeUrl);
+                JSONObject pokeJsonObject = pokemonDaoMem.getPokemonJsonObjectFromUrl(pokeUrl);
+                Pokemon pokemon = pokemonDaoMem.getPokemonFromJsonObject(pokeJsonObject);
                 pokemonsOfType.add(pokemon);
             }
         }

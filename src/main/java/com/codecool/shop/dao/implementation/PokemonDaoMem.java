@@ -8,6 +8,7 @@ import com.codecool.shop.model.PokemonCategory;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+import org.thymeleaf.util.StringUtils;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -55,38 +56,47 @@ public class PokemonDaoMem implements PokemonDao {
     }
 
     @Override
+    public List<Pokemon> getAll(int offset, int limit) {
+        return null;
+    }
+
+    @Override
     public List<Pokemon> getAll() {
         return data;
     }
 
     @Override
     public List<Pokemon> getBy(PokemonCategory pokemonCategory) {
-        return data.stream().filter(t -> t.getPokemonCategory().equals(pokemonCategory)).collect(Collectors.toList());
+        return data.stream().filter(t -> t.getPokemonCategory().contains(pokemonCategory.getCategory())).collect(Collectors.toList());
     }
 
-    public Pokemon getPokemonFromUrl(String url) throws IOException {
+    @Override
+    public List<Pokemon> getBy(PokemonCategory pokemonCategory, int offset, int limit) {
+        return null;
+    }
 
+    public JSONObject getPokemonJsonObjectFromUrl(String url) throws IOException {
         HttpURLConnection pokeURL = UtilDao.getHttpUrlConnection(url);
-
         String pokeResponse = UtilDao.getResponse(pokeURL);
-        JSONObject pokemonJsonObject = (JSONObject) JSONValue.parse(pokeResponse);
+        return (JSONObject) JSONValue.parse(pokeResponse);
+    }
 
+    public Pokemon getPokemonFromJsonObject(JSONObject pokemonJsonObject) {
         int pokemonId = Integer.parseInt(pokemonJsonObject.get("id").toString());
         String pokemonName = pokemonJsonObject.get("name").toString();
-        int pokemonPrice = Integer.parseInt(pokemonJsonObject.get("base_experience").toString()); // shouldn't money be in int ??
+        int pokemonPrice = Integer.parseInt(pokemonJsonObject.get("base_experience").toString());
         String pokemonSprite = (String) ((JSONObject) pokemonJsonObject.get("sprites")).get("front_default");
         pokemonSprite = pokemonSprite == null ? "No Image" : pokemonSprite;
 
         List<String> pokemonCategoryNames = new ArrayList<>();
 
         JSONArray pokemonCategories = (JSONArray) pokemonJsonObject.get("types");
-        for (Object category : pokemonCategories) {
+        for (Object category :pokemonCategories) {
             String pokemonCategoryName = (String) ((JSONObject) ((JSONObject) category).get("type")).get("name");
             pokemonCategoryNames.add(pokemonCategoryName);
         }
         return new Pokemon(pokemonId, pokemonName, pokemonPrice, pokemonCategoryNames, pokemonSprite);
     }
-
 
     public void clearMem(){
         data.clear();

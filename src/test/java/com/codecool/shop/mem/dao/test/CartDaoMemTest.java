@@ -24,9 +24,7 @@ class CartDaoMemTest {
     @Test
     void findPokemon_invalidPokemonId_throwsNoSuchElementException() {
         int fakePokemonId = 612;
-        Cart cart = mock(Cart.class);
         CartDaoMem cartDaoMem = CartDaoMem.getInstance();
-        when(cart.findPokemon(fakePokemonId)).thenThrow(new NoSuchElementException("Pokemon with id " + fakePokemonId + "  not found in cart!"));
         assertThrows(NoSuchElementException.class, () -> cartDaoMem.findPokemon(fakePokemonId));
     }
 

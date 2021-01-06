@@ -62,7 +62,7 @@ public class PokemonDaoMem implements PokemonDao {
 
     @Override
     public List<Pokemon> getBy(PokemonCategory pokemonCategory) {
-        return data.stream().filter(t -> t.getPokemonCategory().equals(pokemonCategory)).collect(Collectors.toList());
+        return data.stream().filter(t -> t.getPokemonCategory().contains(pokemonCategory.getCategory())).collect(Collectors.toList());
     }
 
     public JSONObject getPokemonJsonObjectFromUrl(String url) throws IOException {

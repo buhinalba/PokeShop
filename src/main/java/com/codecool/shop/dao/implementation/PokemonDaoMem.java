@@ -56,6 +56,11 @@ public class PokemonDaoMem implements PokemonDao {
     }
 
     @Override
+    public List<Pokemon> getAll(int offset, int limit) {
+        return null;
+    }
+
+    @Override
     public List<Pokemon> getAll() {
         return data;
     }
@@ -63,6 +68,11 @@ public class PokemonDaoMem implements PokemonDao {
     @Override
     public List<Pokemon> getBy(PokemonCategory pokemonCategory) {
         return data.stream().filter(t -> t.getPokemonCategory().contains(pokemonCategory.getCategory())).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Pokemon> getBy(PokemonCategory pokemonCategory, int offset, int limit) {
+        return null;
     }
 
     public JSONObject getPokemonJsonObjectFromUrl(String url) throws IOException {

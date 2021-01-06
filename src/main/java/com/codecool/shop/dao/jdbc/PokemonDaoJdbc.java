@@ -71,12 +71,14 @@ public class PokemonDaoJdbc implements PokemonDao {
     }
 
     @Override
-    public List<Pokemon> getAll() {
+    public List<Pokemon> getAll(int offset, int limit) {
         try (Connection conn = dataSource.getConnection()) {
             String sql = "SELECT p.name, price, CONCAT_WS(',' , ct.name) AS pokemon_category, sprite_url FROM pokemon AS p " +
                     "JOIN pokemon_category AS pc ON pc.pokemon_id = p.id" +
                     "JOIN category AS ct ON ct.id = pc.category_id" +
-                    "GROUP BY p.id";
+                    "GROUP BY p.id" +
+                    "OFFSET ?" +
+                    "LIMIT ?";
             ResultSet rs = conn.createStatement().executeQuery(sql);
             List<Pokemon> result = new ArrayList<>();
             while (rs.next()) {
@@ -90,12 +92,25 @@ public class PokemonDaoJdbc implements PokemonDao {
         }
     }
 
-    public List<Pokemon> getBy(PokemonCategory pokemonCategory){
+    @Override
+    public List<Pokemon> getAll() {
+        return null;
+    }
+
+    @Override
+    public List<Pokemon> getBy(PokemonCategory pokemonCategory) {
+        return null;
+    }
+
+    @Override
+    public List<Pokemon> getBy(PokemonCategory pokemonCategory, int offset, int limit){
         try (Connection conn = dataSource.getConnection()) {
             String sql = "SELECT id, name, price, CONCAT_WS(',' , ct.name) AS pokemon_category, sprite_url FROM pokemon AS p" +
                     "JOIN pokemon_category AS pc ON  pc.pokemon_id = p.id" +
                     "JOIN category as ct ON pc.category_id = ct.id " +
-                    "WHERE ct.name = ?  GROUP BY p.id";
+                    "WHERE ct.name = ?  GROUP BY p.id" +
+                    "OFFSET ?" +
+                    "LIMIT ?";
             ResultSet rs = conn.createStatement().executeQuery(sql);
             List<Pokemon> result = new ArrayList<>();
             while (rs.next()) {

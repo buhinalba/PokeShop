@@ -66,10 +66,8 @@ public class Cart {
     }
 
     public void decreasePokemonCount(int id) {
-        Pokemon pokemon = null;
         for (Map.Entry<Pokemon, Integer> entry : pokemons.entrySet()) {
             if ((entry.getKey()).getId() == id) {
-                pokemon = entry.getKey();
                 if (entry.getValue().equals(1)) {
                     return;
                 } else {

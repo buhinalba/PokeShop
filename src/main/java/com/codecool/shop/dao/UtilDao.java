@@ -8,7 +8,7 @@ import java.net.URL;
 
 public interface UtilDao {
 
-    public static HttpURLConnection getHttpUrlConnection(String apiEndpoint) throws IOException {
+    static HttpURLConnection getHttpUrlConnection(String apiEndpoint) throws IOException {
         URL pokemonUrl = new URL(apiEndpoint);
         HttpURLConnection connection = (HttpURLConnection) pokemonUrl.openConnection();
         connection.setRequestMethod("GET");
@@ -16,7 +16,7 @@ public interface UtilDao {
         return connection;
     }
 
-    public static String getResponse(HttpURLConnection connection) throws IOException {
+    static String getResponse(HttpURLConnection connection) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         String inputLine;
         StringBuilder content = new StringBuilder();

@@ -92,5 +92,11 @@ export let dataHandler = {
         this._api_get(`http://localhost:8080/edit/increase?pokemon-id=${pokemonId}`, (response) => {
             callback(response);
         })
-    }
+    },
+
+    checkIfUserExists: function (email, callback) {
+        this._api_get(`http://localhost:8080/registration-validation?email=${email}`, (response) => {
+            callback(response.success);
+        })
+        }
 }

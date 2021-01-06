@@ -29,15 +29,15 @@ public class Registration extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // alert javascript
         String username = req.getParameter("username");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
         UserDao userDao = new UserDaoJdbc();
-        User user = new User(username, email, password);
-
-        userDao.add(user);
-        resp.sendRedirect(req.getContextPath() + "/");
+        if (!userDao.emailExists(email) && password.length()>=8) {
+            User user = new User(username, email, password);
+            userDao.add(user);
+        }
+        resp.sendRedirect(req.getContextPath() + "/registration");
     }
 }

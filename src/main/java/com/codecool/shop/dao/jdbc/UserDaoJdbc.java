@@ -37,7 +37,7 @@ public class UserDaoJdbc extends DataManager implements UserDao {
     public User find(String email) {
         // todo question coul use optional?
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "SELECT from \"USER\" WHERE email = ?";
+            String sql = "SELECT * from \"USER\" WHERE email = ?";
 
             PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1, email);

@@ -8,19 +8,22 @@
     <title>Pokemon Shop - Registration</title>
 
     <link rel="stylesheet" type="text/css" href="/static/css/main.css"/>
+    <script type="module" src="/static/js/registration.js" defer></script>
+
 </head>
 <body>
 <div class="page-title">
     <h1>Pokemon Shop - Registration</h1>
 </div>
 
-<div class="filter">
+<div class="filter navbar">
     <div class="brand-name"><a href="/">Pokemon Shop</a></div>
     <div id="review-cart-button">Cart</div>
+    <div class="menu-item"><a href="#">Login</a></div>
 </div>
 
     <form name="registration" action="/registration" method="post">
-        <div class=" registration form">
+        <div class="registration form">
             <div class="checkout-col">
                 <label for="username"><i class="fa fa-user"></i>Username</label>
                 <input type="text" required id="username" name="username" placeholder="cactus_warrior69">
@@ -28,7 +31,7 @@
                 <input type="text" required id="email" name="email" placeholder="cactus@example.com">
 
                 <label for="password"><i class="fas fa-key"></i>Password</label>
-                <input type="password" required id="password" name="password" placeholder="must be at minimum 8 characters">
+                <input type="password" required id="password" name="password" placeholder="must be at minimum 8 characters" minlength="8">
 
             </div>
 

@@ -11,7 +11,7 @@ body {
     font-family: fantasy;
 }
 
-.filter {
+.filter, .navbar {
     color: white;
     display: flex;
     justify-content: left;
@@ -22,18 +22,18 @@ body {
     border-radius: .25em;
 }
 
-.filter div {
+.filter div, .filter div a {
     margin: 15px;
     text-decoration: none!important;
     color: #cecccc!important;
 }
 
-.filter div:hover {
+.filter div:hover, .filter div a:hover {
     cursor: pointer!important;
     color: #ffffff!important;
 }
 
-.filter div.active {
+.filter div.active, .filter div a:active {
     color: white;
 }
 

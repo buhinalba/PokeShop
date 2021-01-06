@@ -1,7 +1,10 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.dao.UserDao;
 import com.codecool.shop.dao.implementation.CartDaoMem;
+import com.codecool.shop.dao.jdbc.UserDaoJdbc;
+import com.codecool.shop.model.User;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -28,7 +31,13 @@ public class Registration extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // alert javascript
         String username = req.getParameter("username");
+        String email = req.getParameter("email");
+        String password = req.getParameter("password");
 
+        UserDao userDao = new UserDaoJdbc();
+        User user = new User(username, email, password);
+
+        userDao.add(user);
         resp.sendRedirect(req.getContextPath() + "/");
     }
 }

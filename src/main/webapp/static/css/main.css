@@ -24,12 +24,13 @@ body {
 
 .filter div {
     margin: 15px;
-    text-decoration: none;
-    color: #cecccc;
+    text-decoration: none!important;
+    color: #cecccc!important;
 }
+
 .filter div:hover {
-    cursor: pointer;
-    color: #ffffff;
+    cursor: pointer!important;
+    color: #ffffff!important;
 }
 
 .filter div.active {

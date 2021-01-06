@@ -35,7 +35,7 @@ public class UserDaoJdbc extends DataManager implements UserDao {
 
     @Override
     public User find(String email) {
-        // todo question coul use optional?
+        // todo question could use optional?
         try (Connection conn = dataSource.getConnection()) {
             String sql = "SELECT * from \"USER\" WHERE email = ?";
 

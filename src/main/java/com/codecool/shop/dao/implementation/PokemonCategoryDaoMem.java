@@ -50,8 +50,7 @@ public class PokemonCategoryDaoMem implements PokemonCategoryDao {
     @Override
     public List<PokemonCategory> getAll() { return data; }
 
-    public JSONArray getPokemonCategoriesJsonArrayFromUrl() throws IOException {
-        HttpURLConnection con = UtilDao.getHttpUrlConnection("https://pokeapi.co/api/v2/type");
+    public JSONArray getPokemonCategoriesJsonArrayFromUrl(HttpURLConnection con) throws IOException {
         String content = UtilDao.getResponse(con);
         con.disconnect();
         JSONObject jsonResponse = (JSONObject) JSONValue.parse(content);
@@ -74,7 +73,8 @@ public class PokemonCategoryDaoMem implements PokemonCategoryDao {
     }
 
     public void getAllPokemonCategories() throws IOException {
-        JSONArray responseCategories = getPokemonCategoriesJsonArrayFromUrl();
+        String api = "https://pokeapi.co/api/v2/type";
+        JSONArray responseCategories = getPokemonCategoriesJsonArrayFromUrl(UtilDao.getHttpUrlConnection(api));
         List<String> names = getPokemonCategoriesListFromJsonArray(responseCategories);
         addAll(names);
     }

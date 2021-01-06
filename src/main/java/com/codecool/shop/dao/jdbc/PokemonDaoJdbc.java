@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PokemonDaoJdbc implements PokemonDao {
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     public PokemonDaoJdbc(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -41,7 +41,7 @@ public class PokemonDaoJdbc implements PokemonDao {
     public Pokemon find(int id) {
         try (Connection conn = dataSource.getConnection()) {
             String sql = "SELECT name, price, CONCAT_WS(',' , ct.name) AS pokemon_category, sprite_url FROM pokemon AS p " +
-                    "JOIN pokemon_category AS pc ON pc.pokemon_id = p.id" +
+                    "JOIN pokemon_category AS pc ON pc.pokemon_id = p.id " +
                     "JOIN category AS ct ON ct.id = pc.category_id " +
                     "WHERE p.id = ?";
 

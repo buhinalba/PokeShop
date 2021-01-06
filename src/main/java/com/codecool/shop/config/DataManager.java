@@ -31,7 +31,6 @@ public class DataManager {
         Properties properties = loadProperties();
 
         try {
-            // dataSource.setURL(properties.getProperty("url"));
             dataSource.setDatabaseName(properties.getProperty("database"));
             dataSource.setUser(properties.getProperty("user"));
             dataSource.setPassword(properties.getProperty("password"));

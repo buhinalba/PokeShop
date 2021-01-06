@@ -11,9 +11,9 @@ public interface PokemonDao {
     Pokemon find(int id);
     void remove(int id);
 
-    List<Pokemon> getAll(int offset, int limit);
+    List<Pokemon> getAll(int offset);
     List<Pokemon> getAll();
     List<Pokemon> getBy(PokemonCategory pokemonCategory);
-    List<Pokemon> getBy(PokemonCategory pokemonCategory, int offset, int limit);
+    List<Pokemon> getBy(PokemonCategory pokemonCategory, int offset);
 
 }

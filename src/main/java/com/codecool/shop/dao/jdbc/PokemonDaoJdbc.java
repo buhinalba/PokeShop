@@ -12,6 +12,7 @@ import java.util.List;
 
 public class PokemonDaoJdbc implements PokemonDao {
     private DataSource dataSource;
+    public static final int LIMIT = 20;
 
     public PokemonDaoJdbc(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -71,15 +72,21 @@ public class PokemonDaoJdbc implements PokemonDao {
     }
 
     @Override
-    public List<Pokemon> getAll(int offset, int limit) {
+    public List<Pokemon> getAll(int offset) {
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "SELECT p.name, price, CONCAT_WS(',' , ct.name) AS pokemon_category, sprite_url FROM pokemon AS p " +
-                    "JOIN pokemon_category AS pc ON pc.pokemon_id = p.id" +
-                    "JOIN category AS ct ON ct.id = pc.category_id" +
-                    "GROUP BY p.id" +
-                    "OFFSET ?" +
-                    "LIMIT ?";
-            ResultSet rs = conn.createStatement().executeQuery(sql);
+            String sql = "SELECT p.id," +
+                         "       p.name, p.price, " +
+                         "       array_agg(ct.name::TEXT) AS pokemon_category, " +
+                         "       sprite_url FROM pokemon AS p " +
+                         "JOIN pokemon_category AS pc ON pc.pokemon_id = p.id " +
+                         "JOIN category AS ct ON ct.id = pc.category_id " +
+                         "GROUP BY p.id, ct.name " +
+                         "ORDER BY p.id " +
+                         "OFFSET ?" +
+                         "LIMIT " + LIMIT ;
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, offset);
+            ResultSet rs = preparedStatement.executeQuery();
             List<Pokemon> result = new ArrayList<>();
             while (rs.next()) {
                 Pokemon pokemon = new Pokemon(rs.getInt(1), rs.getString(2), rs.getInt(3),
@@ -103,15 +110,15 @@ public class PokemonDaoJdbc implements PokemonDao {
     }
 
     @Override
-    public List<Pokemon> getBy(PokemonCategory pokemonCategory, int offset, int limit){
+    public List<Pokemon> getBy(PokemonCategory pokemonCategory, int offset){
         try (Connection conn = dataSource.getConnection()) {
             String sql = "SELECT id, name, price, CONCAT_WS(',' , ct.name) AS pokemon_category, sprite_url FROM pokemon AS p" +
                     "JOIN pokemon_category AS pc ON  pc.pokemon_id = p.id" +
                     "JOIN category as ct ON pc.category_id = ct.id " +
                     "WHERE ct.name = ?  GROUP BY p.id" +
                     "OFFSET ?" +
-                    "LIMIT ?";
-            ResultSet rs = conn.createStatement().executeQuery(sql);
+                    "LIMIT " + "''" + LIMIT;
+            ResultSet rs = conn.prepareStatement(sql).executeQuery();
             List<Pokemon> result = new ArrayList<>();
             while (rs.next()) {
                 Pokemon pokemon = new Pokemon(rs.getInt(1), rs.getString(2), rs.getInt(3),

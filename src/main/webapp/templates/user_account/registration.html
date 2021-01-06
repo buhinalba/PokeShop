@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Codecool"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <title>Pokemon Shop - Registration</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css"/>
+</head>
+<body>
+<div class="page-title">
+    <h1>Pokemon Shop - Checkout</h1>
+</div>
+
+<div class="filter">
+    <div class="brand-name"><a href="/">Pokemon Shop</a></div>
+    <div id="review-cart-button">Cart</div>
+</div>
+
+<div class="registration form">
+    <form name="registration" action="/complete-registration" method="post">
+        <div class="form">
+            <div class="checkout-col">
+                <h3>Billing Address</h3>
+                <label for="username"><i class="fa fa-user"></i>Username</label>
+                <input type="text" required id="username" name="username" placeholder="cactus_warrior69">
+                <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                <input type="text" required id="email" name="email" placeholder="cactus@example.com">
+
+                <label for="password"><i class="fas fa-key"></i> Address</label>
+                <input type="password" required id="password" name="password" placeholder="must be at minimum 8 characters">
+
+            </div>
+
+            <div class="filter__button">
+                <button type="submit" id="register-button">Register</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div th:replace="footer.html :: copy"></div>
+</body>
+</html>

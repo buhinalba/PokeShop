@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class User extends Customer {
     private final String password;
-    private final String HASH_ALGORITHM = "SHA-512";
+    private static final String HASH_ALGORITHM = "SHA-512";
 
     public User(String name, String email, String password) {
         super(name);
@@ -21,7 +21,7 @@ public class User extends Customer {
         return password;
     }
 
-    private String hashPassword(String password) throws RuntimeException {
+    public static String hashPassword(String password) throws RuntimeException {
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[0];       // to make the login authentication a lot easier :)
         random.nextBytes(salt);

@@ -73,4 +73,10 @@ public class UserDaoJdbc extends DataManager implements UserDao {
         // is this even safe
         return null;
     }
+
+    public boolean validLogin(String email, String password) {
+        User possibleUser = find(email);
+        if (possibleUser == null) return false;
+        return possibleUser.getPassword().equals(User.hashPassword(password));
+    }
 }

@@ -44,8 +44,9 @@ public class Login extends HttpServlet {
             user.setSessionId(sessionId);
 
             sessionController.addSession(user);
+            resp.sendRedirect(req.getContextPath() + "/");
+        } else {
+            resp.sendRedirect(req.getContextPath() + "/login");
         }
-
-        resp.sendRedirect(req.getContextPath() + "/");
     }
 }

@@ -2,8 +2,11 @@ package com.codecool.shop.dao.jdbc;
 
 import com.codecool.shop.config.DataManager;
 import com.codecool.shop.dao.UserDao;
+import com.codecool.shop.dao.jdbc.data.DataGeneratorJDBC;
 import com.codecool.shop.model.Customer;
 import com.codecool.shop.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -11,7 +14,7 @@ import java.util.List;
 
 public class UserDaoJdbc extends DataManager implements UserDao {
     DataSource dataSource;
-
+    private static final Logger logger = LoggerFactory.getLogger(UserDaoJdbc.class);
     public UserDaoJdbc() {
         this.dataSource = connectDataBase();
     }
@@ -28,7 +31,9 @@ public class UserDaoJdbc extends DataManager implements UserDao {
             st.setString(2, user.getEmail());
             st.setString(3, ((User)user).getPassword());
             st.executeUpdate();
+            logger.info("User added.");
         } catch (SQLException e) {
+            logger.warn("Cannot add user to database.");
             e.printStackTrace();
         }
     }
@@ -45,10 +50,12 @@ public class UserDaoJdbc extends DataManager implements UserDao {
             if (rs.next()) {
                 User user = new User(rs.getString(2), rs.getString(3), rs.getString(4));
                 user.setId(rs.getInt(1));
+                logger.info("User is found with email: " + email);
                 return user;
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            logger.warn("Cannot find User with email: " + email);
         }
         return null;
     }
@@ -69,10 +76,12 @@ public class UserDaoJdbc extends DataManager implements UserDao {
             if (rs.next()) {
                 User user = new User(rs.getString(2), rs.getString(3), rs.getString(4));
                 user.setId(rs.getInt(1));
+                logger.info("Customer found with id: " + id);
                 return user;
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            logger.warn("Cannot find Customer with id: " + id);
         }
         return null;
     }
@@ -85,9 +94,10 @@ public class UserDaoJdbc extends DataManager implements UserDao {
             PreparedStatement st = conn.prepareStatement(sql);
             st.setInt(1, id);
             st.executeUpdate();
-
+            logger.info("Successfully removed User");
         } catch (SQLException e) {
             e.printStackTrace();
+            logger.warn("Cannot remove User from database.");
         }
     }
 

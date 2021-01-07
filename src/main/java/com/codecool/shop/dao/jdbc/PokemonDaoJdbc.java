@@ -1,8 +1,11 @@
 package com.codecool.shop.dao.jdbc;
 
 import com.codecool.shop.dao.PokemonDao;
+import com.codecool.shop.dao.jdbc.data.DataGeneratorJDBC;
 import com.codecool.shop.model.Pokemon;
 import com.codecool.shop.model.PokemonCategory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -14,7 +17,7 @@ import java.util.List;
 public class PokemonDaoJdbc implements PokemonDao {
     private DataSource dataSource;
     public static final int LIMIT = 20;
-
+    private static final Logger logger = LoggerFactory.getLogger(PokemonDaoJdbc.class);
     public PokemonDaoJdbc(DataSource dataSource) {
         this.dataSource = dataSource;
     }
@@ -32,10 +35,12 @@ public class PokemonDaoJdbc implements PokemonDao {
             ResultSet rs = st.getGeneratedKeys();
             rs.next();
             pokemon.setId(rs.getInt(1));
-
+            logger.info("Pokemon added to database.");
         } catch (SQLException throwables) {
+            logger.warn("Cannot add pokemon to database.");
             throw new RuntimeException("Error while adding new Pokemon.", throwables);
         } catch (NullPointerException e) {
+            logger.error("Cannot set up database connection.");
             throw new RuntimeException("Pokemon is null");
         }
     }
@@ -56,8 +61,10 @@ public class PokemonDaoJdbc implements PokemonDao {
                 return null;
             }
             Pokemon pokemon = new Pokemon(id, rs.getString(1), rs.getInt(2), Collections.singletonList(rs.getString(3)), rs.getString(4));
+            logger.info("Pokemon found with id: " + id);
             return pokemon;
         } catch (SQLException e) {
+            logger.warn("Cannot found pokemon with id: " + id);
             throw new RuntimeException("Error while reading pokemon with id: " + id, e);
         }
     }
@@ -69,7 +76,9 @@ public class PokemonDaoJdbc implements PokemonDao {
             PreparedStatement st = conn.prepareStatement(sql);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
+            logger.info("Pokemon removed successfully.");
         } catch (SQLException e) {
+            logger.warn("Cannot remove pokemon.");
             throw new RuntimeException("Error while deleting pokemon with id: " + id, e);
         }
     }
@@ -90,8 +99,10 @@ public class PokemonDaoJdbc implements PokemonDao {
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setInt(1, offset);
             ResultSet rs = preparedStatement.executeQuery();
+            logger.info("Selected all pokemon from database successfully.");
             return getPokemonsFromResultSet(rs);
         } catch (SQLException e) {
+            logger.warn("Cannot load all pokemons.");
             throw new RuntimeException("Error while reading all pokemons", e);
         }
     }
@@ -119,8 +130,10 @@ public class PokemonDaoJdbc implements PokemonDao {
             st.setInt(1, offset);
             st.setInt(2, LIMIT);
             ResultSet rs = st.executeQuery();
+            logger.info("Get pokemons by category successfully.");
             return getPokemonsFromResultSet(rs);
         } catch (SQLException e) {
+            logger.warn("Cannot load pokemons by category.");
             throw new RuntimeException("Error while reading all pokemons", e);
         }
     }

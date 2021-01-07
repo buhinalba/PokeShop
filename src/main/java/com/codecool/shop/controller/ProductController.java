@@ -26,7 +26,6 @@ import java.io.IOException;
 public class ProductController extends HttpServlet implements UtilDao {
 
     private PokemonGetAllDao pokemonGetAllDao = new PokemonGetAllDao();
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PokemonDao pokemonDao;

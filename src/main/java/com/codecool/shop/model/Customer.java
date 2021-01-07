@@ -3,6 +3,9 @@ package com.codecool.shop.model;
 import java.sql.Date;
 
 public class Customer extends BaseModel {
+    private String sessionId;
+
+
     private String email;
     private String address;
     private String city;
@@ -93,4 +96,13 @@ public class Customer extends BaseModel {
         String saveName = name.replaceAll("\\s+","_") + getId();
         return saveName;
     }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
 }

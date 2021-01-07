@@ -14,7 +14,16 @@ public class User extends Customer {
         super(name);
         setEmail(email);
         this.password = hashPassword(password);
-        System.out.println(this.password + " " + this.password.length());
+    }
+
+    public User(String name, String email, String password, boolean isHashed) {
+        super(name);
+        if (isHashed) {
+            this.password = password;
+        } else {
+            this.password = hashPassword(password);
+        }
+        setEmail(email);
     }
 
     public String getPassword() {

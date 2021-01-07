@@ -1,7 +1,9 @@
 package com.codecool.shop.controller;
 
+import com.codecool.shop.business.logic.SessionController;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.jdbc.UserDaoJdbc;
+import com.codecool.shop.model.User;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -32,8 +34,16 @@ public class Login extends HttpServlet {
         UserDaoJdbc userDao = new UserDaoJdbc();
 
         if (userDao.validLogin(email, pw)) {
+            System.out.println("valid login");
+            SessionController sessionController = SessionController.getInstance();
+
             HttpSession session = req.getSession();
-            session.setAttribute("email", email);
+            String sessionId = session.getId();
+
+            User user = userDao.find(email);
+            user.setSessionId(sessionId);
+
+            sessionController.addSession(user);
         }
 
         resp.sendRedirect(req.getContextPath() + "/");

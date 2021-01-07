@@ -25,7 +25,6 @@ public class ValidateRegistration extends HttpServlet {
 
         String response = String.format("{\"success\": %s}", validationIsSuccessful);
 
-        System.out.println("response: " + response);
         out.println(response);
     }
 }

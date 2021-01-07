@@ -43,8 +43,13 @@ public class UserDaoJdbc extends DataManager implements UserDao {
             st.setString(1, email);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                User user = new User(rs.getString(2), rs.getString(3), rs.getString(4));
-                user.setId(rs.getInt(1));
+                int id = rs.getInt(1);
+                String username = rs.getString(2);
+                String emailRes = rs.getString(3);
+                String hashPw = rs.getString(4);
+                User user = new User(username, emailRes, hashPw, true);
+                user.setId(id);
+
                 return user;
             }
         } catch (SQLException e) {
@@ -76,7 +81,8 @@ public class UserDaoJdbc extends DataManager implements UserDao {
 
     public boolean validLogin(String email, String password) {
         User possibleUser = find(email);
-        if (possibleUser == null) return false;
+        if (possibleUser == null) {return false;}
+
         return possibleUser.getPassword().equals(User.hashPassword(password));
     }
 }

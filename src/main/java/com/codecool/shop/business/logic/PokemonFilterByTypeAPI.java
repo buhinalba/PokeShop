@@ -1,5 +1,6 @@
 package com.codecool.shop.business.logic;
 
+import com.codecool.shop.config.DataHandlerConfig;
 import com.codecool.shop.dao.UtilDao;
 import com.codecool.shop.dao.implementation.PokemonDaoMem;
 import com.codecool.shop.dao.implementation.PokemonFilterDaoByTypeDao;
@@ -33,15 +34,18 @@ public class PokemonFilterByTypeAPI extends HttpServlet implements UtilDao {
         String type = request.getParameter("type"); // todo
         int offset = request.getParameter("offset") != null ? Integer.parseInt(request.getParameter("offset")) : 0;
 
-        PokemonFilterDaoByTypeDao filterDao = PokemonFilterDaoByTypeDao.getInstance();
-        List<Pokemon> filteredPokemons = filterDao.getPokemons(type, offset);
+//        PokemonFilterDaoByTypeDao filterDao = PokemonFilterDaoByTypeDao.getInstance(); // prev version
+//        List<Pokemon> filteredPokemons = filterDao.getPokemons(type, offset);
+//
+//        PokemonDaoMem pokemonDaoMem = PokemonDaoMem.getInstance();
+//        pokemonDaoMem.setData(filteredPokemons);
+//
+//        Gson gson = new Gson();
+//
+//        String filteredPokemonsJson = gson.toJson(filteredPokemons);
 
-        PokemonDaoMem pokemonDaoMem = PokemonDaoMem.getInstance();
-        pokemonDaoMem.setData(filteredPokemons);
+        String filteredPokemonJson = DataHandlerConfig.getPokemonDaoFilterByType(type, offset);
 
-        Gson gson = new Gson();
-
-        String filteredPokemonsJson = gson.toJson(filteredPokemons);
-        out.println(filteredPokemonsJson);
+        out.println(filteredPokemonJson);
     }
 }

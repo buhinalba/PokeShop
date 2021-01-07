@@ -8,6 +8,8 @@ import com.codecool.shop.model.PokemonCategory;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.thymeleaf.util.StringUtils;
 
 import java.io.IOException;
@@ -18,7 +20,7 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class PokemonDaoMem implements PokemonDao {
-
+    private static final Logger logger = LoggerFactory.getLogger(PokemonDaoMem.class);
     private List<Pokemon> data = new ArrayList<>();
     private static PokemonDaoMem instance = null;
 
@@ -106,9 +108,11 @@ public class PokemonDaoMem implements PokemonDao {
     public Pokemon getPokemonById(int id) {
         for(Pokemon pokemon: data) {
             if (pokemon.getId() == id) {
+                logger.info("Pokemon found with id: " + id);
                 return pokemon;
             }
         }
+        logger.warn("No such pokemon with id: " + id);
         throw new NoSuchElementException("Pokemon with id " + id + " not found");
     }
 }

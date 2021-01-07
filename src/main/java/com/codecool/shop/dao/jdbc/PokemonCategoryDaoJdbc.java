@@ -1,7 +1,10 @@
 package com.codecool.shop.dao.jdbc;
 
 import com.codecool.shop.dao.PokemonCategoryDao;
+import com.codecool.shop.dao.jdbc.data.DataGeneratorJDBC;
 import com.codecool.shop.model.PokemonCategory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -10,7 +13,7 @@ import java.util.List;
 
 public class PokemonCategoryDaoJdbc implements PokemonCategoryDao {
     private DataSource dataSource;
-
+    private static final Logger logger = LoggerFactory.getLogger(PokemonCategoryDaoJdbc.class);
     public PokemonCategoryDaoJdbc(DataSource dataSource) {
         this.dataSource = dataSource;
     }
@@ -26,8 +29,9 @@ public class PokemonCategoryDaoJdbc implements PokemonCategoryDao {
             ResultSet rs = st.getGeneratedKeys();
             rs.next();
             category.setId(rs.getInt(1));
-
+            logger.info("Category added successfully.");
         } catch (SQLException throwables) {
+            logger.warn("Cannot add category to database.");
             throw new RuntimeException("Error while adding new Category.", throwables);
         }
     }
@@ -43,8 +47,10 @@ public class PokemonCategoryDaoJdbc implements PokemonCategoryDao {
                 return null;
             }
             PokemonCategory pokemonCategory = new PokemonCategory(rs.getString(1));
+            logger.info("Category name found.");
             return pokemonCategory;
         } catch (SQLException e) {
+            logger.warn("Cannot load category.");
             throw new RuntimeException("Error while reading pokemon category with id: " + id, e);
         }
     }
@@ -56,7 +62,9 @@ public class PokemonCategoryDaoJdbc implements PokemonCategoryDao {
             PreparedStatement st = conn.prepareStatement(sql);
             st.setInt(1, id);
             st.executeQuery();
+            logger.info("Category removed.");
         } catch (SQLException e) {
+            logger.warn("Cannot remove category.");
             throw new RuntimeException("Error while deleting category with id: " + id, e);
         }
     }
@@ -71,8 +79,10 @@ public class PokemonCategoryDaoJdbc implements PokemonCategoryDao {
                 PokemonCategory pokemonCategory = new PokemonCategory(rs.getString(1));
                 result.add(pokemonCategory);
             }
+            logger.info("All categories loaded.");
             return result;
         } catch (SQLException e) {
+            logger.warn("Cannot load all pokemon categories.");
             throw new RuntimeException("Error while reading all pokemon categories", e);
         }
     }

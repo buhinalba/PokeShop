@@ -11,7 +11,7 @@ body {
     font-family: fantasy;
 }
 
-.filter {
+.filter, .navbar {
     color: white;
     display: flex;
     justify-content: left;
@@ -22,17 +22,18 @@ body {
     border-radius: .25em;
 }
 
-.filter div {
+.filter div, .filter div a {
     margin: 15px;
-    text-decoration: none;
-    color: #cecccc;
-}
-.filter div:hover {
-    cursor: pointer;
-    color: #ffffff;
+    text-decoration: none!important;
+    color: #cecccc!important;
 }
 
-.filter div.active {
+.filter div:hover, .filter div a:hover {
+    cursor: pointer!important;
+    color: #ffffff!important;
+}
+
+.filter div.active, .filter div a:active {
     color: white;
 }
 
@@ -53,6 +54,7 @@ body {
     top: 0;
     background: #2c3e50;
     border-radius: .25em;
+    margin-bottom: 20px;
 }
 
 .filter__select, .filter__price, .filter__button {
@@ -296,7 +298,7 @@ form {
     text-align: center;
 }
 
-.checkout {
+.checkout, .form {
     /*margin-top: 35px;*/
     /*margin-bottom: 35px;*/
     align-content: center;
@@ -310,21 +312,24 @@ form {
     padding-right: 30px;
 }
 
-.checkout-col {
+.checkout-col, .form-col {
     -ms-flex: 50%;
     flex: 50%;
+    padding: 0 16px;
 }
 
-.checkout-row {
+.checkout-row, .form-row {
     width: 100%;
     align-content: center;
 }
 
+/*
 .checkout-col {
     padding: 0 16px;
 }
+*/
 
-.checkout-form {
+.checkout-form, .form {
     background-color: #f2f2f2;
     padding: 10px 40px 20px 20px;
     border: 2px solid lightgrey;
@@ -376,6 +381,7 @@ label {
     cursor: pointer;
     background-color: #486684;
 }
+
 
 .pagination-container {
     display: flex;

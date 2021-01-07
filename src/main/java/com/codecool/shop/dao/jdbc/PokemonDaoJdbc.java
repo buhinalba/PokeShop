@@ -20,7 +20,7 @@ public class PokemonDaoJdbc implements PokemonDao {
     }
 
     @Override
-    public void add(Pokemon pokemon) {
+    public void add(Pokemon pokemon) throws RuntimeException{
         try(Connection conn = dataSource.getConnection()) {
             String sql = "INSERT INTO pokemon (id, name, price, sprite_url) VALUES (?, ?, ?, ?)";
             PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -35,6 +35,8 @@ public class PokemonDaoJdbc implements PokemonDao {
 
         } catch (SQLException throwables) {
             throw new RuntimeException("Error while adding new Pokemon.", throwables);
+        } catch (NullPointerException e) {
+            throw new RuntimeException("Pokemon is null");
         }
     }
 
@@ -42,7 +44,7 @@ public class PokemonDaoJdbc implements PokemonDao {
     @Override
     public Pokemon find(int id) {
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "SELECT name, price, CONCAT_WS(',' , ct.name) AS pokemon_category, sprite_url FROM pokemon AS p " +
+            String sql = "SELECT p.name, price, CONCAT_WS(',' , ct.name) AS pokemon_category, sprite_url FROM pokemon AS p " +
                     "JOIN pokemon_category AS pc ON pc.pokemon_id = p.id " +
                     "JOIN category AS ct ON ct.id = pc.category_id " +
                     "WHERE p.id = ?";
@@ -53,7 +55,7 @@ public class PokemonDaoJdbc implements PokemonDao {
             if (!rs.next()) {
                 return null;
             }
-            Pokemon pokemon = new Pokemon(id, rs.getString(1), rs.getInt(2), Arrays.asList(rs.getString(3)), rs.getString(4));
+            Pokemon pokemon = new Pokemon(id, rs.getString(1), rs.getInt(2), Collections.singletonList(rs.getString(3)), rs.getString(4));
             return pokemon;
         } catch (SQLException e) {
             throw new RuntimeException("Error while reading pokemon with id: " + id, e);

@@ -26,7 +26,7 @@ public class User extends Customer {
         byte[] salt = new byte[0];       // to make the login authentication a lot easier :)
         random.nextBytes(salt);
         try {
-             MessageDigest md = MessageDigest.getInstance("SHA-512");
+            MessageDigest md = MessageDigest.getInstance(HASH_ALGORITHM);
             md.update(salt);
             byte[] hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8));
             return Arrays.toString(hashedPassword);

@@ -60,12 +60,35 @@ public class UserDaoJdbc extends DataManager implements UserDao {
 
     @Override
     public Customer find(int id) {
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "SELECT * from \"USER\" WHERE id = ?";
+
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                User user = new User(rs.getString(2), rs.getString(3), rs.getString(4));
+                user.setId(rs.getInt(1));
+                return user;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public void remove(int id) {
-        // delete account feature for the future
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "DELETE from \"USER\" WHERE id = ?";
+
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1, id);
+            st.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

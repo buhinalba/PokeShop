@@ -56,8 +56,8 @@ public class PokemonDaoMem implements PokemonDao {
     }
 
     @Override
-    public List<Pokemon> getAll(int offset, int limit) {
-        return null;
+    public List<Pokemon> getAll(int offset) {
+        return data;
     }
 
     @Override
@@ -71,7 +71,7 @@ public class PokemonDaoMem implements PokemonDao {
     }
 
     @Override
-    public List<Pokemon> getBy(PokemonCategory pokemonCategory, int offset, int limit) {
+    public List<Pokemon> getBy(PokemonCategory pokemonCategory, int offset) {
         return null;
     }
 

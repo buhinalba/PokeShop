@@ -45,8 +45,6 @@ public class ProductController extends HttpServlet implements UtilDao {
         }
 
 
-
-
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
 
         WebContext context = new WebContext(req, resp, req.getServletContext());

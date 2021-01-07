@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class PokemonDaoJdbc implements PokemonDao {
@@ -42,7 +43,7 @@ public class PokemonDaoJdbc implements PokemonDao {
     public Pokemon find(int id) {
         try (Connection conn = dataSource.getConnection()) {
             String sql = "SELECT name, price, CONCAT_WS(',' , ct.name) AS pokemon_category, sprite_url FROM pokemon AS p " +
-                    "JOIN pokemon_category AS pc ON pc.pokemon_id = p.id" +
+                    "JOIN pokemon_category AS pc ON pc.pokemon_id = p.id " +
                     "JOIN category AS ct ON ct.id = pc.category_id " +
                     "WHERE p.id = ?";
 
@@ -76,24 +77,18 @@ public class PokemonDaoJdbc implements PokemonDao {
         try (Connection conn = dataSource.getConnection()) {
             String sql = "SELECT p.id," +
                          "       p.name, p.price, " +
-                         "       array_agg(ct.name::TEXT) AS pokemon_category, " +
+                         "       string_agg(ct.name, ', ') AS pokemon_category, " +
                          "       sprite_url FROM pokemon AS p " +
                          "JOIN pokemon_category AS pc ON pc.pokemon_id = p.id " +
                          "JOIN category AS ct ON ct.id = pc.category_id " +
-                         "GROUP BY p.id, ct.name " +
+                         "GROUP BY p.id, p.name " +
                          "ORDER BY p.id " +
                          "OFFSET ?" +
                          "LIMIT " + LIMIT ;
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setInt(1, offset);
             ResultSet rs = preparedStatement.executeQuery();
-            List<Pokemon> result = new ArrayList<>();
-            while (rs.next()) {
-                Pokemon pokemon = new Pokemon(rs.getInt(1), rs.getString(2), rs.getInt(3),
-                        Arrays.asList(rs.getString(4)), rs.getString(5));
-                result.add(pokemon);
-            }
-            return result;
+            return getPokemonsFromResultSet(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Error while reading all pokemons", e);
         }
@@ -112,22 +107,29 @@ public class PokemonDaoJdbc implements PokemonDao {
     @Override
     public List<Pokemon> getBy(PokemonCategory pokemonCategory, int offset){
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "SELECT id, name, price, CONCAT_WS(',' , ct.name) AS pokemon_category, sprite_url FROM pokemon AS p" +
-                    "JOIN pokemon_category AS pc ON  pc.pokemon_id = p.id" +
+            String sql = "SELECT id, name, price, string_agg(ct.name , ', ') AS pokemon_category, sprite_url FROM pokemon AS p " +
+                    "JOIN pokemon_category AS pc ON  pc.pokemon_id = p.id " +
                     "JOIN category as ct ON pc.category_id = ct.id " +
-                    "WHERE ct.name = ?  GROUP BY p.id" +
-                    "OFFSET ?" +
-                    "LIMIT " + "''" + LIMIT;
-            ResultSet rs = conn.prepareStatement(sql).executeQuery();
-            List<Pokemon> result = new ArrayList<>();
-            while (rs.next()) {
-                Pokemon pokemon = new Pokemon(rs.getInt(1), rs.getString(2), rs.getInt(3),
-                        Arrays.asList(rs.getString(4)), rs.getString(5));
-                result.add(pokemon);
-            }
-            return result;
+                    "WHERE ct.name = ?  GROUP BY p.id " +
+                    "OFFSET ? " +
+                    "LIMIT ?";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1, offset);
+            st.setInt(2, LIMIT);
+            ResultSet rs = st.executeQuery();
+            return getPokemonsFromResultSet(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Error while reading all pokemons", e);
         }
+    }
+
+    private List<Pokemon> getPokemonsFromResultSet(ResultSet rs) throws SQLException {
+        List<Pokemon> result = new ArrayList<>();
+        while (rs.next()) {
+            Pokemon pokemon = new Pokemon(rs.getInt(1), rs.getString(2), rs.getInt(3),
+                    Collections.singletonList(rs.getString(4)), rs.getString(5));
+            result.add(pokemon);
+        }
+        return result;
     }
 }

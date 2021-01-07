@@ -107,17 +107,23 @@ public class PokemonDaoJdbc implements PokemonDao {
     @Override
     public List<Pokemon> getBy(String pokemonCategoryName, int offset){
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "SELECT p.id, p.name, p.price, string_agg(ct.name , ', ') AS pokemon_category, sprite_url FROM pokemon AS p " +
-                    "JOIN pokemon_category AS pc ON  pc.pokemon_id = p.id " +
-                    "JOIN category as ct ON pc.category_id = ct.id " +
-                    "WHERE ct.name = ? " +
-                    "GROUP BY p.id " +
-                    "OFFSET ? " +
-                    "LIMIT ?";
+            String sql = "SELECT p.id, " +
+                         "       p.name, " +
+                         "       p.price, " +
+                         "       string_agg(ct.name , ', ') AS pokemon_category, " +
+                         "       sprite_url FROM pokemon AS p " +
+                         "JOIN pokemon_category AS pc ON  pc.pokemon_id = p.id " +
+                         "JOIN category as ct ON pc.category_id = ct.id " +
+                         "GROUP BY p.id, p.name " +
+                         "HAVING string_agg(ct.name, ', ') LIKE ? " +
+                         "OFFSET ? " +
+                         "LIMIT ?";
             PreparedStatement st = conn.prepareStatement(sql);
-            st.setString(1,pokemonCategoryName);
+            st.setString(1,"%" + pokemonCategoryName + "%");
             st.setInt(2, offset);
             st.setInt(3, LIMIT);
+            System.out.println(st.toString());
+
             ResultSet rs = st.executeQuery();
             return getPokemonsFromResultSet(rs);
         } catch (SQLException e) {

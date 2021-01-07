@@ -1,4 +1,4 @@
-package com.codecool.shop.controller;
+package com.codecool.shop.business.logic;
 
 
 import com.codecool.shop.dao.implementation.CartDaoMem;

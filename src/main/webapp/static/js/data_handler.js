@@ -98,5 +98,11 @@ export let dataHandler = {
         this._api_get(`http://localhost:8080/registration-validation?email=${email}`, (response) => {
             callback(response.success);
         })
-        }
+    },
+
+    validateUser: function (email, pw, callback) {
+        this._api_post(`http://localhost:8080/validate-login`, {email: email, password: pw}, (response) => {
+            callback(response.success);
+        })
+    }
 }

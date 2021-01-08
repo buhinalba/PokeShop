@@ -2,6 +2,8 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.UserDao;
 import com.codecool.shop.dao.jdbc.UserDaoJdbc;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +16,7 @@ import java.io.PrintWriter;
 
 @WebServlet(urlPatterns = {"/registration-validation"})
 public class ValidateRegistration extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger(ValidateRegistration.class);
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json"); resp.setCharacterEncoding("UTF-8");
@@ -25,6 +28,7 @@ public class ValidateRegistration extends HttpServlet {
 
         String response = String.format("{\"success\": %s}", validationIsSuccessful);
 
+        logger.info("Response: " + response);
         out.println(response);
     }
 }

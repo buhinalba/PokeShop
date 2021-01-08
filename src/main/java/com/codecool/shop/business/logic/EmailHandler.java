@@ -1,5 +1,8 @@
 package com.codecool.shop.business.logic;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -12,7 +15,7 @@ import java.util.Properties;
 public class EmailHandler {
     private static final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
     private static final int TIME_OF_DELIVERY = 5;
-
+    private static final Logger logger = LoggerFactory.getLogger(EmailHandler.class);
     public EmailHandler(){
 
     }
@@ -61,10 +64,10 @@ public class EmailHandler {
             // Send message
             Transport.send(message);
 
-            System.out.println("Sent message successfully....");
+            logger.info("Sent message successfully.");
 
-        } catch (
-                MessagingException e) {
+        } catch (MessagingException e) {
+            logger.warn("Cannot send email.");
             throw new RuntimeException(e);
         }
     }

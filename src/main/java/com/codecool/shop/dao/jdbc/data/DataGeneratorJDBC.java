@@ -6,6 +6,8 @@ import com.codecool.shop.dao.PokemonGetAllDaoInt;
 import com.codecool.shop.dao.implementation.PokemonCategoryDaoMem;
 import com.codecool.shop.dao.implementation.PokemonGetAllDao;
 import com.codecool.shop.model.Pokemon;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -19,7 +21,7 @@ import java.util.NoSuchElementException;
 public class DataGeneratorJDBC {
     private static PokemonGetAllDaoInt pokemonGetAllDao = new PokemonGetAllDao();
     private static DataSource dataSource = DataManager.connectDataBase();
-
+    private static final Logger logger = LoggerFactory.getLogger(DataGeneratorJDBC.class);
     private static final String apiURL = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=1118";
 
     public static void addPokemonsToDatabase() throws IOException {
@@ -37,7 +39,7 @@ public class DataGeneratorJDBC {
 
                 connectCategoriesToPokemons(conn, pokemon.getPokemonCategory(), pokemon.getId());
             } catch (SQLException e) {
-                System.out.println("Pokemon addition to database failed");
+                logger.error("Pokemon addition to database failed");
                 e.printStackTrace();
                 break;
             }
@@ -58,6 +60,7 @@ public class DataGeneratorJDBC {
                 st.execute();
             }
         } catch (SQLException e) {
+                logger.error("Category addition to database failed");
                 e.printStackTrace();
             }
     }
@@ -81,13 +84,16 @@ public class DataGeneratorJDBC {
             st.setString(1, name);
             ResultSet rs = st.executeQuery();
             if (!rs.next()) {
+                logger.error("Category Does NOt Exist in database!");
                 throw new SQLException("Category Does NOt Exist in database!");
             }
             return rs.getInt(1);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
+            logger.error("Cannot connect to database.");
         }
+        logger.error("Category Does NOt Exist in database!");
         throw new NoSuchElementException("Category Does NOt Exist in database!");
     }
 
@@ -96,8 +102,10 @@ public class DataGeneratorJDBC {
             String query = "DELETE from pokemon_category; DELETE from category; DELETE from pokemon";
             PreparedStatement s = conn.prepareStatement(query);
             s.execute();
+            logger.info("Database reseted successfully.");
         } catch (SQLException e) {
             e.printStackTrace();
+            logger.error("Cannot connect to database.");
         }
     }
 

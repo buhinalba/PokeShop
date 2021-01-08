@@ -73,7 +73,7 @@ public class PokemonDaoMem implements PokemonDao {
     }
 
     @Override
-    public List<Pokemon> getBy(PokemonCategory pokemonCategory, int offset) {
+    public List<Pokemon> getBy(String pokemonCategoryName, int offset) {
         return null;
     }
 

@@ -1,5 +1,6 @@
 package com.codecool.shop.business.logic;
 
+import com.codecool.shop.config.DataHandlerConfig;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.PokemonCategoryDao;
 import com.codecool.shop.dao.PokemonDao;
@@ -30,13 +31,15 @@ public class PokemonPaginationAPI extends HttpServlet implements UtilDao {
     private PokemonGetAllDao pokemonGetAllDao = new PokemonGetAllDao();
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/json");response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
 
         int offset = request.getParameter("offset") != null ? Integer.parseInt(request.getParameter("offset")) : 0;
 
-        String pokemonsJson = pokemonGetAllDao.pokemonPagination(offset);
+//        String pokemonsJson = pokemonGetAllDao.pokemonPagination(offset); // prev version
+        String pokemonsJson = DataHandlerConfig.getPokemonDaoPagination(offset);
+
         out.println(pokemonsJson);
     }
 }

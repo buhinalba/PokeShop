@@ -14,6 +14,6 @@ public interface PokemonDao {
     List<Pokemon> getAll(int offset);
     List<Pokemon> getAll();
     List<Pokemon> getBy(PokemonCategory pokemonCategory);
-    List<Pokemon> getBy(PokemonCategory pokemonCategory, int offset);
+    List<Pokemon> getBy(String pokemonCategoryName, int offset);
 
 }

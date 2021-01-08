@@ -49,7 +49,7 @@ public class PokemonDaoJdbc implements PokemonDao {
     @Override
     public Pokemon find(int id) {
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "SELECT p.name, price, CONCAT_WS(',' , ct.name) AS pokemon_category, sprite_url FROM pokemon AS p " +
+            String sql = "SELECT name, price, string_agg(ct.name, ', ') AS pokemon_category, sprite_url FROM pokemon AS p " +
                     "JOIN pokemon_category AS pc ON pc.pokemon_id = p.id " +
                     "JOIN category AS ct ON ct.id = pc.category_id " +
                     "WHERE p.id = ?";
@@ -118,17 +118,25 @@ public class PokemonDaoJdbc implements PokemonDao {
     }
 
     @Override
-    public List<Pokemon> getBy(PokemonCategory pokemonCategory, int offset){
+    public List<Pokemon> getBy(String pokemonCategoryName, int offset){
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "SELECT id, name, price, string_agg(ct.name , ', ') AS pokemon_category, sprite_url FROM pokemon AS p " +
-                    "JOIN pokemon_category AS pc ON  pc.pokemon_id = p.id " +
-                    "JOIN category as ct ON pc.category_id = ct.id " +
-                    "WHERE ct.name = ?  GROUP BY p.id " +
-                    "OFFSET ? " +
-                    "LIMIT ?";
+            String sql = "SELECT p.id, " +
+                         "       p.name, " +
+                         "       p.price, " +
+                         "       string_agg(ct.name , ', ') AS pokemon_category, " +
+                         "       sprite_url FROM pokemon AS p " +
+                         "JOIN pokemon_category AS pc ON  pc.pokemon_id = p.id " +
+                         "JOIN category as ct ON pc.category_id = ct.id " +
+                         "GROUP BY p.id, p.name " +
+                         "HAVING string_agg(ct.name, ', ') LIKE ? " +
+                         "OFFSET ? " +
+                         "LIMIT ?";
             PreparedStatement st = conn.prepareStatement(sql);
-            st.setInt(1, offset);
-            st.setInt(2, LIMIT);
+            st.setString(1,"%" + pokemonCategoryName + "%");
+            st.setInt(2, offset);
+            st.setInt(3, LIMIT);
+            System.out.println(st.toString());
+
             ResultSet rs = st.executeQuery();
             logger.info("Get pokemons by category successfully.");
             return getPokemonsFromResultSet(rs);

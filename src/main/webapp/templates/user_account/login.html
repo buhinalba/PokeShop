@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Codecool"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <title>Pokemon Shop - Registration</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css"/>
+    <script type="module" src="/static/js/login.js" defer></script>
+
+</head>
+<body>
+<div class="page-title">
+    <h1>Pokemon Shop - Login</h1>
+</div>
+
+<div class="filter navbar">
+    <div class="brand-name"><a href="/">Pokemon Shop</a></div>
+    <div id="review-cart-button">Cart</div>
+    <div class="menu-item"><a href="/registration">Registration</a></div>
+</div>
+
+<form name="registration" action="/login" method="post">
+    <div class="registration form">
+        <div class="checkout-col">
+
+            <label for="email"><i class="fa fa-envelope"></i>Email</label>
+            <input type="text" required id="email" name="email" placeholder="cactus@example.com">
+
+            <label for="password"><i class="fas fa-key"></i>Password</label>
+            <input type="password" required id="password" name="password" minlength="8">
+
+        </div>
+
+        <div class="filter__button">
+            <button type="submit" id="register-button">Login</button>
+        </div>
+    </div>
+</form>
+
+<div th:replace="footer.html :: copy"></div>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="author" content="Codecool"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <title>Pokemon Shop - Checkout</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css"/>
+    <script type="module" src="/static/js/checkout.js" defer></script>
+</head>
+
+<body>
+
+<div class="page-title">
+    <h1>Pokemon Shop - Checkout</h1>
+</div>
+
+<div class="cart-total">
+
+    <div class="brand-name"><a href="/">Pokemon Shop</a></div>
+
+    <div class="container">
+        <i class="fa fa-shopping-cart"></i>
+        <p class="total" th:text="${'Total amount : ' + totalAmount + ' - Total price : ' + totalPrice}">Total items : 42 - Total
+            price : 3230$</p>
+    </div>
+</div>
+
+<div class="container">
+    <div id="pokemons-container" class="checkout-row">
+        <div class="card-container">
+            <div class="card" th:each="entry : ${pokemonMap}">
+                <img class="card-image" th:attr="src=${entry.key.getSpriteImageUrl()}" height="150" width="150" alt=""/>
+                <div class="card-header">
+                    <h4 class="card-title" th:text="${'Name: ' + entry.key.getName()}">Pokemon name</h4>
+                </div>
+                <div class="card-body">
+                    <div class="card-text">
+                        <p class="card-text" th:if="${entry.key.getPokemonCategory().size() > 1}"
+                           th:text="${'Types: ' + entry.key.getPokemonCategoryString()}">Pokemon type</p>
+                        <p class="card-text" th:unless="${entry.key.getPokemonCategory().size() > 1}"
+                           th:text="${'Type: ' + entry.key.getPokemonCategoryString()}">Pokemon type</p>
+                        <p class="card-text" th:text="${'Count: ' + entry.value}">Pokemon count</p>
+                        <p class="lead" th:with="result=${entry.key.getDefaultPrice() * entry.value}"
+                           th:text="${'Price: ' + result}">Price</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="checkout">
+    <form name="checkout" action="/valid-checkout" method="post">
+        <div class="checkout-form">
+            <div class="checkout-col">
+                <h3>Billing Address</h3>
+                <label for="fname"><i class="fa fa-user"></i> Full Name</label>
+                <input type="text" required id="fname" name="fullname" placeholder="John M. Doe">
+                <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                <input type="text" required id="email" name="email" placeholder="john@example.com">
+                <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
+                <input type="text" required id="adr" name="address" placeholder="542 W. 15th Street">
+                <label for="city"><i class="fa fa-institution"></i> City</label>
+                <input type="text" required id="city" name="city" placeholder="New York">
+                <label for="state">State</label>
+                <input type="text" id="state" name="state" placeholder="NY">
+                <label for="zip">Zip</label>
+                <input type="text" id="zip" name="zip" placeholder="10001">
+            </div>
+
+            <div class="checkout-col">
+                <h3>Payment</h3>
+                <input type="text" required id="ccname" name="cardname" placeholder="Name on Card">
+                <input type="text" required id="ccnum" name="cardnumber" placeholder="Credit card number">
+                <input type="month" required id="expdate" name="expdate" placeholder="Expiration Date">
+                <input type="text" required id="cvv" name="cvv" placeholder="CVV">
+            </div>
+            <div class="filter__button">
+                <button type="submit" id="checkout-button">Checkout</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div th:replace="footer.html :: copy"></div>
+</body>
+</html>

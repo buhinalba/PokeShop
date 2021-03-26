@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="author" content="Codecool"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <title>Pokemon Shop</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css"/>
+    <script type="module" src="/static/js/main.js" defer></script>
+</head>
+
+<body>
+
+<div class="page-title" data-offset="0" data-search="">
+    <h1>Pokemon Shop</h1>
+</div>
+
+<div class="filter">
+    <div class="brand-name"><a href="/">Pokemon Shop</a></div>
+    <div id="menu-item review-cart-button">Cart</div>
+    <div class="menu-item"><a href="/registration">Registration</a></div>
+    <div class="menu-item"><a href="/login">Login</a></div>
+
+    <div class="filter__select">
+        <select name="select-type" id="select-type">
+            <option selected disabled>Search by type</option>
+            <option th:attr="value=${type.getCategory()}" th:each="type, iterStat : ${types}"
+                    th:text="${type.getCategory()}">
+            </option>
+        </select>
+    </div>
+
+    <div class="filter__button">
+        <button type="submit" id="submit-search">Search</button>
+    </div>
+
+</div>
+
+
+<div class="container">
+    <div id="pokemons-container" class="row">
+        <div class="card-container">
+            <div class="card" th:attr="data-pokemon-id=${pokemon.getId()}" th:each="pokemon : ${pokemons}">
+                <img class="card-image" src="https://css.gg/pokemon.css" alt="pokemon-image"
+                     th:attr="src=${pokemon.getSpriteImageUrl()}" height="150" width="150"/>
+                <div class="card-header">
+                    <h4 class="card-title" th:text="${pokemon.getName()}">Pokemon name</h4>
+                </div>
+                <div class="card-body">
+                    <div class="card-text">
+                        <p class="card-text" th:if="${pokemon.getPokemonCategory().size() > 1}"
+                           th:text="${'Types: ' + pokemon.getPokemonCategoryString()}">Pokemon type</p>
+                        <p class="card-text" th:unless="${pokemon.getPokemonCategory().size() > 1}"
+                           th:text="${'Type: ' + pokemon.getPokemonCategoryString()}">Pokemon type</p>
+                        <p class="lead" th:text="${'Price: ' + pokemon.getDefaultPrice()}">Price</p>
+                    </div>
+                    <div class="card-text">
+                        <a class="btn-success" href="#">Add to cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="pagination-container">
+    <div class="pagination" id="prev-page">Prev Page</div>
+    <div class="pagination" id="next-page">Next Page</div>
+</div>
+
+<div th:replace="footer.html :: copy"></div>
+
+<div id="myModal" class="modal hidden">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="modal-body"><p>This has to be changed to the cart content</p></div>
+    </div>
+</div>
+
+</body>
+</html>
